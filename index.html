@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
+        
+        <script src="jquery-3.3.1.min.js"></script>
+        <link rel="stylesheet" href="estilo.css">
+    </head>
+    <body>
+        
+        <nav id="topo">
+            
+            <span id="btOpen" class="slide-menu-open" style="text-decoration:  none;position: fixed;left:  0;">
+                <span class="menu-anchor"></span>
+                <img src="img/logo.png" alt="logo">
+                <p>Jarbas - Automação Residencial</p>
+            </span>
+
+            <span id="btClose" class="menu-close hide" style="text-decoration:  none;position: fixed;left:  0;">
+                <span class="menu-anchor"></span>
+                <img src="img/logo.png" alt="logo">
+                <p>Jarbas - Automação Residencial</p>
+            </span>
+        </nav>
+
+        <div class="side-menu-overlay" style="width: 0px; opacity: 0;"></div>
+        <div class="side-menu-wrapper">
+            <ul>
+                <li class="ativo"><a href="#" class="menu-controles" >Controles</a></li>
+                <li><a href="#" class="menu-leds" >Leds</a></li>
+                <li><a href="#" class="menu-lampadas" >Lampadas</a></li>
+                <li><a href="#" class="menu-tomadas" >Tomadas</a></li>
+                <li><a href="#" class="menu-configuracoes" >Configurações</a></li>
+            </ul>
+        </div>
+
+
+        <div id="menu-controles" class="content-menu">
+            <h3 class="">Controles</h3>
+
+            <!-- <label class="">Sala</label>
+            <input type="radio" name="radioControle" class='' value='S' checked="checked">
+            
+            <label class="">Crianças</label>
+            <input type="radio" name="radioControle" class='' value='C'>
+            
+            <label class="">Escritorio</label>
+            <input type="radio" name="radioControle" class='' value='M'> -->
+
+            <nav class="submenu-locais">
+                <ul>
+                    <li class="sl ativo" >Sala</li>
+                    <li class="sl">Crianças</li>
+                    <li class="sl">Escritório</li>
+                </ul>
+            </nav>
+            
+
+            <div id="controle-sub" class="">
+                <h6 class="">Sub</h6>
+                <button type="button" value="IR1onReciver" class="btn btn-red1 btn-circle controle btn-xl">On</i></button>
+                <button type="button" value="IR1offReciver" class="btn btn-black btn-circle controle btn-xl">Off</i></button>
+                <button type="button" value="IR1volMenosReciver" class="btn btn-gray btn-circle controle btn-sm">-</i></button>
+                <button type="button" value="IR1volMaisReciver" class="btn btn-gray btn-circle controle btn-sm">+</i></button>
+                <br>
+                <button type="button" value="IR1dvdReciver" class="btn btn-gray btn-circle controle btn-xl">TV</i></button>
+                <button type="button" value="IR1cdReciver" class="btn btn-gray btn-circle controle btn-xl">AUX</i></button>
+                <button type="button" value="IR1radioReciver" class="btn btn-gray btn-circle controle btn-xl">Radio</i></button>
+            </div>
+            
+            <div id="controle-tv-sala" class="">
+                <h6 class="">TV</h6>
+                <button type="button" value="IR1ligaTv" class="btn btn-red1 btn-circle controle btn-xl">Power</i></button>
+                <button type="button" value="IR1cimaTv" class="btn btn-gray btn-circle controle btn-xl">▲</i></button>
+                <button type="button" value="IR1inputTv" class="btn btn-gray btn-circle controle btn-xl">Input</i></button>
+                <br>
+                <button type="button" value="IR1esquerdaTv" class="btn btn-gray btn-circle controle btn-xl">◄</i></button>
+                <button type="button" value="IR1okTv" class="btn btn-gray btn-circle controle btn-xl">OK</i></button>
+                <button type="button" value="IR1direitaTv" class="btn btn-gray btn-circle controle btn-xl">►</i></button>
+                <br>
+                <button type="button" value="IR1homeTv" class="btn btn-gray btn-circle controle btn-xl">Home</i></button>
+                <button type="button" value="IR1baixoTv" class="btn btn-gray btn-circle controle btn-xl">▼</i></button>
+                <button type="button" value="IR1exitTv" class="btn btn-gray btn-circle controle btn-xl">Exit</i></button>
+                <br>
+                <button type="button" value="IR1qmenuTv" class="btn btn-gray btn-circle controle btn-xl">Q.Menu</i></button>
+                <button type="button" value="IR1tv3d" class="btn btn-gray btn-circle controle btn-xl">3D</i></button>
+                <button type="button" value="IR1backTv" class="btn btn-gray btn-circle controle btn-xl">Back</i></button>
+                <br>
+                <button type="button" value="IR1volumeTvMenos" class="btn btn-gray btn-circle controle btn-xxl">Vol -</i></button>
+                <button type="button" value="IR1volumeTvMais" class="btn btn-gray btn-circle controle btn-xxl">Vol +</i></button>
+                <br>
+                <button type="button" value="#1playTv" class="btn btn-gray btn-circle controle btn-xl">►</i></button>
+                <button type="button" value="#1pauseTv" class="btn btn-gray btn-circle controle btn-xl">| |</i></button>
+                <button type="button" value="#1stopTv" class="btn btn-gray btn-circle controle btn-xl">▀</i></button>
+            </div>
+        </div>
+
+        <div id="menu-leds" class="content-menu hide">
+            <h3 class="">Leds</h3>
+
+            <!--             <input type="radio" name="radioLed" class='' value='S' checked="checked">
+            <label class="radio-inline">Sala</label>
+            
+            <input type="radio" name="radioLed" class='' value='M'> 
+            <label class="radio-inline">Escada</label>
+            
+            <input type="radio" name="radioLed" class='' value='A'>
+            <label class="radio-inline">Crianças</label>
+            
+            <input type="radio" name="radioLed" class='' value='A'>
+            <label class="radio-inline">Escritorio</label>
+            
+            <input type="radio" name="radioLed" class='' value='C'>
+            <label class="radio-inline">Casal</label>
+            
+            <input type="radio" name="radioLed" class='' value='C'>
+            <label class="radio-inline">Externas</label> -->
+
+            <nav class="submenu-locais">
+                <ul>
+                    <li class="lg ativo" >Sala</li>
+                    <li class="lg">Escada</li>
+                    <li class="lg">Crianças</li>
+                    <li class="lg">Escritorio</li>
+                    <li class="lg">Casal</li>
+                    <li class="lg">Externas</li>
+                </ul>
+            </nav>
+        
+
+            <div  class="">
+                <button type="button" value="Sobe" class="btn btn-gray btn-circle led  btn-lgF">▲</button>
+                <button type="button" value="Desce" class="btn btn-gray btn-circle led btn-lgF">▼</button>
+                <button type="button" value="Desliga" class="btn btn-black btn-circle led btn-lgF">OFF</button>
+                <button type="button" value="Liga" class="btn btn-red1 btn-circle led btn-lgF">ON</button>
+                <br>
+                <button type="button" value="Red" class="btn btn-red1 btn-circle led btn-lg">&emsp;</button>
+                <button type="button" value="Green" class="btn btn-green1 btn-circle led btn-lg">&emsp;</button>
+                <button type="button" value="Blue" class="btn btn-blue1 btn-circle led btn-lg">&emsp;</button>
+                <button type="button" value="White" class="btn btn-white btn-circle led btn-lg">&emsp;</button>
+                <br>
+                <button type="button" value="Red1" class="btn btn-red2 btn-circle led btn-lg">&emsp;</button>
+                <button type="button" value="Green1" class="btn btn-green2 btn-circle led btn-lg">&emsp;</button>
+                <button type="button" value="Blue1" class="btn btn-blue2 btn-circle led btn-lg">&emsp;</button>
+                <button type="button" value="Flash" class="btn btn-gray btn-circle led btn-lg">flash</button>
+                <br>
+                <button type="button" value="Red2" class="btn btn-red3 btn-circle led btn-lg">&emsp;</button>
+                <button type="button" value="Green2" class="btn btn-green3 btn-circle led btn-lg">&emsp;</button>
+                <button type="button" value="Blue2" class="btn btn-blue3 btn-circle led btn-lg">&emsp;</button>
+                <button type="button" value="Strobe" class="btn btn-gray btn-circle led btn-lg">strobe</button>
+                <br>
+                <button type="button" value="Red3" class="btn btn-red4 btn-circle led btn-lg">&emsp;</button>
+                <button type="button" value="Green3" class="btn btn-green4 btn-circle led btn-lg">&emsp;</button>
+                <button type="button" value="Blue3" class="btn btn-blue4 btn-circle led btn-lg">&emsp;</button>
+                <button type="button" value="Fade" class="btn btn-gray btn-circle led btn-lg">fade</button>
+                <br>
+                <button type="button" value="Red4" class="btn btn-red5 btn-circle led btn-lg">&emsp;</button>
+                <button type="button" value="Green4" class="btn btn-green5 btn-circle led btn-lg">&emsp;</button>
+                <button type="button" value="Blue4" class="btn btn-blue5 btn-circle led btn-lg">&emsp;</button>
+                <button type="button" value="Smooth" class="btn btn-gray btn-circle led btn-lg">smooth</button>
+            </div>
+        </div>
+
+        <div id="menu-lampadas" class="content-menu hide">
+            <h3 class="">Lampadas</h3>
+            
+            <div class="onoffswitch">
+                <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" checked>
+                <label class="onoffswitch-label" for="myonoffswitch">
+                    <span class="onoffswitch-inner"></span>
+                    <span class="onoffswitch-switch"></span>
+                </label>
+            </div>
+            
+        </div>
+                
+        <div id="menu-tomadas" class="content-menu hide">
+            <h3 class="">Tomadas</h3>
+
+            <div class="switch__container">
+              <input id="switch-shadow" class="switch switch--shadow" type="checkbox">
+              <label for="switch-shadow"></label>
+            </div>
+
+            <div class="switch__container">
+              <input id="switch-flat" class="switch switch--flat" type="checkbox">
+              <label for="switch-flat"></label>
+            </div>
+        </div>    
+
+        <div id="menu-configuracoes" class="content-menu hide">
+            <h3 class="">Configurações</h3>
+        </div>    
+
+
+                        
+
+
+    </body>
+</html>
+
+
+<script type="text/javascript">
+    
+    $( ".btn-circle.controle" ).click(function() {
+        var ipSend = "192.168.0.88";
+        //var comando = $(this).val() + $('input:radio[name=radioControle]:checked').val();;
+        var comando = $(this).val() + "S";
+        //alert(comando);
+        //console.log(comando);
+        $.post("http://"+ipSend+"/"+comando); 
+    });
+
+    $( ".btn-circle.led" ).click(function() {
+        var ipSend = "192.168.0.88";
+        var local = $('input:radio[name=radioLed]:checked').val();
+        if(local != "H"){
+            complemento = "led";
+        }else{
+            complemento = "holo";
+        }
+        var comando ="IR5" + complemento + $(this).val() + local;
+        alert(comando);
+        //console.log(comando);
+        //$.post("http://"+ipSend+"/"+comando); 
+    });
+
+
+
+    var slidebar_width  = 290; //slidebar width + padding size
+    var slide_bar       = $(".side-menu-wrapper"); //slidebar
+    var slide_open_btn  = $(".slide-menu-open"); //slidebar close btn
+    var slide_close_btn = $(".menu-close"); //slidebar close btn
+    var overlay         = $(".side-menu-overlay"); //slidebar close btn
+
+    slide_open_btn.click(function(e){
+        e.preventDefault();
+        slide_bar.css( {"left": "0px"}); //change to "right" for right positioned menu
+        overlay.css({"opacity":"1", "width":"100%"});
+        $("#btOpen").addClass("hide");
+        $("#btClose").removeClass("hide");
+    });
+
+    slide_close_btn.click(function(e){
+        e.preventDefault();
+        slide_bar.css({"left": "-"+ slidebar_width + "px"}); //change to "right" for right positioned menu
+        overlay.css({"opacity":"0", "width":"0"}); 
+        $("#btClose").addClass("hide");
+        $("#btOpen").removeClass("hide"); 
+    });
+
+    ////////////////////////////////////////////////////////////////////////////
+
+
+    $(".menu-controles, .menu-leds, .menu-lampadas, .menu-tomadas, .menu-configuracoes, .side-menu-overlay").click(function(e){
+        e.preventDefault();
+        slide_bar.css({"left": "-"+ slidebar_width + "px"}); //change to "right" for right positioned menu
+        overlay.css({"opacity":"0", "width":"0"}); 
+        $("#btClose").addClass("hide");
+        $("#btOpen").removeClass("hide");  
+    });
+
+    
+    //click no menu lateral
+    $(".side-menu-wrapper ul li a").click(function(e){
+        $(".side-menu-wrapper ul li").removeClass("ativo");
+        $(this).parent("li").addClass("ativo");
+
+        if($(this).hasClass("menu-controles")){
+            $(".content-menu").addClass("hide");
+            $("#menu-controles").removeClass("hide");
+            console.log("menu controles");
+        }
+        if($(this).hasClass("menu-leds")){
+            $(".content-menu").addClass("hide");
+            $("#menu-leds").removeClass("hide");
+            console.log("menu leds");
+        }
+        if($(this).hasClass("menu-lampadas")){
+            $(".content-menu").addClass("hide");
+            $("#menu-lampadas").removeClass("hide");
+            console.log("menu lampadas");
+        }
+        if($(this).hasClass("menu-tomadas")){
+            $(".content-menu").addClass("hide");
+            $("#menu-tomadas").removeClass("hide");
+            console.log("menu tomadas");
+        }
+        if($(this).hasClass("menu-configuracoes")){
+            $(".content-menu").addClass("hide");
+            $("#menu-configuracoes").removeClass("hide");
+            console.log("menu configuracoes");
+        }
+        
+    });
+
+    //click submenu de locais
+    $(".submenu-locais ul li").click(function(e){
+        $(".submenu-locais ul li").removeClass("ativo");
+        $(this).addClass("ativo");
+    });
+
+
+var controleSala = function(){
+    //mostra sub
+    //mostra tv
+    //mostra net
+}
+
+var controleCrianca = function(){
+    //mostra tv 
+}
+
+var controleEscritorio = function(){
+    //mostra tv
+    //mostra android tv
+    //mostra net
+}
+</script>
