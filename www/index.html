@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <title>Jarbas V2.1</title>
+    <link rel="stylesheet" href="icons/material.css">
+    <link rel="stylesheet" href="css/materialize.alterado.css">
+
+    <style type="text/css">
+    	body{
+			background-color: #f2f2f2;
+		}
+
+#topo{
+	position: fixed;
+	top: 0px;
+    z-index: 999;
+}
+
+#topo > p{
+	margin-left: 70px;
+	margin-top: 0px;
+}
+
+.logo-topo{
+	width: 40px;
+    margin-top: 8px;
+    margin-left: 20px;
+    float: left;
+}
+
+#slide-out > li.ativo{
+	background-color: #906e42;
+}
+
+
+
+.submenu-locais{
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+    color: #fff;
+    background-color: #13273d;
+    height: 45px;
+    z-index: 999;
+}
+
+.submenu-locais ul {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    height: 45px;
+    padding: 0 0 0 0px;
+    list-style: none;
+    line-height: 44px;
+}
+.submenu-locais ul li {  
+    height: 45px;
+    display: inline-block;
+}
+
+.submenu-locais ul li.sl {  
+    padding: 0px 26px !important;
+    margin-left: 3px;
+}
+
+.submenu-locais ul li.lg {  
+    padding: 0px 0px !important;
+    margin-left: 3px;
+}
+
+.submenu-locais ul li.ativo{
+    color: #f49c14;
+    border-bottom:3px solid #f49c14;
+}
+
+.submenu-locais ul a {
+    padding: 0 2px;
+}
+
+
+.content-menu {
+    margin-top: 60px;
+}
+
+
+.margem-baixo-2{margin-bottom: 2px !important;}
+.margem-baixo-4{margin-bottom: 4px !important;}
+.margem-baixo-6{margin-bottom: 6px !important;}
+.margem-baixo-8{margin-bottom: 8px !important;}
+.margem-baixo-10{margin-bottom: 10px !important;}
+.margem-baixo-15{margin-bottom: 15px !important;}
+
+.titulo-controles{
+    border-bottom: 1px solid #ff9800;
+    margin: 6px 35px;
+    color: #030947;
+}
+/*.content-menu h5{
+    text-align: center;
+}*/
+
+    
+    </style>
+</head>
+<body>
+
+	<!-- blue darken-4 -->
+	<nav class="indigo darken-4" id="topo">
+		<a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons orange-text">menu</i></a>
+        <img class="logo-topo" src="img/logo.png" alt="logo">
+        <p>Jarbas - Automação Residencial</p>
+    </nav>
+
+
+	<ul id="slide-out" class="side-nav indigo darken-3">
+	    <li>&nbsp;</li>
+	    <li class="ativo"><a class="waves-effect waves-light white-text bt-menu-lateral menu-controles">Controles</a></li><li><div class="divider"></div></li>
+	    <li><a class="waves-effect waves-light white-text bt-menu-lateral menu-leds">Leds</a></li><li><div class="divider"></div></li>
+	    <li><a class="waves-effect waves-light white-text bt-menu-lateral menu-lampadas">Lampadas</a></li><li><div class="divider"></div></li>
+	    <li><a class="waves-effect waves-light white-text bt-menu-lateral menu-tomadas">Tomadas</a></li><li><div class="divider"></div></li>
+	    <li><a class="waves-effect waves-light white-text bt-menu-lateral menu-configuracoes">Configurações</a></li>
+	</ul>
+
+<!-- 	<div>
+		<h5>Controles</h5>
+		<a class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">add</i></a>
+	</div> -->
+
+	<div id="menu-controles" class="content-menu ">
+            <h5 class="center-align">Controles</h5>
+
+            <nav class="submenu-locais indigo darken-4">
+                <ul>
+                    <li class="sl ativo"><a class="link-submenu-controle" href="#">Sala</a></li>
+                    <li class="sl"><a class="link-submenu-controle" href="#">Crianças</a></li>
+                    <li class="sl"><a class="link-submenu-controle" href="#">Escritório</a></li>
+                </ul>
+            </nav>
+
+            <div id="controle-sub" class="">
+                <h6 class="titulo-controles">Surround sound</h6>
+                <div class="center-align row">
+                    <button type="button" value="" class="btn-floating btn-large waves-effect waves-light red accent-4">On</button>
+                    <button type="button" value="" class="btn-floating btn-large waves-effect waves-light grey darken-4">Off</button>
+                    <button type="button" value="" class="btn-floating btn-large waves-effect waves-light grey">TV</button>
+                    <button type="button" value="" class="btn-floating btn-large waves-effect waves-light grey">AUX</button>
+                    
+                </div>
+                <div class="center-align row">
+                    <button type="button" value="" class="btn-floating btn-largeX waves-effect waves-light grey">Vol -</button>
+                    <button type="button" value="" class="btn-floating btn-largeX waves-effect waves-light grey">Vol +</button>
+                </div>
+            </div>
+
+
+            <div id="controle-tv-sala" class="">
+                <h6 class="titulo-controles">TV</h6>
+                <div class="center-align row">
+                    <button type="button" value="" class="btn-floating btn-large waves-effect waves-light red accent-4"><i class="material-icons">power_settings_new</i></button>
+                    <button type="button" value="" class="btn-floating btn-large waves-effect waves-light grey darken-4">▲</button>
+                    <button type="button" value="" class="btn-floating btn-large waves-effect waves-light grey">input</button>
+                </div>
+                <div class="center-align row">
+                    <button type="button" value="" class="btn-floating btn-large waves-effect waves-light grey darken-4">◄</button>
+                    <button type="button" value="" class="btn-floating btn-large waves-effect waves-light grey darken-3">OK</button>
+                    <button type="button" value="" class="btn-floating btn-large waves-effect waves-light grey darken-4">►</button>
+                </div>
+                <div class="center-align row">
+                    <button type="button" value="IR1homeTv" class="btn-floating btn-large waves-effect waves-light grey">Home</button>
+                    <button type="button" value="IR1baixoTv" class="btn-floating btn-large waves-effect waves-light grey darken-4">▼</button>
+                    <button type="button" value="IR1exitTv" class="btn-floating btn-large waves-effect waves-light grey">Exit</button>
+                </div>
+                <div class="center-align row">
+                    <button type="button" value="IR1qmenuTv" class="btn-floating btn-large waves-effect waves-light grey">Q.Menu</button>
+                    <button type="button" value="IR1tv3d" class="btn-floating btn-large waves-effect waves-light grey">3D</button>
+                    <button type="button" value="IR1backTv" class="btn-floating btn-large waves-effect waves-light grey">Back</button>
+                </div>
+                
+                <div class="center-align row">
+                    <button type="button" value="IR1volumeTvMenos" class="btn-floating btn-largeX waves-effect waves-light grey">Vol -</button>
+                    <button type="button" value="IR1volumeTvMais" class="btn-floating btn-largeX waves-effect waves-light grey">Vol +</button>
+                </div>
+                
+                <div class="center-align row">
+                    <button type="button" value="playTv" class="btn-floating btn-large waves-effect waves-light grey">►</button>
+                    <button type="button" value="pauseTv" class="btn-floating btn-large waves-effect waves-light grey">| |</button>
+                    <button type="button" value="stopTv" class="btn-floating btn-large waves-effect waves-light grey">▀</button>
+                </div>
+                <div class="row"></div>
+                <div class="row"></div>
+
+            </div>
+    </div>
+
+    <div id="menu-leds" class="content-menu hide">
+            <h5 class="center-align">Leds</h5>
+
+            <nav class="submenu-locais indigo darken-4">
+                <ul>
+                    <li class="lg ativo"><a class="link-submenu-led" href="#">Sala</a></li>
+                    <li class="lg"><a class="link-submenu-led" href="#">Escada</a></li>
+                    <li class="lg"><a class="link-submenu-led" href="#">Crianças</a></li>
+                    <li class="lg"><a class="link-submenu-led" href="#">Escritorio</a></li>
+                    <li class="lg"><a class="link-submenu-led" href="#">Casal</a></li>
+                    <li class="lg"><a class="link-submenu-led" href="#">Externas</a></li>
+                </ul>
+            </nav>
+        
+            <div class="center-align margem-baixo-2">
+                <button type="button" value="Sobe" class="btn-floating btn-large waves-effect waves-light grey">▲</button>
+                <button type="button" value="Desce" class="btn-floating btn-large waves-effect waves-light grey">▼</button>
+                <button type="button" value="Desliga" class="btn-floating btn-large waves-effect waves-light grey darken-4">OFF</button>
+                <button type="button" value="Liga" class="btn-floating btn-large waves-effect waves-light red accent-4">ON</button>
+            </div>
+            <div class="center-align margem-baixo-2">
+                <button type="button" value="" class="btn-floating btn-large waves-effect waves-light red">&emsp;</button>
+                <button type="button" value="" class="btn-floating btn-large waves-effect waves-light green">&emsp;</button>
+                <button type="button" value="" class="btn-floating btn-large waves-effect waves-light blue">&emsp;</button>
+                <button type="button" value="" class="btn-floating btn-large waves-effect waves-light white">&emsp;</button>
+            </div>
+            <div class="center-align margem-baixo-2">
+                <button type="button" value="" class="btn-floating btn-large waves-effect waves-light yellow darken-4">&emsp;</button>
+                <button type="button" value="" class="btn-floating btn-large waves-effect waves-light light-green">&emsp;</button>
+                <button type="button" value="" class="btn-floating btn-large waves-effect waves-light indigo">&emsp;</button>
+                <button type="button" value="" class="btn-floating btn-large waves-effect waves-light grey">flash</button>
+            </div>
+            <div class="center-align margem-baixo-2">
+                <button type="button" value="" class="btn-floating btn-large waves-effect waves-light yellow darken-3">&emsp;</button>
+                <button type="button" value="" class="btn-floating btn-large waves-effect waves-light green accent-2">&emsp;</button>
+                <button type="button" value="" class="btn-floating btn-large waves-effect waves-light purple darken-4">&emsp;</button>
+                <button type="button" value="" class="btn-floating btn-large waves-effect waves-light grey">strobe</button>
+            </div>
+            <div class="center-align margem-baixo-2">
+                <button type="button" value="" class="btn-floating btn-large waves-effect waves-light yellow accent-2">&emsp;</button>
+                <button type="button" value="" class="btn-floating btn-large waves-effect waves-light cyan lighten-1">&emsp;</button>
+                <button type="button" value="" class="btn-floating btn-large waves-effect waves-light purple darken-3">&emsp;</button>
+                <button type="button" value="" class="btn-floating btn-large waves-effect waves-light grey">fade</button>
+            </div>
+            <div class="center-align margem-baixo-15">
+                <button type="button" value="" class="btn-floating btn-large waves-effect waves-light yellow accent-1">&emsp;</button>
+                <button type="button" value="" class="btn-floating btn-large waves-effect waves-light light-blue darken-2">&emsp;</button>
+                <button type="button" value="" class="btn-floating btn-large waves-effect waves-light pink darken-4">&emsp;</button>
+                <button type="button" value="" class="btn-floating btn-large waves-effect waves-light grey">smooth</button>
+            </div>
+
+            <div class="center-align swith-led">
+            <label>controlar todas</label>
+                <div class="switch">
+                    <label>
+                      Off
+                      <input type="checkbox">
+                      <span class="lever"></span>
+                      On
+                    </label>
+                </div>
+            </div>
+
+            <!-- <div  class="">
+                <button type="button" value="Sobe" class="btn btn-gray btn-circle led  btn-lgF">▲</button>
+                <button type="button" value="Desce" class="btn btn-gray btn-circle led btn-lgF">▼</button>
+                <button type="button" value="Desliga" class="btn btn-black btn-circle led btn-lgF">OFF</button>
+                <button type="button" value="Liga" class="btn btn-red1 btn-circle led btn-lgF">ON</button>
+                <br>
+                <button type="button" value="Red" class="btn btn-red1 btn-circle led btn-lg">&emsp;</button>
+                <button type="button" value="Green" class="btn btn-green1 btn-circle led btn-lg">&emsp;</button>
+                <button type="button" value="Blue" class="btn btn-blue1 btn-circle led btn-lg">&emsp;</button>
+                <button type="button" value="White" class="btn btn-white btn-circle led btn-lg">&emsp;</button>
+                <br>
+                <button type="button" value="Red1" class="btn btn-red2 btn-circle led btn-lg">&emsp;</button>
+                <button type="button" value="Green1" class="btn btn-green2 btn-circle led btn-lg">&emsp;</button>
+                <button type="button" value="Blue1" class="btn btn-blue2 btn-circle led btn-lg">&emsp;</button>
+                <button type="button" value="Flash" class="btn btn-gray btn-circle led btn-lg">flash</button>
+                <br>
+                <button type="button" value="Red2" class="btn btn-red3 btn-circle led btn-lg">&emsp;</button>
+                <button type="button" value="Green2" class="btn btn-green3 btn-circle led btn-lg">&emsp;</button>
+                <button type="button" value="Blue2" class="btn btn-blue3 btn-circle led btn-lg">&emsp;</button>
+                <button type="button" value="Strobe" class="btn btn-gray btn-circle led btn-lg">strobe</button>
+                <br>
+                <button type="button" value="Red3" class="btn btn-red4 btn-circle led btn-lg">&emsp;</button>
+                <button type="button" value="Green3" class="btn btn-green4 btn-circle led btn-lg">&emsp;</button>
+                <button type="button" value="Blue3" class="btn btn-blue4 btn-circle led btn-lg">&emsp;</button>
+                <button type="button" value="Fade" class="btn btn-gray btn-circle led btn-lg">fade</button>
+                <br>
+                <button type="button" value="Red4" class="btn btn-red5 btn-circle led btn-lg">&emsp;</button>
+                <button type="button" value="Green4" class="btn btn-green5 btn-circle led btn-lg">&emsp;</button>
+                <button type="button" value="Blue4" class="btn btn-blue5 btn-circle led btn-lg">&emsp;</button>
+                <button type="button" value="Smooth" class="btn btn-gray btn-circle led btn-lg">smooth</button>
+            </div> -->
+    </div>
+
+    <div id="menu-lampadas" class="content-menu hide">
+        <h5 class="">Lampadas</h5>
+        
+        <div class="onoffswitch">
+            <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" checked>
+            <label class="onoffswitch-label" for="myonoffswitch">
+                <span class="onoffswitch-inner"></span>
+                <span class="onoffswitch-switch"></span>
+            </label>
+        </div>
+        
+    </div>
+            
+    <div id="menu-tomadas" class="content-menu hide">
+        <h5 class="">Tomadas</h5>
+
+        <div class="switch__container">
+          <input id="switch-shadow" class="switch switch--shadow" type="checkbox">
+          <label for="switch-shadow"></label>
+        </div>
+
+        <div class="switch__container">
+          <input id="switch-flat" class="switch switch--flat" type="checkbox">
+          <label for="switch-flat"></label>
+        </div>
+    </div>    
+
+    <div id="menu-configuracoes" class="content-menu hide">
+        <h5 class="">Configurações</h5>
+    </div>   
+
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/materialize.min.js"></script>
+
+    <script type="text/javascript">
+    	//inicializa bt do menu lateral
+    	$(".button-collapse").sideNav();
+
+    	$('.bt-menu-lateral').on('click', function(){
+    		$('.bt-menu-lateral').parent().removeClass('ativo');
+    		$(this).parent().addClass('ativo');
+    		$('.button-collapse').sideNav('hide');
+
+
+            if($(this).hasClass("menu-controles")){
+                $(".content-menu").addClass("hide");
+                $("#menu-controles").removeClass("hide");
+                console.log("menu controles");
+            }
+            if($(this).hasClass("menu-leds")){
+                $(".content-menu").addClass("hide");
+                $("#menu-leds").removeClass("hide");
+                console.log("menu leds");
+            }
+            if($(this).hasClass("menu-lampadas")){
+                $(".content-menu").addClass("hide");
+                $("#menu-lampadas").removeClass("hide");
+                console.log("menu lampadas");
+            }
+            if($(this).hasClass("menu-tomadas")){
+                $(".content-menu").addClass("hide");
+                $("#menu-tomadas").removeClass("hide");
+                console.log("menu tomadas");
+            }
+            if($(this).hasClass("menu-configuracoes")){
+                $(".content-menu").addClass("hide");
+                $("#menu-configuracoes").removeClass("hide");
+                console.log("menu configuracoes");
+            }
+
+    	});
+
+        $('.link-submenu-controle').on('click', function(){
+            $('.link-submenu-controle').parent().removeClass('ativo');
+            $(this).parent().addClass('ativo');
+        });
+
+        $('.link-submenu-led').on('click', function(){
+            $('.link-submenu-led').parent().removeClass('ativo');
+            $(this).parent().addClass('ativo');
+        });
+
+        /*$(".swith-led").addClass('hide');
+        $(".swith-led").removeClass('hide');*/
+    </script>
+
+</body>
+</html>
