@@ -247,7 +247,7 @@
                 <button type="button" value="" class="btn-floating btn-large waves-effect waves-light grey">smooth</button>
             </div>
 
-            <div class="center-align swith-led">
+            <div class="center-align swith-led hide">
             <label>controlar todas</label>
                 <div class="switch">
                     <label>
@@ -294,29 +294,10 @@
 
     <div id="menu-lampadas" class="content-menu hide">
         <h5 class="">Lampadas</h5>
-        
-        <div class="onoffswitch">
-            <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" checked>
-            <label class="onoffswitch-label" for="myonoffswitch">
-                <span class="onoffswitch-inner"></span>
-                <span class="onoffswitch-switch"></span>
-            </label>
-        </div>
-        
     </div>
             
     <div id="menu-tomadas" class="content-menu hide">
         <h5 class="">Tomadas</h5>
-
-        <div class="switch__container">
-          <input id="switch-shadow" class="switch switch--shadow" type="checkbox">
-          <label for="switch-shadow"></label>
-        </div>
-
-        <div class="switch__container">
-          <input id="switch-flat" class="switch switch--flat" type="checkbox">
-          <label for="switch-flat"></label>
-        </div>
     </div>    
 
     <div id="menu-configuracoes" class="content-menu hide">
@@ -331,7 +312,17 @@
     	//inicializa bt do menu lateral
     	$(".button-collapse").sideNav();
 
-    	$('.bt-menu-lateral').on('click', function(){
+    	
+
+        /*EVENTOS DE CLICK*/
+        $('.lever').on('click', function(){
+            navigator.vibrate(40);
+        });
+        $('button').on('click', function() {
+            navigator.vibrate(20);
+        });
+
+        $('.bt-menu-lateral').on('click', function(){
     		$('.bt-menu-lateral').parent().removeClass('ativo');
     		$(this).parent().addClass('ativo');
     		$('.button-collapse').sideNav('hide');
@@ -362,21 +353,53 @@
                 $("#menu-configuracoes").removeClass("hide");
                 console.log("menu configuracoes");
             }
-
+            navigator.vibrate(30);
     	});
 
         $('.link-submenu-controle').on('click', function(){
             $('.link-submenu-controle').parent().removeClass('ativo');
             $(this).parent().addClass('ativo');
+            navigator.vibrate(30);
+            if($(this).text() === "Sala"){
+
+            }
+            if($(this).text() === "Crianças"){
+
+            }
+            if($(this).text() === "Escritorio"){
+
+            }
         });
 
         $('.link-submenu-led').on('click', function(){
             $('.link-submenu-led').parent().removeClass('ativo');
             $(this).parent().addClass('ativo');
+            navigator.vibrate(30);
+
+
+            if($(this).text() === "Sala"){
+
+            }
+            if($(this).text() === "Escada"){
+
+            }
+            if($(this).text() === "Crianças"){
+
+            }
+            if($(this).text() === "Escritorio"){
+
+            }
+            if($(this).text() === "Casal"){
+
+            }
+            if($(this).text() === "Externas"){
+                $(".swith-led").removeClass('hide');
+            }else{
+                $(".swith-led").addClass('hide');
+            }
+
         });
 
-        /*$(".swith-led").addClass('hide');
-        $(".swith-led").removeClass('hide');*/
     </script>
 
 </body>
