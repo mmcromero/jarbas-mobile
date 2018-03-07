@@ -1,0 +1,94 @@
+body{
+background-color: #f2f2f2;
+}
+
+#topo{
+  position: fixed;
+  top: 0px;
+    z-index: 999;
+}
+
+#topo > p{
+  margin-left: 70px;
+  margin-top: 0px;
+}
+
+.logo-topo{
+  width: 40px;
+    margin-top: 8px;
+    margin-left: 20px;
+    float: left;
+}
+
+#slide-out > li.ativo{
+  background-color: #906e42;
+}
+
+
+
+.submenu-locais{
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+    color: #fff;
+    background-color: #13273d;
+    height: 45px;
+    z-index: 999;
+}
+
+.submenu-locais ul {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    height: 45px;
+    padding: 0 0 0 0px;
+    list-style: none;
+    line-height: 44px;
+}
+.submenu-locais ul li {  
+    height: 45px;
+    display: inline-block;
+}
+
+.submenu-locais ul li.sl {  
+    padding: 0px 26px !important;
+    margin-left: 3px;
+}
+
+.submenu-locais ul li.lg {  
+    padding: 0px 0px !important;
+    margin-left: 3px;
+}
+
+.submenu-locais ul li.ativo{
+    color: #f49c14;
+    border-bottom:3px solid #f49c14;
+}
+
+.submenu-locais ul a {
+    padding: 0 2px;
+}
+
+
+.content-menu {
+    margin-top: 60px;
+}
+
+
+.margem-baixo-2{margin-bottom: 2px !important;}
+.margem-baixo-4{margin-bottom: 4px !important;}
+.margem-baixo-6{margin-bottom: 6px !important;}
+.margem-baixo-8{margin-bottom: 8px !important;}
+.margem-baixo-10{margin-bottom: 10px !important;}
+.margem-baixo-15{margin-bottom: 15px !important;}
+
+.titulo-controles{
+    border-bottom: 1px solid #ff9800;
+    margin: 6px 35px;
+    color: #030947;
+}
+/*.content-menu h5{
+    text-align: center;
+}*/
