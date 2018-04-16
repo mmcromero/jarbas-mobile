@@ -31,7 +31,7 @@ $('#menu-controles button').on('click', function() {
         //repeticao =  $(this).attr('repeticao');
         //codigo = $(this).val()
         //local= localControle
-        var ipSend = "192.168.0.46:8080";
+        var ipSend = "192.168.15.46:8080";
         var saida = "ir?" + $(this).attr('repeticao') + $(this).val() + localControle;
     }
     
@@ -58,7 +58,7 @@ $('#menu-leds button').on('click', function() {
         //repeticao =  $(this).attr('repeticao');
         //codigo = $(this).val()
         //local= localLed
-        var ipSend = "192.168.0.46:8080";
+        var ipSend = "192.168.15.46:8080";
         var saida = "ir?" + $(this).attr('repeticao') + $(this).val() + localLed;
     }
 
