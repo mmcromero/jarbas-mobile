@@ -23,7 +23,9 @@ $('#menu-controles button').on('click', function() {
         //codigo = $(this).val()
         //repeticao = repeticaoLed
         //local= localControle
-        var ipSend = "192.168.0.88";
+
+
+        var ipSend = $("#host2").val(); //var ipSend = "192.168.0.88";
         var saida = "ir?codigo=" + $(this).val() + "&repeticao=" + $(this).attr('repeticao') + "&local=" + localControle;
     }else{
         //Saida Arduino Mega
@@ -31,7 +33,9 @@ $('#menu-controles button').on('click', function() {
         //repeticao =  $(this).attr('repeticao');
         //codigo = $(this).val()
         //local= localControle
-        var ipSend = "192.168.15.46:8080";
+
+
+        var ipSend = $("#host1").val(); //var ipSend = "192.168.15.46:8080";
         var saida = "ir?" + $(this).attr('repeticao') + $(this).val() + localControle;
     }
     
@@ -50,7 +54,7 @@ $('#menu-leds button').on('click', function() {
         //codigo = $(this).val()
         //repeticao = repeticaoLed
         //local= localLed
-        var ipSend = "192.168.0.88";
+         var ipSend = $("#host2").val(); //var ipSend = "192.168.0.88";
         var saida = "ir?codigo=" + $(this).val() + "&repeticao=" + $(this).attr('repeticao') + "&local=" + localLed;
     }else{
         //Saida Arduino Mega
@@ -58,7 +62,7 @@ $('#menu-leds button').on('click', function() {
         //repeticao =  $(this).attr('repeticao');
         //codigo = $(this).val()
         //local= localLed
-        var ipSend = "192.168.15.46:8080";
+         var ipSend = $("#host1").val(); //var ipSend = "192.168.15.46:8080";
         var saida = "ir?" + $(this).attr('repeticao') + $(this).val() + localLed;
     }
 
@@ -66,6 +70,41 @@ $('#menu-leds button').on('click', function() {
     console.log("http://"+ipSend+"/"+saida);
     $.post("http://"+ipSend+"/"+saida); 
 });
+
+
+
+
+
+
+
+
+
+
+$('#menu-por-locais button').on('click', function() {
+    navigator.vibrate(20);
+    
+    if(localLed != "S"){
+        var ipSend = $("#host2").val(); //var ipSend = "192.168.0.88";
+        var saida = "ir?codigo=" + $(this).val() + "&repeticao=" + $(this).attr('repeticao') + "&local=" + localLed;
+    }else{
+        var ipSend = $("#host1").val(); //var ipSend = "192.168.15.46:8080";
+        var saida = "ir?" + $(this).attr('repeticao') + $(this).val() + localLed;
+    }
+    console.log(saida);
+    console.log("http://"+ipSend+"/"+saida);
+    $.post("http://"+ipSend+"/"+saida); 
+});
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -128,7 +167,6 @@ $('.link-submenu-led').on('click', function(){
     $(this).parent().addClass('ativo');
     navigator.vibrate(30);
 
-
     
     if($(this).text() === "Sala"){
         localLed = "S";
@@ -152,6 +190,75 @@ $('.link-submenu-led').on('click', function(){
     }
 
     if($(this).text() === "Externas"){
+        localLed = "F";
+        console.log(localLed);
+        $(".swith-led").removeClass('hide');
+    }else{
+        $(".swith-led").addClass('hide');
+    }
+
+});
+
+
+
+
+
+
+
+$('.link-locais').on('click', function(){
+    console.log("click local");
+    $(".content-menu").addClass("hide");
+    $("#menu-por-locais").removeClass("hide");
+    $('.button-collapse').sideNav('hide');
+});
+
+
+$('.link-submenu-locais').on('click', function(){
+    
+
+    $('.link-submenu-locais').parent().removeClass('ativo');
+
+    $(".tabs-locais").addClass("hide");
+
+
+    $(this).parent().addClass('ativo');
+    navigator.vibrate(30);
+
+    
+    if($(this).text() === "Sala"){
+        $(".local-sala").removeClass("hide");
+        $(".titulo-locais").html("Sala");
+        localLed = "S";
+        console.log(localLed);
+    }
+    if($(this).text() === "Escada"){
+        $(".local-escada").removeClass("hide");
+        $(".titulo-locais").html("Escada");
+        localLed = "E";
+        console.log(localLed);
+    }
+    if($(this).text() === "Crianças"){
+        $(".local-criancas").removeClass("hide");
+        $(".titulo-locais").html("Quarto Crianças");
+        localLed = "K";
+        console.log(localLed);
+    }
+    if($(this).text() === "Escritório"){
+        $(".local-escritorio").removeClass("hide");
+        $(".titulo-locais").html("Escritório");
+        localLed = "M";
+        console.log(localLed);
+    }
+    if($(this).text() === "Casal"){
+        $(".local-casal").removeClass("hide");
+        $(".titulo-locais").html("Quarto Casal");
+        localLed = "C";
+        console.log(localLed);
+    }
+
+    if($(this).text() === "Externas"){
+        $(".local-externas").removeClass("hide");
+        $(".titulo-locais").html("Áreas Externas");
         localLed = "F";
         console.log(localLed);
         $(".swith-led").removeClass('hide');

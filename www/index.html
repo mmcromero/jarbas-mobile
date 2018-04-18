@@ -22,24 +22,26 @@
 	<ul id="slide-out" class="side-nav indigo darken-3 mnu-tateral">
 	    <li>
             <div>
-            <ul class="tabs indigo">
-                <li class="tab col s3"><a class="active" href="#test1">Local</a></li>
-                <li class="tab col s3"><a href="#test2">Categoria</a></li>
+            <ul class="tabs indigo darken-3 margem-baixo-10">
+                <li class="tab col s3"><a class="active white-text link-locais" href="#porLocal">Local</a></li>
+                <li class="tab col s3"><a class="white-text" href="#porCategoria">Categoria</a></li>
             </ul>
             </div>
-            <div id="test1" class="col s12">
+            <div id="porLocal" class="col s12">
 
                 <ul>
-                <li><a class="waves-effect waves-light white-text bt-menu-lateral menu-controles">Sala</a></li><li><div class="divider"></div></li>
+                <!--  <li><a class="waves-effect waves-light white-text bt-menu-lateral menu-controles">Sala</a></li><li><div class="divider"></div></li>
+                <li><a class="waves-effect waves-light white-text bt-menu-lateral menu-controles">Cozinha</a></li><li><div class="divider"></div></li>
                 <li><a class="waves-effect waves-light white-text bt-menu-lateral menu-leds">Escada</a></li><li><div class="divider"></div></li>
                 <li><a class="waves-effect waves-light white-text bt-menu-lateral menu-lampadas">Crianças</a></li><li><div class="divider"></div></li>
                 <li><a class="waves-effect waves-light white-text bt-menu-lateral menu-tomadas">Escritorio</a></li><li><div class="divider"></div></li>
                 <li><a class="waves-effect waves-light white-text bt-menu-lateral menu-tomadas">Casal</a></li><li><div class="divider"></div></li>
-                <li><a class="waves-effect waves-light white-text bt-menu-lateral menu-tomadas">Externa</a></li><li><div class="divider"></div></li>
+                <li><a class="waves-effect waves-light white-text bt-menu-lateral menu-controles">Banheiros</a></li><li><div class="divider"></div></li>
+                <li><a class="waves-effect waves-light white-text bt-menu-lateral menu-tomadas">Externa</a></li><li><div class="divider"></div></li> -->
                 <li><a class="waves-effect waves-light white-text bt-menu-lateral menu-configuracoes">Configurações</a></li>
                 </ul>
             </div>
-            <div id="test2" class="col s12">
+            <div id="porCategoria" class="col s12">
                 <ul>
                 <li><a class="waves-effect waves-light white-text bt-menu-lateral menu-controles">Controles</a></li><li><div class="divider"></div></li>
                 <li><a class="waves-effect waves-light white-text bt-menu-lateral menu-leds">Leds</a></li><li><div class="divider"></div></li>
@@ -50,14 +52,220 @@
                 </ul>
             </div>
         </li>
-	    
-	    
-	    
-	    
 	</ul>
 
+    <div id="menu-por-locais" class="content-menu">
+            <h5 class="center-align titulo-locais">Sala</h5>
 
-	<div id="menu-controles" class="content-menu ">
+            <nav class="submenu-locais indigo darken-4">
+                <ul>
+                    <li class="lg ativo"><a class="link-submenu-locais" href="#">Sala</a></li>
+                    <li class="lg"><a class="link-submenu-locais" href="#">Escada</a></li>
+                    <li class="lg"><a class="link-submenu-locais" href="#">Crianças</a></li>
+                    <li class="lg"><a class="link-submenu-locais" href="#">Escritório</a></li>
+                    <li class="lg"><a class="link-submenu-locais" href="#">Casal</a></li>
+                    <li class="lg"><a class="link-submenu-locais" href="#">Externas</a></li>
+                </ul>
+            </nav>
+
+
+            <!-- SALA -->
+            <div class="tabs-locais local-sala">
+                <div id="controle-sub" class="">
+                    <h6 class="titulo-controles">Surround sound</h6>
+                    <div class="center-align row">
+                        <button type="button" value="1587656775" class="btn-floating btn-large waves-effect waves-light red accent-4" repeticao="1" >On</button>
+                        <button type="button" value="1587640455" class="btn-floating btn-large waves-effect waves-light grey darken-4" repeticao="1" >Off</button>
+                        <button type="button" value="1587643260" class="btn-floating btn-large waves-effect waves-light grey" repeticao="1" >TV</button>
+                        <button type="button" value="1587652695" class="btn-floating btn-large waves-effect waves-light grey" repeticao="1" >AUX</button>
+                        
+                    </div>
+                    <div class="center-align row">
+                        <button type="button" value="1587664935" class="btn-floating btn-largeX waves-effect waves-light grey darken-3" repeticao="1" >Vol -</button>
+                        <button type="button" value="1587632295" class="btn-floating btn-largeX waves-effect waves-light grey darken-3" repeticao="1" >Vol +</button>
+                    </div>
+                </div>
+                <div id="controle-tv-sala" class="">
+                    <h6 class="titulo-controles">TV Sala</h6>
+                    <div class="center-align row margem-baixo5">
+                        <button type="button" value="551489775" class="btn-floating btn-large waves-effect waves-light red accent-4" repeticao="1"><i class="material-icons">power_settings_new</i></button>
+                        <button type="button" value="551486205" class="btn-floating btn-largeX waves-effect waves-light grey darken-4" repeticao="1" >▲</button>
+                        <button type="button" value="551538735" class="btn-floating btn-large waves-effect waves-light grey" repeticao="1" >input</button>
+                    </div>
+                    <div class="center-align row margem-baixo5">
+                        <button type="button" value="551542815" class="btn-floating btn-largeX waves-effect waves-light grey darken-4" repeticao="1" >◄</button>
+                        <button type="button" value="551494365" class="btn-floating btn-largeX waves-effect waves-light grey darken-3" repeticao="1" >OK</button>
+                        <button type="button" value="551510175" class="btn-floating btn-largeX waves-effect waves-light grey darken-4" repeticao="1" >►</button>
+                    </div>
+                    <div class="center-align row margem-baixo5">
+                        <button type="button" value="551500740" class="btn-floating btn-large waves-effect waves-light grey" repeticao="1" >3D</button>
+                        <button type="button" value="551518845" class="btn-floating btn-largeX waves-effect waves-light grey darken-4" repeticao="1" >▼</button>
+                        <button type="button" value="551541285" class="btn-floating btn-large waves-effect waves-light grey" repeticao="1" >Exit</button>
+                    </div>
+                    <div class="center-align row margem-baixo5">
+                        <button type="button" value="551535165" value2="551527005" class="btn-floating btn-large waves-effect waves-light grey" repeticao="1" >Q.Menu</button>
+                        <button type="button" value="551501505" class="btn-floating btn-large waves-effect waves-light blue" repeticao="1" >Home</button>
+                        
+                        <button type="button" value="551490795" class="btn-floating btn-large waves-effect waves-light grey" repeticao="1" >Back</button>
+                    </div>
+                    
+                    <div class="center-align row margem-baixo5">
+                        <button type="button" value="551534655" class="btn-floating btn-largeX waves-effect waves-light grey darken-3" repeticao="1" >Vol -</button>
+                        <button type="button" value="551502015" class="btn-floating btn-largeX waves-effect waves-light grey darken-3" repeticao="1" >Vol +</button>
+                    </div>
+                    
+                    <div class="center-align row margem-baixo5">
+                        <button type="button" value="551489010" class="btn-floating btn-large waves-effect waves-light grey darken-2" repeticao="1" >►</button>
+                        <button type="button" value="551509410" class="btn-floating btn-large waves-effect waves-light grey darken-2" repeticao="1" >| |</button>
+                        <button type="button" value="551521650" class="btn-floating btn-large waves-effect waves-light grey darken-2" repeticao="1" >▀</button>
+                    </div>
+                    <div class="row"></div>
+                </div>
+                <div id="controle-led-sala" class="">
+                    <h6 class="titulo-controles">Fita Led Sala</h6>
+                    <div class="center-align margem-baixo-2">
+                        <button type="button" value="16187647" value2="16748655" class="btn-floating btn-large waves-effect waves-light grey" repeticao="5" >▲</button>
+                        <button type="button" value="16220287" value2="16758855" class="btn-floating btn-large waves-effect waves-light grey" repeticao="5" >▼</button>
+                        <button type="button" value="16203967" value2="16775175" class="btn-floating btn-large waves-effect waves-light grey darken-4" repeticao="5" >OFF</button>
+                        <button type="button" value="16236607" value2="16756815" class="btn-floating btn-large waves-effect waves-light red accent-4" repeticao="5" >ON</button>
+                    </div>
+                    <div class="center-align margem-baixo-2">
+                        <button type="button" value="16195807" value2="16750695" class="btn-floating btn-large waves-effect waves-light red" repeticao="5">&emsp;</button>
+                        <button type="button" value="16228447" value2="16767015" class="btn-floating btn-large waves-effect waves-light green" repeticao="5">&emsp;</button>
+                        <button type="button" value="16212127" value2="16746615" class="btn-floating btn-large waves-effect waves-light blue" repeticao="5">&emsp;</button>
+                        <button type="button" value="16244767" value2="16754775" class="btn-floating btn-large waves-effect waves-light white" repeticao="5">&emsp;</button>
+                    </div>
+                    <div class="center-align margem-baixo-2">
+                        <button type="button" value="16191727" value2="16771095" class="btn-floating btn-large waves-effect waves-light yellow darken-4" repeticao="5" >&emsp;</button>
+                        <button type="button" value="16224367" value2="16730295" class="btn-floating btn-large waves-effect waves-light light-green" repeticao="5" >&emsp;</button>
+                        <button type="button" value="16208047" value2="16738455" class="btn-floating btn-large waves-effect waves-light indigo" repeticao="5" >&emsp;</button>
+                        <button type="button" value="16240687" value2="16757325" class="btn-floating btn-large waves-effect waves-light grey" repeticao="5" >flash</button>
+                    </div>
+                    <div class="center-align margem-baixo-2">
+                        <button type="button" value="16199887" value2="16712445" class="btn-floating btn-large waves-effect waves-light yellow darken-3" repeticao="5" >&emsp;</button>
+                        <button type="button" value="16232527" value2="16724685" class="btn-floating btn-large waves-effect waves-light green accent-2" repeticao="5" >&emsp;</button>
+                        <button type="button" value="16216207" value2="16720095" class="btn-floating btn-large waves-effect waves-light purple darken-4" repeticao="5" >&emsp;</button>
+                        <button type="button" value="16248847" value2="16711935" class="btn-floating btn-large waves-effect waves-light grey" repeticao="5" >strobe</button>
+                    </div>
+                    <div class="center-align margem-baixo-2">
+                        <button type="button" value="16189687" value2="16732335" class="btn-floating btn-large waves-effect waves-light yellow accent-2" repeticao="5" >&emsp;</button>
+                        <button type="button" value="16222327" value2="16742535" class="btn-floating btn-large waves-effect waves-light cyan lighten-1" repeticao="5" >&emsp;</button>
+                        <button type="button" value="16206007" value2="16740495" class="btn-floating btn-large waves-effect waves-light purple darken-3" repeticao="5" >&emsp;</button>
+                        <button type="button" value="16238647" value2="16734375" class="btn-floating btn-large waves-effect waves-light grey" repeticao="5" >fade</button>
+                    </div>
+                    <div class="center-align margem-baixo-15">
+                        <button type="button" value="16197847" value2="16726215" class="btn-floating btn-large waves-effect waves-light yellow accent-1" repeticao="5" >&emsp;</button>
+                        <button type="button" value="16230487" value2="16722135" class="btn-floating btn-large waves-effect waves-light light-blue darken-2" repeticao="5" >&emsp;</button>
+                        <button type="button" value="16214167" value2="16773135" class="btn-floating btn-large waves-effect waves-light pink darken-4" repeticao="5" >&emsp;</button>
+                        <button type="button" value="16246807" value2="16724175" class="btn-floating btn-large waves-effect waves-light grey" repeticao="5" >smooth</button>
+                    </div>
+                    <div class="row"></div>
+                    <div class="row"></div>
+                    <div class="row"></div>
+                </div>
+            </div>
+            <!-- COZINHA -->
+            <!-- ESCADA -->
+            <div class="tabs-locais local-escada hide">
+                <div class="center-align margem-baixo-2">
+                    <button type="button" value="16187647" value2="16748655" class="btn-floating btn-large waves-effect waves-light grey" repeticao="5" >▲</button>
+                    <button type="button" value="16220287" value2="16758855" class="btn-floating btn-large waves-effect waves-light grey" repeticao="5" >▼</button>
+                    <button type="button" value="16203967" value2="16775175" class="btn-floating btn-large waves-effect waves-light grey darken-4" repeticao="5" >OFF</button>
+                    <button type="button" value="16236607" value2="16756815" class="btn-floating btn-large waves-effect waves-light red accent-4" repeticao="5" >ON</button>
+                </div>
+                <div class="center-align margem-baixo-2">
+                    <button type="button" value="16195807" value2="16750695" class="btn-floating btn-large waves-effect waves-light red" repeticao="5">&emsp;</button>
+                    <button type="button" value="16228447" value2="16767015" class="btn-floating btn-large waves-effect waves-light green" repeticao="5">&emsp;</button>
+                    <button type="button" value="16212127" value2="16746615" class="btn-floating btn-large waves-effect waves-light blue" repeticao="5">&emsp;</button>
+                    <button type="button" value="16244767" value2="16754775" class="btn-floating btn-large waves-effect waves-light white" repeticao="5">&emsp;</button>
+                </div>
+                <div class="center-align margem-baixo-2">
+                    <button type="button" value="16191727" value2="16771095" class="btn-floating btn-large waves-effect waves-light yellow darken-4" repeticao="5" >&emsp;</button>
+                    <button type="button" value="16224367" value2="16730295" class="btn-floating btn-large waves-effect waves-light light-green" repeticao="5" >&emsp;</button>
+                    <button type="button" value="16208047" value2="16738455" class="btn-floating btn-large waves-effect waves-light indigo" repeticao="5" >&emsp;</button>
+                    <button type="button" value="16240687" value2="16757325" class="btn-floating btn-large waves-effect waves-light grey" repeticao="5" >flash</button>
+                </div>
+                <div class="center-align margem-baixo-2">
+                    <button type="button" value="16199887" value2="16712445" class="btn-floating btn-large waves-effect waves-light yellow darken-3" repeticao="5" >&emsp;</button>
+                    <button type="button" value="16232527" value2="16724685" class="btn-floating btn-large waves-effect waves-light green accent-2" repeticao="5" >&emsp;</button>
+                    <button type="button" value="16216207" value2="16720095" class="btn-floating btn-large waves-effect waves-light purple darken-4" repeticao="5" >&emsp;</button>
+                    <button type="button" value="16248847" value2="16711935" class="btn-floating btn-large waves-effect waves-light grey" repeticao="5" >strobe</button>
+                </div>
+                <div class="center-align margem-baixo-2">
+                    <button type="button" value="16189687" value2="16732335" class="btn-floating btn-large waves-effect waves-light yellow accent-2" repeticao="5" >&emsp;</button>
+                    <button type="button" value="16222327" value2="16742535" class="btn-floating btn-large waves-effect waves-light cyan lighten-1" repeticao="5" >&emsp;</button>
+                    <button type="button" value="16206007" value2="16740495" class="btn-floating btn-large waves-effect waves-light purple darken-3" repeticao="5" >&emsp;</button>
+                    <button type="button" value="16238647" value2="16734375" class="btn-floating btn-large waves-effect waves-light grey" repeticao="5" >fade</button>
+                </div>
+                <div class="center-align margem-baixo-15">
+                    <button type="button" value="16197847" value2="16726215" class="btn-floating btn-large waves-effect waves-light yellow accent-1" repeticao="5" >&emsp;</button>
+                    <button type="button" value="16230487" value2="16722135" class="btn-floating btn-large waves-effect waves-light light-blue darken-2" repeticao="5" >&emsp;</button>
+                    <button type="button" value="16214167" value2="16773135" class="btn-floating btn-large waves-effect waves-light pink darken-4" repeticao="5" >&emsp;</button>
+                    <button type="button" value="16246807" value2="16724175" class="btn-floating btn-large waves-effect waves-light grey" repeticao="5" >smooth</button>
+                </div>
+            </div>
+            <!-- CRIANÇAS -->
+            <div class="tabs-locais local-criancas hide">
+                <div id="controle-sub" class="">
+                    <h6 class="titulo-controles">Surround sound</h6>
+                    <div class="center-align row">
+                        <button type="button" value="1587656775" class="btn-floating btn-large waves-effect waves-light red accent-4" repeticao="1" >On</button>
+                        <button type="button" value="1587640455" class="btn-floating btn-large waves-effect waves-light grey darken-4" repeticao="1" >Off</button>
+                        <button type="button" value="1587643260" class="btn-floating btn-large waves-effect waves-light grey" repeticao="1" >TV</button>
+                        <button type="button" value="1587652695" class="btn-floating btn-large waves-effect waves-light grey" repeticao="1" >AUX</button>
+                        
+                    </div>
+                    <div class="center-align row">
+                        <button type="button" value="1587664935" class="btn-floating btn-largeX waves-effect waves-light grey darken-3" repeticao="1" >Vol -</button>
+                        <button type="button" value="1587632295" class="btn-floating btn-largeX waves-effect waves-light grey darken-3" repeticao="1" >Vol +</button>
+                    </div>
+                </div>
+                <div id="controle-tv-sala" class="">
+                    <h6 class="titulo-controles">TV</h6>
+                    <div class="center-align row margem-baixo5">
+                        <button type="button" value="551489775" class="btn-floating btn-large waves-effect waves-light red accent-4" repeticao="1"><i class="material-icons">power_settings_new</i></button>
+                        <button type="button" value="551486205" class="btn-floating btn-largeX waves-effect waves-light grey darken-4" repeticao="1" >▲</button>
+                        <button type="button" value="551538735" class="btn-floating btn-large waves-effect waves-light grey" repeticao="1" >input</button>
+                    </div>
+                    <div class="center-align row margem-baixo5">
+                        <button type="button" value="551542815" class="btn-floating btn-largeX waves-effect waves-light grey darken-4" repeticao="1" >◄</button>
+                        <button type="button" value="551494365" class="btn-floating btn-largeX waves-effect waves-light grey darken-3" repeticao="1" >OK</button>
+                        <button type="button" value="551510175" class="btn-floating btn-largeX waves-effect waves-light grey darken-4" repeticao="1" >►</button>
+                    </div>
+                    <div class="center-align row margem-baixo5">
+                        <button type="button" value="551500740" class="btn-floating btn-large waves-effect waves-light grey" repeticao="1" >3D</button>
+                        <button type="button" value="551518845" class="btn-floating btn-largeX waves-effect waves-light grey darken-4" repeticao="1" >▼</button>
+                        <button type="button" value="551541285" class="btn-floating btn-large waves-effect waves-light grey" repeticao="1" >Exit</button>
+                    </div>
+                    <div class="center-align row margem-baixo5">
+                        <button type="button" value="551535165" value2="551527005" class="btn-floating btn-large waves-effect waves-light grey" repeticao="1" >Q.Menu</button>
+                        <button type="button" value="551501505" class="btn-floating btn-large waves-effect waves-light blue" repeticao="1" >Home</button>
+                        
+                        <button type="button" value="551490795" class="btn-floating btn-large waves-effect waves-light grey" repeticao="1" >Back</button>
+                    </div>
+                    
+                    <div class="center-align row margem-baixo5">
+                        <button type="button" value="551534655" class="btn-floating btn-largeX waves-effect waves-light grey darken-3" repeticao="1" >Vol -</button>
+                        <button type="button" value="551502015" class="btn-floating btn-largeX waves-effect waves-light grey darken-3" repeticao="1" >Vol +</button>
+                    </div>
+                    
+                    <div class="center-align row margem-baixo5">
+                        <button type="button" value="551489010" class="btn-floating btn-large waves-effect waves-light grey darken-2" repeticao="1" >►</button>
+                        <button type="button" value="551509410" class="btn-floating btn-large waves-effect waves-light grey darken-2" repeticao="1" >| |</button>
+                        <button type="button" value="551521650" class="btn-floating btn-large waves-effect waves-light grey darken-2" repeticao="1" >▀</button>
+                    </div>
+                    <div class="row"></div>
+                    <div class="row"></div>
+                    <div class="row"></div>
+                </div>
+            </div>
+            <!-- ESCRITORIO -->
+            <!-- CASAL -->
+            <!-- WC -->
+            <!-- EXTERNAS -->
+    </div>
+
+	<div id="menu-controles" class="content-menu hide">
             <h5 class="center-align">Controles</h5>
 
             <nav class="submenu-locais indigo darken-4">
@@ -198,7 +406,27 @@
     </div>    
 
     <div id="menu-configuracoes" class="content-menu hide">
-        <h5 class="">Configurações</h5>
+        <h5 class="center-align titulo-locais">Configurações</h5>
+        <div class="row">
+            <form class="col s12">
+
+
+              <div class="row">
+                <div class="input-field col s12">
+                  <input id="host1" type="text" value="192.168.15.46:8080" class="validate">
+                  <label for="host1">Host arduino baixo</label>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="input-field col s12">
+                  <input id="host2" type="text" value="192.168.15.88:8080" class="validate">
+                  <label for="host2">Host arduino alto</label>
+                </div>
+              </div>
+
+            </form>
+          </div>
     </div>   
 
 
