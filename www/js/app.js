@@ -1,6 +1,82 @@
+// example.js file
+// Wait for device API libraries to load
+//
 var repeticaoLed = "1"
 var localLed ="S";
 var localControle="S";
+var ondeEstou="S";
+var tipoConexao;
+
+function onLoad() {
+    document.addEventListener("deviceready", onDeviceReady, false);
+}
+
+// device APIs are available
+//
+function onDeviceReady() {
+    checkConnection();
+}
+
+
+
+function checkConnection() {
+    var networkState = navigator.connection.type;
+ 
+    var states = {};
+    states[Connection.UNKNOWN]  = 'Unknown connection'; //'Unknown connection';
+    states[Connection.ETHERNET] = 'Ethernet connection'; //'Ethernet connection';
+    states[Connection.WIFI]     = 'wifi'; //'WiFi connection';
+    states[Connection.CELL_2G]  = '2G'; //'Cell 2G connection';
+    states[Connection.CELL_3G]  = '3G'; //'Cell 3G connection';
+    states[Connection.CELL_4G]  = '4G'; //'Cell 4G connection';
+    states[Connection.CELL]     = 'generic connection'; //'Cell generic connection';
+    states[Connection.NONE]     = 'No network connection'; //'No network connection';
+    tipoConexao = states[networkState];
+ 
+    alert('Estou conectado por: ' + states[networkState]);
+}
+ 
+
+/* function getHost(local){
+    if(local != "S"){
+        if(tipoConexao == "wifi"){
+            var ipSend = $("#host2").val(); 
+        }else{
+            var ipSend = $("#host-ext2").val(); 
+        }
+    }else{
+        if(tipoConexao == "wifi"){
+            var ipSend = $("#host1").val(); 
+        }else{
+            var ipSend = $("#host-ext1").val(); 
+        }
+    }
+
+    return ipSend;
+ }*/
+
+ function getHost2(valor, repeticao, local){
+    if(local != "S"){
+        if(tipoConexao == "wifi"){
+            var ipSend = $("#host2").val(); 
+        }else{
+            var ipSend = $("#host-ext2").val(); 
+        }
+        var saida = "ir?codigo=" + valor + "&repeticao=" + repeticao + "&local=" + local;
+    }else{
+        if(tipoConexao == "wifi"){
+            var ipSend = $("#host1").val(); 
+        }else{
+            var ipSend = $("#host-ext1").val(); 
+        }
+        var saida = "ir?" + repeticao + valor + local;
+    }
+    var host="http://"+ipSend+"/"+saida;
+    return host;
+ }
+
+
+
 
 //inicializa bt do menu lateral
 $(".button-collapse").sideNav();
@@ -25,7 +101,12 @@ $('#menu-controles button').on('click', function() {
         //local= localControle
 
 
-        var ipSend = $("#host2").val(); //var ipSend = "192.168.0.88";
+        //var ipSend = $("#host2").val(); //var ipSend = "192.168.0.88";
+        if(tipoConexao == "wifi"){
+            var ipSend = $("#host2").val(); 
+        }else{
+            var ipSend = $("#host-ext2").val(); 
+        }
         var saida = "ir?codigo=" + $(this).val() + "&repeticao=" + $(this).attr('repeticao') + "&local=" + localControle;
     }else{
         //Saida Arduino Mega
@@ -35,7 +116,12 @@ $('#menu-controles button').on('click', function() {
         //local= localControle
 
 
-        var ipSend = $("#host1").val(); //var ipSend = "192.168.15.46:8080";
+        //var ipSend = $("#host1").val(); //var ipSend = "192.168.15.46:8080";
+        if(tipoConexao == "wifi"){
+            var ipSend = $("#host1").val(); 
+        }else{
+            var ipSend = $("#host-ext1").val(); 
+        }
         var saida = "ir?" + $(this).attr('repeticao') + $(this).val() + localControle;
     }
     
@@ -54,7 +140,12 @@ $('#menu-leds button').on('click', function() {
         //codigo = $(this).val()
         //repeticao = repeticaoLed
         //local= localLed
-         var ipSend = $("#host2").val(); //var ipSend = "192.168.0.88";
+        //var ipSend = $("#host2").val(); //var ipSend = "192.168.0.88";
+        if(tipoConexao == "wifi"){
+            var ipSend = $("#host2").val(); 
+        }else{
+            var ipSend = $("#host-ext2").val(); 
+        }
         var saida = "ir?codigo=" + $(this).val() + "&repeticao=" + $(this).attr('repeticao') + "&local=" + localLed;
     }else{
         //Saida Arduino Mega
@@ -62,7 +153,12 @@ $('#menu-leds button').on('click', function() {
         //repeticao =  $(this).attr('repeticao');
         //codigo = $(this).val()
         //local= localLed
-         var ipSend = $("#host1").val(); //var ipSend = "192.168.15.46:8080";
+        //var ipSend = $("#host1").val(); //var ipSend = "192.168.15.46:8080";
+        if(tipoConexao == "wifi"){
+            var ipSend = $("#host1").val(); 
+        }else{
+            var ipSend = $("#host-ext1").val(); 
+        }
         var saida = "ir?" + $(this).attr('repeticao') + $(this).val() + localLed;
     }
 
@@ -81,18 +177,27 @@ $('#menu-leds button').on('click', function() {
 
 
 $('#menu-por-locais button').on('click', function() {
+    //alert("Estou conectado por: "+tipoConexao);
+
     navigator.vibrate(20);
-    
-    if(localLed != "S"){
-        var ipSend = $("#host2").val(); //var ipSend = "192.168.0.88";
-        var saida = "ir?codigo=" + $(this).val() + "&repeticao=" + $(this).attr('repeticao') + "&local=" + localLed;
-    }else{
-        var ipSend = $("#host1").val(); //var ipSend = "192.168.15.46:8080";
-        var saida = "ir?" + $(this).attr('repeticao') + $(this).val() + localLed;
-    }
-    console.log(saida);
-    console.log("http://"+ipSend+"/"+saida);
-    $.post("http://"+ipSend+"/"+saida); 
+
+    /*    
+        if(ondeEstou != "S"){
+            var saida = "ir?codigo=" + $(this).val() + "&repeticao=" + $(this).attr('repeticao') + "&local=" + ondeEstou;
+        }else{
+            var saida = "ir?" + $(this).attr('repeticao') + $(this).val() + ondeEstou;
+        }
+        var hostSend = getHost(ondeEstou);
+        console.log(saida);
+        console.log("http://"+hostSend+"/"+saida);
+        $.post("http://"+hostSend+"/"+saida); 
+    */
+
+    var hostSend = getHost2($(this).val(), $(this).attr('repeticao'), ondeEstou);
+    console.log(hostSend);
+    $.post(hostSend);
+    alert(hostSend);
+
 });
 
 
@@ -228,42 +333,51 @@ $('.link-submenu-locais').on('click', function(){
     if($(this).text() === "Sala"){
         $(".local-sala").removeClass("hide");
         $(".titulo-locais").html("Sala");
-        localLed = "S";
-        console.log(localLed);
+        ondeEstou = "S";
+        console.log(ondeEstou);
     }
     if($(this).text() === "Escada"){
         $(".local-escada").removeClass("hide");
         $(".titulo-locais").html("Escada");
-        localLed = "E";
-        console.log(localLed);
+        ondeEstou = "E";
+        console.log(ondeEstou);
     }
     if($(this).text() === "Crianças"){
         $(".local-criancas").removeClass("hide");
         $(".titulo-locais").html("Quarto Crianças");
-        localLed = "K";
-        console.log(localLed);
+        ondeEstou = "K";
+        console.log(ondeEstou);
     }
     if($(this).text() === "Escritório"){
         $(".local-escritorio").removeClass("hide");
         $(".titulo-locais").html("Escritório");
-        localLed = "M";
-        console.log(localLed);
+        ondeEstou = "M";
+        console.log(ondeEstou);
     }
     if($(this).text() === "Casal"){
         $(".local-casal").removeClass("hide");
         $(".titulo-locais").html("Quarto Casal");
-        localLed = "C";
-        console.log(localLed);
+        ondeEstou = "C";
+        console.log(ondeEstou);
     }
 
     if($(this).text() === "Externas"){
         $(".local-externas").removeClass("hide");
         $(".titulo-locais").html("Áreas Externas");
-        localLed = "F";
-        console.log(localLed);
+        ondeEstou = "F";
+        console.log(ondeEstou);
         $(".swith-led").removeClass('hide');
     }else{
         $(".swith-led").addClass('hide');
     }
 
 });
+
+
+
+ 
+
+
+
+
+

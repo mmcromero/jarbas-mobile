@@ -82,6 +82,7 @@ background-color: #f2f2f2;
 
 .margem-baixo-2{margin-bottom: 2px !important;}
 .margem-baixo-4{margin-bottom: 4px !important;}
+.margem-baixo-5{margin-bottom: 5px !important;}
 .margem-baixo-6{margin-bottom: 6px !important;}
 .margem-baixo-8{margin-bottom: 8px !important;}
 .margem-baixo-10{margin-bottom: 10px !important;}
@@ -92,11 +93,9 @@ background-color: #f2f2f2;
     margin: 6px 35px;
     color: #030947;
 }
-/*.content-menu h5{
-    text-align: center;
-}*/
 
-.margem-baixo5{
-    margin-bottom: 5px !important;
+.linha-divisao{
+    border-bottom: 1px solid #ff9800;
+    margin: 20px;
+    color: #030947;
 }
-
