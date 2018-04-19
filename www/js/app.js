@@ -55,7 +55,7 @@ function checkConnection() {
     return ipSend;
  }*/
 
- function getHost2(valor, repeticao, local){
+function getHost(valor, repeticao, local){
     if(local != "S"){
         if(tipoConexao == "wifi"){
             var ipSend = $("#host2").val(); 
@@ -73,22 +73,16 @@ function checkConnection() {
     }
     var host="http://"+ipSend+"/"+saida;
     return host;
- }
-
-
-
+}
 
 //inicializa bt do menu lateral
 $(".button-collapse").sideNav();
-
 
 
 /*EVENTOS DE CLICK*/
 $('.lever').on('click', function(){
     navigator.vibrate(40);
 });
-
-
 
 $('#menu-controles button').on('click', function() {
     navigator.vibrate(20);
@@ -176,6 +170,8 @@ $('#menu-leds button').on('click', function() {
 
 
 
+
+
 $('#menu-por-locais button').on('click', function() {
     //alert("Estou conectado por: "+tipoConexao);
 
@@ -193,15 +189,12 @@ $('#menu-por-locais button').on('click', function() {
         $.post("http://"+hostSend+"/"+saida); 
     */
 
-    var hostSend = getHost2($(this).val(), $(this).attr('repeticao'), ondeEstou);
+    var hostSend = getHost($(this).val(), $(this).attr('repeticao'), ondeEstou);
     console.log(hostSend);
     $.post(hostSend);
-    alert(hostSend);
+    //alert(hostSend);
 
 });
-
-
-
 
 
 
