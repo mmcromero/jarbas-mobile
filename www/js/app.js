@@ -1,70 +1,49 @@
-// example.js file
-// Wait for device API libraries to load
-//
+/*DECLARAÇÃO DE VARIAVEIS*/
 var repeticaoLed = "1"
 var localLed ="S";
 var localControle="S";
 var ondeEstou="S";
 var tipoConexao;
 
+
+/*VERIFICA DISPONIBILIDADE DAS APIS DO DISPOSITIVO - INICIO*/
 function onLoad() {
-    document.addEventListener("deviceready", onDeviceReady, false);
+    document.addEventListener("deviceready", onDeviceReady, false);  
 }
 
 // device APIs are available
-//
 function onDeviceReady() {
-    checkConnection();
+    WifiInfo.getWifiInfo(success,err);
 }
+/*VERIFICA DISPONIBILIDADE DAS APIS DO DISPOSITIVO - FIM*/
 
 
-
-function checkConnection() {
-    var networkState = navigator.connection.type;
- 
-    var states = {};
-    states[Connection.UNKNOWN]  = 'Unknown connection'; //'Unknown connection';
-    states[Connection.ETHERNET] = 'Ethernet connection'; //'Ethernet connection';
-    states[Connection.WIFI]     = 'wifi'; //'WiFi connection';
-    states[Connection.CELL_2G]  = '2G'; //'Cell 2G connection';
-    states[Connection.CELL_3G]  = '3G'; //'Cell 3G connection';
-    states[Connection.CELL_4G]  = '4G'; //'Cell 4G connection';
-    states[Connection.CELL]     = 'generic connection'; //'Cell generic connection';
-    states[Connection.NONE]     = 'No network connection'; //'No network connection';
-    tipoConexao = states[networkState];
- 
-    alert('Estou conectado por: ' + states[networkState]);
-}
- 
-
-/* function getHost(local){
-    if(local != "S"){
-        if(tipoConexao == "wifi"){
-            var ipSend = $("#host2").val(); 
-        }else{
-            var ipSend = $("#host-ext2").val(); 
-        }
+function success(results) {
+    console.log(JSON.stringify(results));
+    //alert(results.SSID);
+    if(results.SSID == "\"Isengard\""){
+        tipoConexao = "interna";
     }else{
-        if(tipoConexao == "wifi"){
-            var ipSend = $("#host1").val(); 
-        }else{
-            var ipSend = $("#host-ext1").val(); 
-        }
+        tipoConexao = "externa";
     }
+};
+function err(e) {
+    console.log(JSON.stringify(e));
+};
 
-    return ipSend;
- }*/
 
 function getHost(valor, repeticao, local){
+    WifiInfo.getWifiInfo(success,err);
+    //alert(tipoConexao);
     if(local != "S"){
-        if(tipoConexao == "wifi"){
+        if(tipoConexao == "interna"){
             var ipSend = $("#host2").val(); 
         }else{
             var ipSend = $("#host-ext2").val(); 
         }
         var saida = "ir?codigo=" + valor + "&repeticao=" + repeticao + "&local=" + local;
     }else{
-        if(tipoConexao == "wifi"){
+        if(tipoConexao == "interna"){
             var ipSend = $("#host1").val(); 
         }else{
             var ipSend = $("#host-ext1").val(); 
@@ -173,38 +152,13 @@ $('#menu-leds button').on('click', function() {
 
 
 $('#menu-por-locais button').on('click', function() {
-    //alert("Estou conectado por: "+tipoConexao);
-
     navigator.vibrate(20);
-
-    /*    
-        if(ondeEstou != "S"){
-            var saida = "ir?codigo=" + $(this).val() + "&repeticao=" + $(this).attr('repeticao') + "&local=" + ondeEstou;
-        }else{
-            var saida = "ir?" + $(this).attr('repeticao') + $(this).val() + ondeEstou;
-        }
-        var hostSend = getHost(ondeEstou);
-        console.log(saida);
-        console.log("http://"+hostSend+"/"+saida);
-        $.post("http://"+hostSend+"/"+saida); 
-    */
 
     var hostSend = getHost($(this).val(), $(this).attr('repeticao'), ondeEstou);
     console.log(hostSend);
     $.post(hostSend);
     //alert(hostSend);
-
 });
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -296,9 +250,6 @@ $('.link-submenu-led').on('click', function(){
     }
 
 });
-
-
-
 
 
 
