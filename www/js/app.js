@@ -21,7 +21,7 @@ function onDeviceReady() {
 function success(results) {
     console.log(JSON.stringify(results));
     //alert(results.SSID);
-    if(results.SSID == "\"Isengard\""){
+    if(results.SSID == "\"Isengard\"" || results.SSID == "\"Fora-Temer-5G\"" || results.SSID == "\"Fora-Temer\""){
         tipoConexao = "interna";
     }else{
         tipoConexao = "externa";
@@ -40,13 +40,16 @@ function getHost(valor, repeticao, local){
             var ipSend = $("#host2").val(); 
         }else{
             var ipSend = $("#host-ext2").val(); 
+            //alert("envio externo"); 
+
         }
         var saida = "ir?codigo=" + valor + "&repeticao=" + repeticao + "&local=" + local;
     }else{
         if(tipoConexao == "interna"){
             var ipSend = $("#host1").val(); 
         }else{
-            var ipSend = $("#host-ext1").val(); 
+            var ipSend = $("#host-ext1").val();
+            //alert("envio externo"); 
         }
         var saida = "ir?" + repeticao + valor + local;
     }
