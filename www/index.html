@@ -412,39 +412,48 @@
         <div class="row">
             <form class="col s12">
 
-              <div class="linha-divisao">Rede Local</div>
+                <div class="linha-divisao">Rede Local</div>
 
-              <div class="row">
-                <div class="input-field col s12">
-                  <input id="host1" type="text" value="192.168.0.7:8087" class="validate">
-                  <label for="host1">Host arduino baixo</label>
+                <div class="row">
+                    <div class="input-field col s12">
+                      <input id="host1" type="text" value=" " class="validate">
+                      <label for="host1">Host arduino baixo</label>
+                    </div>
                 </div>
-              </div>
 
-              <div class="row">
-                <div class="input-field col s12">
-                  <input id="host2" type="text" value="192.168.0.8:8088" class="validate">
-                  <label for="host2">Host arduino alto</label>
+                <div class="row">
+                    <div class="input-field col s12">
+                      <input id="host2" type="text" value=" " class="validate">
+                      <label for="host2">Host arduino alto</label>
+                    </div>
                 </div>
-              </div>
 
-              <div class="linha-divisao">Rede Externa</div>
+                <div class="linha-divisao">Rede Externa</div>
 
-              <div class="row">
-                <div class="input-field col s12">
-                  <input id="host-ext1" type="text" value="romeropi.no-ip.org:8087" class="validate">
-                  <label for="host-ext1">Host arduino baixo</label>
+                <div class="row">
+                    <div class="input-field col s12">
+                      <input id="host-ext1" type="text" value=" " class="validate">
+                      <label for="host-ext1">Host arduino baixo</label>
+                    </div>
                 </div>
-              </div>
 
-              <div class="row">
-                <div class="input-field col s12">
-                  <input id="host-ext2" type="text" value="romeropi.no-ip.org:8088" class="validate">
-                  <label for="host-ext2">Host arduino alto</label>
+                <div class="row">
+                    <div class="input-field col s12">
+                      <input id="host-ext2" type="text" value=" " class="validate">
+                      <label for="host-ext2">Host arduino alto</label>
+                    </div>
                 </div>
-              </div>
+
+
+                
 
             </form>
+
+            <button id = "createFile">CREATE FILE</button>
+                <button id="writeFile">WRITE FILE</button>
+                <button id="readFile">READ FILE</button>
+                <button id="removeFile">DELETE FILE</button>
+                <textarea id="textarea"></textarea>
           </div>
     </div>   
 

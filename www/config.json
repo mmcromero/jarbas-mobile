@@ -1,0 +1,6 @@
+{
+	"host1": "192.168.0.7:8087",
+	"host_ext1": "romeropi.no-ip.org:8087",
+	"host2": "192.168.0.7:8088",
+	"host_ext2": "romeropi.no-ip.org:8088"
+}
