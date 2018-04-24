@@ -51,7 +51,7 @@
     <plugin name="cordova-plugin-statusbar" spec="^2.4.2" />
     <preference name="StatusBarBackgroundColor" value="#131953" />
     <plugin name="cordova-wifiinfo-plugin" spec="^0.1.0" />
+    <plugin name="cordova-plugin-file" spec="^6.0.1" />
     <engine name="android" spec="^7.0.0" />
     <engine name="browser" spec="^5.0.3" />
-    <plugin name="cordova-plugin-file" spec="^6.0.1" />
 </widget>

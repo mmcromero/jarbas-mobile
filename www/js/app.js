@@ -5,6 +5,9 @@ var localControle="S";
 var ondeEstou="S";
 var tipoConexao;
 
+function onErrorLoadFs(){
+        console.log("erro");
+    }
 
 /*VERIFICA DISPONIBILIDADE DAS APIS DO DISPOSITIVO - INICIO*/
 function onLoad() {
@@ -14,14 +17,30 @@ function onLoad() {
 // device APIs are available
 function onDeviceReady() {
     WifiInfo.getWifiInfo(success,err);
+    console.log(cordova.file);
+    
+
+
+localStorage.setItem('myKey', JSON.stringify({ my: 'data' }, null, '\t'));
+
+var data = localStorage.getItem('myKey');  
+if (data) {  
+    data = JSON.parse(data);
+    console.log(data);
+};
+
+
+
+
 }
 /*VERIFICA DISPONIBILIDADE DAS APIS DO DISPOSITIVO - FIM*/
+
 
 
 function success(results) {
     console.log(JSON.stringify(results));
     //alert(results.SSID);
-    if(results.SSID == "\"Isengard\"" || results.SSID == "\"Fora-Temer-5G\"" || results.SSID == "\"Fora-Temer\""){
+    if(results.SSID == "\"Isengard\"" || results.SSID == "\"Fora-Temer-5g\"" || results.SSID == "\"Fora-Temer\""){
         tipoConexao = "interna";
     }else{
         tipoConexao = "externa";
