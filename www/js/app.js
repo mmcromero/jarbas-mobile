@@ -15,6 +15,14 @@ function onLoad() {
 function onDeviceReady() {
     // wifi info
     WifiInfo.getWifiInfo(success,err);
+
+
+
+
+
+    writeToFile('config.json', { foo: 'bar' });
+
+
     
 
     //file manager
@@ -26,8 +34,71 @@ function onDeviceReady() {
     //This alias is a read-only pointer to the app itself
     window.resolveLocalFileSystemURL(cordova.file.applicationDirectory + "www/config.json", gotFile, fail);
 
+
+
+
+
+
+
+
+
+
 }
 /*VERIFICA DISPONIBILIDADE DAS APIS DO DISPOSITIVO - FIM*/
+
+function writeToFile(fileName, data) {
+    data = JSON.stringify(data, null, '\t');
+    window.resolveLocalFileSystemURL(cordova.file.externalApplicationStorageDirectory, function (directoryEntry) {
+        console.log("diretorio arquivo escrito: ");
+        console.dir(directoryEntry);
+        directoryEntry.getFile(fileName, { create: true }, function (fileEntry) {
+            fileEntry.createWriter(function (fileWriter) {
+                fileWriter.onwriteend = function (e) {
+                    // for real-world usage, you might consider passing a success callback
+                    console.log('Write of file "' + fileName + '"" completed.');
+                };
+
+                fileWriter.onerror = function (e) {
+                    // you could hook this up with our global error handler, or pass in an error callback
+                    console.log('Write failed: ' + e.toString());
+                };
+
+                var blob = new Blob([data], { type: 'text/plain' });
+                fileWriter.write(blob);
+            }, errorHandler.bind(null, fileName));
+        }, errorHandler.bind(null, fileName));
+    }, errorHandler.bind(null, fileName));
+}
+
+var errorHandler = function (fileName, e) {  
+    var msg = '';
+
+    switch (e.code) {
+        case FileError.QUOTA_EXCEEDED_ERR:
+            msg = 'Storage quota exceeded';
+            break;
+        case FileError.NOT_FOUND_ERR:
+            msg = 'File not found';
+            break;
+        case FileError.SECURITY_ERR:
+            msg = 'Security error';
+            break;
+        case FileError.INVALID_MODIFICATION_ERR:
+            msg = 'Invalid modification';
+            break;
+        case FileError.INVALID_STATE_ERR:
+            msg = 'Invalid state';
+            break;
+        default:
+            msg = 'Unknown error';
+            break;
+    };
+
+    console.log('Error (' + fileName + '): ' + msg);
+}
+
+
+
 
 
 
@@ -42,7 +113,6 @@ function gotFile(fileEntry) {
         var reader = new FileReader();
 
         reader.onloadend = function(e) {
-            //console.log("Text is: "+this.result);
             
             var obj = JSON.parse(this.result);
             console.log(obj);
@@ -63,123 +133,6 @@ function gotFile(fileEntry) {
 
 
 
-/*    
-    function createFile() {
-       var type = window.TEMPORARY;
-       var size = 5*1024*1024;
-       window.resolveLocalFileSystemURL(type, size, successCallback, errorCallback)
-
-       function successCallback(fs) {
-          fs.root.getFile('log.txt', {create: true, exclusive: true}, function(fileEntry) {
-             alert('File creation successfull!')
-          }, errorCallback);
-       }
-
-       function errorCallback(error) {
-          alert("ERROR: " + error.code)
-       }
-        
-    }
-
-
-    function writeFile() {
-       var type = window.TEMPORARY;
-       var size = 5*1024*1024;
-       window.resolveLocalFileSystemURL(type, size, successCallback, errorCallback)
-
-       function successCallback(fs) {
-          fs.root.getFile('log.txt', {create: true}, function(fileEntry) {
-
-             fileEntry.createWriter(function(fileWriter) {
-                fileWriter.onwriteend = function(e) {
-                   alert('Write completed.');
-                };
-
-                fileWriter.onerror = function(e) {
-                   alert('Write failed: ' + e.toString());
-                };
-
-                var blob = new Blob(['Lorem Ipsum'], {type: 'text/plain'});
-                fileWriter.write(blob);
-             }, errorCallback);
-          }, errorCallback);
-       }
-
-       function errorCallback(error) {
-          alert("ERROR: " + error.code)
-       }
-    }
-
-
-    function readFile() {
-       var type = window.TEMPORARY;
-       var size = 5*1024*1024;
-       window.resolveLocalFileSystemURL(type, size, successCallback, errorCallback)
-
-       function successCallback(fs) {
-          fs.root.getFile('log.txt', {}, function(fileEntry) {
-
-             fileEntry.file(function(file) {
-                var reader = new FileReader();
-
-                reader.onloadend = function(e) {
-                   var txtArea = document.getElementById('textarea');
-                   txtArea.value = this.result;
-                };
-                reader.readAsText(file);
-             }, errorCallback);
-          }, errorCallback);
-       }
-
-       function errorCallback(error) {
-          alert("ERROR: " + error.code)
-       }
-    }
-
-
-    function removeFile() {
-       var type = window.TEMPORARY;
-       var size = 5*1024*1024;
-       window.resolveLocalFileSystemURL(type, size, successCallback, errorCallback)
-
-       function successCallback(fs) {
-          fs.root.getFile('log.txt', {create: false}, function(fileEntry) {
-
-             fileEntry.remove(function() {
-                alert('File removed.');
-             }, errorCallback);
-          }, errorCallback);
-       }
-
-       function errorCallback(error) {
-          alert("ERROR: " + error.code)
-       }
-    }
-*/
-
-
-/*$('#createFile').on('click', function(){
-    console.log("click - bts - file manager");
-    createFile();
-});
-$('#writeFile').on('click', function(){
-    console.log("click - bts - file manager");
-    writeFile();
-});
-$('#readFile').on('click', function(){
-    console.log("click - bts - file manager");
-    readFile();
-});
-$('#removeFile').on('click', function(){
-    console.log("click - bts - file manager");
-    removeFile();
-});*/
-
-
-
-
-
-
 function success(results) {
     //console.log(JSON.stringify(results));
     console.log("######### Wifi - Info - Plugin #########")
@@ -193,6 +146,7 @@ function success(results) {
 
     //mac adress gi: A4-70-D6-E1-12-FC
     //ip cel gi: 192.168.0.16
+
 
 
     //alert(results.SSID);
