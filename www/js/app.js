@@ -4,6 +4,7 @@ var localLed ="S";
 var localControle="S";
 var ondeEstou="S";
 var tipoConexao;
+var fileDataConfig;
 
 
 /*VERIFICA DISPONIBILIDADE DAS APIS DO DISPOSITIVO - INICIO*/
@@ -16,40 +17,55 @@ function onDeviceReady() {
     // wifi info
     WifiInfo.getWifiInfo(success,err);
 
+    //writeToFile('config.json', { host1: '192.168.0.7:8087', host_ext1: "romeropi.no-ip.org:8087", host2: "192.168.0.8:8088", host_ext2: "romeropi.no-ip.org:8088" });
 
+    readFromFile('config.json', function (data) {
+        fileDataConfig = data;
 
-
-
-    writeToFile('config.json', { foo: 'bar' });
-
-
-    
-
-    //file manager
-    //console.log(cordova.file.applicationDirectory); 
-    window.resolveLocalFileSystemURL(cordova.file.applicationDirectory, function(f) {
-        console.dir(f);
-    }, fail);
-
-    //This alias is a read-only pointer to the app itself
-    window.resolveLocalFileSystemURL(cordova.file.applicationDirectory + "www/config.json", gotFile, fail);
-
-
-
-
-
-
-
-
-
-
+        //preenche os campos
+        $("#host1").val(fileDataConfig.host1);
+        $("#host-ext1").val(fileDataConfig.host_ext1);
+        $("#host2").val(fileDataConfig.host2);
+        $("#host-ext2").val(fileDataConfig.host_ext2);
+        $("#textarea").val(fileDataConfig);
+        console.log(fileDataConfig)
+    });
 }
 /*VERIFICA DISPONIBILIDADE DAS APIS DO DISPOSITIVO - FIM*/
+
+function salvaConfig(){
+    var host1 = $("#host1").val();
+    var host2 = $("#host2").val();
+    var host_ext1 = $("#host-ext1").val();
+    var host_ext2 = $("#host-ext2").val();
+    writeToFile('config.json', { host1: host1, host_ext1: host_ext1, host2: host2, host_ext2: host_ext2 });
+    alert("Configurações Salvas");
+
+    //volta pra tela inicial
+    $(".content-menu").addClass("hide");
+    $("#menu-por-locais").removeClass("hide");
+    $('.button-collapse').sideNav('hide');
+    //var elem = document.querySelector('.modal');
+    //var instance = M.Modal.init(elem, options);
+    //instance.open();
+}
+
+function readFromFile(fileName, cb) {
+    var pathToFile = cordova.file.externalApplicationStorageDirectory + fileName;
+    window.resolveLocalFileSystemURL(pathToFile, function (fileEntry) {
+        fileEntry.file(function (file) {
+            var reader = new FileReader();
+            reader.onloadend = function (e) {
+                cb(JSON.parse(this.result));
+            };
+            reader.readAsText(file);
+        }, errorHandler.bind(null, fileName));
+    }, errorHandler.bind(null, fileName));
+}
 
 function writeToFile(fileName, data) {
     data = JSON.stringify(data, null, '\t');
     window.resolveLocalFileSystemURL(cordova.file.externalApplicationStorageDirectory, function (directoryEntry) {
-        console.log("diretorio arquivo escrito: ");
         console.dir(directoryEntry);
         directoryEntry.getFile(fileName, { create: true }, function (fileEntry) {
             fileEntry.createWriter(function (fileWriter) {
@@ -98,41 +114,7 @@ var errorHandler = function (fileName, e) {
 }
 
 
-
-
-
-
-function fail(e) {
-    console.log("FileSystem Error");
-    console.dir(e);
-}
-
-function gotFile(fileEntry) {
-
-    fileEntry.file(function(file) {
-        var reader = new FileReader();
-
-        reader.onloadend = function(e) {
-            
-            var obj = JSON.parse(this.result);
-            console.log(obj);
-
-            //preenche os campos
-            $("#host1").val(obj.host1);
-            $("#host-ext1").val(obj.host_ext1);
-            $("#host2").val(obj.host2);
-            $("#host-ext2").val(obj.host_ext2);
-            $("#textarea").val(this.result);
-
-        }
-
-        reader.readAsText(file);
-    });
-
-}
-
-
-
+//-----------------------------------------------------------------
 function success(results) {
     //console.log(JSON.stringify(results));
     console.log("######### Wifi - Info - Plugin #########")
@@ -147,9 +129,6 @@ function success(results) {
     //mac adress gi: A4-70-D6-E1-12-FC
     //ip cel gi: 192.168.0.16
 
-
-
-    //alert(results.SSID);
     if(results.SSID == "\"Isengard\"" || results.SSID == "\"Fora-Temer-5g\"" || results.SSID == "\"Fora-Temer\""){
         tipoConexao = "interna";
     }else{
@@ -159,18 +138,16 @@ function success(results) {
 function err(e) {
     console.log(JSON.stringify(e));
 };
-
+//---------------------------------------------------------------
 
 function getHost(valor, repeticao, local){
-    WifiInfo.getWifiInfo(success,err);
-    //alert(tipoConexao);
+    console.log(tipoConexao);
     if(local != "S"){
         if(tipoConexao == "interna"){
             var ipSend = $("#host2").val(); 
         }else{
             var ipSend = $("#host-ext2").val(); 
-            //alert("envio externo"); 
-
+            console.log("envio externo"); 
         }
         var saida = "ir?codigo=" + valor + "&repeticao=" + repeticao + "&local=" + local;
     }else{
@@ -178,7 +155,7 @@ function getHost(valor, repeticao, local){
             var ipSend = $("#host1").val(); 
         }else{
             var ipSend = $("#host-ext1").val();
-            //alert("envio externo"); 
+            console.log("envio externo"); 
         }
         var saida = "ir?" + repeticao + valor + local;
     }
@@ -284,12 +261,11 @@ $('#menu-leds button').on('click', function() {
 
 
 $('#menu-por-locais button').on('click', function() {
+    WifiInfo.getWifiInfo(success,err);
     navigator.vibrate(20);
-
     var hostSend = getHost($(this).val(), $(this).attr('repeticao'), ondeEstou);
     console.log(hostSend);
     $.post(hostSend);
-    //alert(hostSend);
 });
 
 
@@ -451,9 +427,9 @@ $('.link-submenu-locais').on('click', function(){
 
 
 
- 
-
-
+$('.bt-salvar').on('click', function(){
+    salvaConfig();
+});
 
 
 
