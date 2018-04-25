@@ -412,42 +412,57 @@
         <div class="row">
             <form class="col s12">
 
-              <div class="linha-divisao">Rede Local</div>
+                <div class="linha-divisao">Rede Local</div>
 
-              <div class="row">
-                <div class="input-field col s12">
-                  <input id="host1" type="text" value="192.168.15.46:8080" class="validate">
-                  <label for="host1">Host arduino baixo</label>
+                <div class="row">
+                    <div class="input-field col s12">
+                      <input id="host1" type="text" value="192.168.0.7:8087" class="validate">
+                      <label for="host1">Host arduino baixo</label>
+                    </div>
                 </div>
-              </div>
 
-              <div class="row">
-                <div class="input-field col s12">
-                  <input id="host2" type="text" value="192.168.15.88:8080" class="validate">
-                  <label for="host2">Host arduino alto</label>
+                <div class="row">
+                    <div class="input-field col s12">
+                      <input id="host2" type="text" value="192.168.0.8:8088" class="validate">
+                      <label for="host2">Host arduino alto</label>
+                    </div>
                 </div>
-              </div>
 
-              <div class="linha-divisao">Rede Externa</div>
+                <div class="linha-divisao">Rede Externa</div>
 
-              <div class="row">
-                <div class="input-field col s12">
-                  <input id="host-ext1" type="text" value="romeropi.no-ip.org:8081" class="validate">
-                  <label for="host-ext1">Host arduino baixo</label>
+                <div class="row">
+                    <div class="input-field col s12">
+                      <input id="host-ext1" type="text" value="romeropi.no-ip.org:8087" class="validate">
+                      <label for="host-ext1">Host arduino baixo</label>
+                    </div>
                 </div>
-              </div>
 
-              <div class="row">
-                <div class="input-field col s12">
-                  <input id="host-ext2" type="text" value="romeropi.no-ip.org:8082" class="validate">
-                  <label for="host-ext2">Host arduino alto</label>
+                <div class="row">
+                    <div class="input-field col s12">
+                      <input id="host-ext2" type="text" value="romeropi.no-ip.org:8088" class="validate">
+                      <label for="host-ext2">Host arduino alto</label>
+                    </div>
                 </div>
-              </div>
+
+
+                
 
             </form>
+
+            <a class="waves-effect waves-light orange btn bt-salvar">salvar</a>
           </div>
     </div>   
 
+    <!-- Modal Structure -->
+    <!-- <div id="config" class="modal">
+        <div class="modal-content">
+            <h4>Modal Header</h4>
+            <p>A bunch of text</p>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+        </div>
+    </div> -->
 
     
     <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
