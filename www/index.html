@@ -413,14 +413,12 @@
             <form class="col s12">
 
                 <div class="linha-divisao">Rede Local</div>
-
                 <div class="row">
                     <div class="input-field col s12">
                       <input id="host1" type="text" value="192.168.0.7:8087" class="validate">
                       <label for="host1">Host arduino baixo</label>
                     </div>
                 </div>
-
                 <div class="row">
                     <div class="input-field col s12">
                       <input id="host2" type="text" value="192.168.0.8:8088" class="validate">
@@ -429,36 +427,72 @@
                 </div>
 
                 <div class="linha-divisao">Rede Externa</div>
-
-
-              <div class="row">
-                <div class="input-field col s12">
-                  <input id="host-ext1" type="text" value="" class="validate">
-                  <label for="host-ext1">Host arduino baixo</label>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="host-ext1" type="text" value="romeropi.no-ip.org:8087" class="validate">
+                        <label for="host-ext1">Host arduino baixo</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="host-ext2" type="text" value="romeropi.no-ip.org:8088" class="validate">
+                        <label for="host-ext2">Host arduino alto</label>
+                    </div>
                 </div>
 
-              <div class="row">
-                <div class="input-field col s12">
-                  <input id="host-ext2" type="text" value="" class="validate">
-                  <label for="host-ext2">Host arduino alto</label>
-                </div>
-                
             </form>
 
             <a class="waves-effect waves-light orange btn bt-salvar">salvar</a>
-          </div>
+        </div>
     </div>   
 
     <!-- Modal Structure -->
-    <!-- <div id="config" class="modal">
+    <div id="configInit" class="modal modal-fixed-footer">
         <div class="modal-content">
-            <h4>Modal Header</h4>
-            <p>A bunch of text</p>
+            <h5>Configuração inicial</h5>
+            <p>Não foi localizada as informações de hosts, informe-as nos campos a baixo.</p>
+
+            <ul class="collapsible expandable">
+                <li class="active">
+                  <div class="collapsible-header orange-text"><i class="material-icons">filter_drama</i>Rede local</div>
+                  <div class="collapsible-body">
+                    <div class="row">
+                        <div class="input-field col s12">
+                          <input id="host1-init" type="text" value="192.168.0.7:8087" class="validate">
+                          <label for="host1-init">Host arduino baixo</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                          <input id="host2-init" type="text" value="192.168.0.8:8088" class="validate">
+                          <label for="host2-init">Host arduino alto</label>
+                        </div>
+                    </div>
+                  </div>
+                </li>
+                <li>
+                  <div class="collapsible-header orange-text"><i class="material-icons">filter_drama</i>Rede externa</div>
+                  <div class="collapsible-body">
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input id="host-ext1-init" type="text" value=" " class="validate">
+                            <label for="host-ext1-init">Host arduino baixo</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input id="host-ext2-init" type="text" value=" " class="validate">
+                            <label for="host-ext2-init">Host arduino alto</label>
+                        </div>
+                    </div>
+                  </div>
+                </li>
+            </ul>
         </div>
         <div class="modal-footer">
-            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+          <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat orange white-text">Salvar</a>
         </div>
-    </div> -->
+    </div>
 
     
     <script type="text/javascript" charset="utf-8" src="cordova.js"></script>

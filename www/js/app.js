@@ -9,6 +9,7 @@ var fileDataConfig;
 
 /*VERIFICA DISPONIBILIDADE DAS APIS DO DISPOSITIVO - INICIO*/
 function onLoad() {
+    $("#configInit").openModal();
     document.addEventListener("deviceready", onDeviceReady, false);  
 }
 
@@ -27,7 +28,6 @@ function onDeviceReady() {
         $("#host-ext1").val(fileDataConfig.host_ext1);
         $("#host2").val(fileDataConfig.host2);
         $("#host-ext2").val(fileDataConfig.host_ext2);
-        $("#textarea").val(fileDataConfig);
         console.log(fileDataConfig)
     });
 }
@@ -45,9 +45,7 @@ function salvaConfig(){
     $(".content-menu").addClass("hide");
     $("#menu-por-locais").removeClass("hide");
     $('.button-collapse').sideNav('hide');
-    //var elem = document.querySelector('.modal');
-    //var instance = M.Modal.init(elem, options);
-    //instance.open();
+
 }
 
 function readFromFile(fileName, cb) {
