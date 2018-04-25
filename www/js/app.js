@@ -4,6 +4,7 @@ var localLed ="S";
 var localControle="S";
 var ondeEstou="S";
 var tipoConexao;
+var fileDataConfig;
 
 
 /*VERIFICA DISPONIBILIDADE DAS APIS DO DISPOSITIVO - INICIO*/
@@ -13,15 +14,122 @@ function onLoad() {
 
 // device APIs are available
 function onDeviceReady() {
+    // wifi info
     WifiInfo.getWifiInfo(success,err);
+
+    //writeToFile('config.json', { host1: '192.168.0.7:8087', host_ext1: "romeropi.no-ip.org:8087", host2: "192.168.0.8:8088", host_ext2: "romeropi.no-ip.org:8088" });
+
+    readFromFile('config.json', function (data) {
+        fileDataConfig = data;
+
+        //preenche os campos
+        $("#host1").val(fileDataConfig.host1);
+        $("#host-ext1").val(fileDataConfig.host_ext1);
+        $("#host2").val(fileDataConfig.host2);
+        $("#host-ext2").val(fileDataConfig.host_ext2);
+        $("#textarea").val(fileDataConfig);
+        console.log(fileDataConfig)
+    });
 }
 /*VERIFICA DISPONIBILIDADE DAS APIS DO DISPOSITIVO - FIM*/
 
+function salvaConfig(){
+    var host1 = $("#host1").val();
+    var host2 = $("#host2").val();
+    var host_ext1 = $("#host-ext1").val();
+    var host_ext2 = $("#host-ext2").val();
+    writeToFile('config.json', { host1: host1, host_ext1: host_ext1, host2: host2, host_ext2: host_ext2 });
+    alert("Configurações Salvas");
 
+    //volta pra tela inicial
+    $(".content-menu").addClass("hide");
+    $("#menu-por-locais").removeClass("hide");
+    $('.button-collapse').sideNav('hide');
+    //var elem = document.querySelector('.modal');
+    //var instance = M.Modal.init(elem, options);
+    //instance.open();
+}
+
+function readFromFile(fileName, cb) {
+    var pathToFile = cordova.file.externalApplicationStorageDirectory + fileName;
+    window.resolveLocalFileSystemURL(pathToFile, function (fileEntry) {
+        fileEntry.file(function (file) {
+            var reader = new FileReader();
+            reader.onloadend = function (e) {
+                cb(JSON.parse(this.result));
+            };
+            reader.readAsText(file);
+        }, errorHandler.bind(null, fileName));
+    }, errorHandler.bind(null, fileName));
+}
+
+function writeToFile(fileName, data) {
+    data = JSON.stringify(data, null, '\t');
+    window.resolveLocalFileSystemURL(cordova.file.externalApplicationStorageDirectory, function (directoryEntry) {
+        console.dir(directoryEntry);
+        directoryEntry.getFile(fileName, { create: true }, function (fileEntry) {
+            fileEntry.createWriter(function (fileWriter) {
+                fileWriter.onwriteend = function (e) {
+                    // for real-world usage, you might consider passing a success callback
+                    console.log('Write of file "' + fileName + '"" completed.');
+                };
+
+                fileWriter.onerror = function (e) {
+                    // you could hook this up with our global error handler, or pass in an error callback
+                    console.log('Write failed: ' + e.toString());
+                };
+
+                var blob = new Blob([data], { type: 'text/plain' });
+                fileWriter.write(blob);
+            }, errorHandler.bind(null, fileName));
+        }, errorHandler.bind(null, fileName));
+    }, errorHandler.bind(null, fileName));
+}
+
+var errorHandler = function (fileName, e) {  
+    var msg = '';
+
+    switch (e.code) {
+        case FileError.QUOTA_EXCEEDED_ERR:
+            msg = 'Storage quota exceeded';
+            break;
+        case FileError.NOT_FOUND_ERR:
+            msg = 'File not found';
+            break;
+        case FileError.SECURITY_ERR:
+            msg = 'Security error';
+            break;
+        case FileError.INVALID_MODIFICATION_ERR:
+            msg = 'Invalid modification';
+            break;
+        case FileError.INVALID_STATE_ERR:
+            msg = 'Invalid state';
+            break;
+        default:
+            msg = 'Unknown error';
+            break;
+    };
+
+    console.log('Error (' + fileName + '): ' + msg);
+}
+
+
+//-----------------------------------------------------------------
 function success(results) {
-    console.log(JSON.stringify(results));
-    //alert(results.SSID);
-    if(results.SSID == "\"Isengard\"" || results.SSID == "\"Fora-Temer-5G\"" || results.SSID == "\"Fora-Temer\""){
+    //console.log(JSON.stringify(results));
+    console.log("######### Wifi - Info - Plugin #########")
+    console.log("SSID: "+results.SSID);
+    console.log("IpAddress: "+results.IpAddress);
+    console.log("MacAddress: "+results.MacAddress);
+    console.log("")
+
+    //mac adress meu cel: F0-D7-AA-E4-BD-B1
+    //ip meu cel: 192.168.0.11
+
+    //mac adress gi: A4-70-D6-E1-12-FC
+    //ip cel gi: 192.168.0.16
+
+    if(results.SSID == "\"Isengard\"" || results.SSID == "\"Fora-Temer-5g\"" || results.SSID == "\"Fora-Temer\""){
         tipoConexao = "interna";
     }else{
         tipoConexao = "externa";
@@ -30,18 +138,16 @@ function success(results) {
 function err(e) {
     console.log(JSON.stringify(e));
 };
-
+//---------------------------------------------------------------
 
 function getHost(valor, repeticao, local){
-    WifiInfo.getWifiInfo(success,err);
-    //alert(tipoConexao);
+    console.log(tipoConexao);
     if(local != "S"){
         if(tipoConexao == "interna"){
             var ipSend = $("#host2").val(); 
         }else{
             var ipSend = $("#host-ext2").val(); 
-            //alert("envio externo"); 
-
+            console.log("envio externo"); 
         }
         var saida = "ir?codigo=" + valor + "&repeticao=" + repeticao + "&local=" + local;
     }else{
@@ -49,7 +155,7 @@ function getHost(valor, repeticao, local){
             var ipSend = $("#host1").val(); 
         }else{
             var ipSend = $("#host-ext1").val();
-            //alert("envio externo"); 
+            console.log("envio externo"); 
         }
         var saida = "ir?" + repeticao + valor + local;
     }
@@ -155,12 +261,11 @@ $('#menu-leds button').on('click', function() {
 
 
 $('#menu-por-locais button').on('click', function() {
+    WifiInfo.getWifiInfo(success,err);
     navigator.vibrate(20);
-
     var hostSend = getHost($(this).val(), $(this).attr('repeticao'), ondeEstou);
     console.log(hostSend);
     $.post(hostSend);
-    //alert(hostSend);
 });
 
 
@@ -322,9 +427,9 @@ $('.link-submenu-locais').on('click', function(){
 
 
 
- 
-
-
+$('.bt-salvar').on('click', function(){
+    salvaConfig();
+});
 
 
 
