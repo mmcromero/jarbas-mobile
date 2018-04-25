@@ -17,8 +17,6 @@ function onDeviceReady() {
     // wifi info
     WifiInfo.getWifiInfo(success,err);
 
-    //writeToFile('config.json', { host1: '192.168.0.7:8087', host_ext1: "romeropi.no-ip.org:8087", host2: "192.168.0.8:8088", host_ext2: "romeropi.no-ip.org:8088" });
-
     readFromFile('config.json', function (data) {
         fileDataConfig = data;
 
@@ -27,27 +25,29 @@ function onDeviceReady() {
         $("#host-ext1").val(fileDataConfig.host_ext1);
         $("#host2").val(fileDataConfig.host2);
         $("#host-ext2").val(fileDataConfig.host_ext2);
-        $("#textarea").val(fileDataConfig);
         console.log(fileDataConfig)
+        console.log("preenche as info");
     });
 }
 /*VERIFICA DISPONIBILIDADE DAS APIS DO DISPOSITIVO - FIM*/
 
-function salvaConfig(){
-    var host1 = $("#host1").val();
-    var host2 = $("#host2").val();
-    var host_ext1 = $("#host-ext1").val();
-    var host_ext2 = $("#host-ext2").val();
+function salvaConfig(tipo){
+    if(tipo == "init"){
+        var host1 = $("#host1-init").val();
+        var host2 = $("#host2-init").val();
+        var host_ext1 = $("#host-ext1-init").val();
+        var host_ext2 = $("#host-ext2-init").val();
+        var $toastContent = '<span>Configurações iniciais salvas</span>';
+    }else{
+        var host1 = $("#host1").val();
+        var host2 = $("#host2").val();
+        var host_ext1 = $("#host-ext1").val();
+        var host_ext2 = $("#host-ext2").val();
+        var $toastContent = '<span>Configurações Salvas</span>';
+    }
+    
     writeToFile('config.json', { host1: host1, host_ext1: host_ext1, host2: host2, host_ext2: host_ext2 });
-    alert("Configurações Salvas");
-
-    //volta pra tela inicial
-    $(".content-menu").addClass("hide");
-    $("#menu-por-locais").removeClass("hide");
-    $('.button-collapse').sideNav('hide');
-    //var elem = document.querySelector('.modal');
-    //var instance = M.Modal.init(elem, options);
-    //instance.open();
+    Materialize.toast($toastContent, 3000);
 }
 
 function readFromFile(fileName, cb) {
@@ -72,6 +72,7 @@ function writeToFile(fileName, data) {
                 fileWriter.onwriteend = function (e) {
                     // for real-world usage, you might consider passing a success callback
                     console.log('Write of file "' + fileName + '"" completed.');
+                    console.log(data);
                 };
 
                 fileWriter.onerror = function (e) {
@@ -95,6 +96,7 @@ var errorHandler = function (fileName, e) {
             break;
         case FileError.NOT_FOUND_ERR:
             msg = 'File not found';
+            $("#configInit").openModal();
             break;
         case FileError.SECURITY_ERR:
             msg = 'Security error';
@@ -252,14 +254,6 @@ $('#menu-leds button').on('click', function() {
 
 
 
-
-
-
-
-
-
-
-
 $('#menu-por-locais button').on('click', function() {
     WifiInfo.getWifiInfo(success,err);
     navigator.vibrate(20);
@@ -267,7 +261,6 @@ $('#menu-por-locais button').on('click', function() {
     console.log(hostSend);
     $.post(hostSend);
 });
-
 
 
 $('.bt-menu-lateral').on('click', function(){
@@ -297,9 +290,7 @@ $('.bt-menu-lateral').on('click', function(){
         console.log("menu tomadas");
     }
     if($(this).hasClass("menu-configuracoes")){
-        $(".content-menu").addClass("hide");
-        $("#menu-configuracoes").removeClass("hide");
-        console.log("menu configuracoes");
+        $("#config").openModal();
     }
     navigator.vibrate(30);
 });
@@ -430,6 +421,8 @@ $('.link-submenu-locais').on('click', function(){
 $('.bt-salvar').on('click', function(){
     salvaConfig();
 });
-
+$('.bt-salvar-init').on('click', function(){
+    salvaConfig("init");
+});
 
 

@@ -6027,7 +6027,7 @@ a.waves-effect .waves-ripple {
   right: 0;
   background-color: #fafafa;
   padding: 0;
-  max-height: 70%;
+  max-height: 85%;
   width: 55%;
   margin: auto;
   overflow-y: auto;
@@ -6035,7 +6035,7 @@ a.waves-effect .waves-ripple {
   will-change: top, opacity; }
   @media only screen and (max-width : 992px) {
     .modal {
-      width: 80%; } }
+      width: 90%; } }
   .modal h1, .modal h2, .modal h3, .modal h4 {
     margin-top: 0; }
   .modal .modal-content {
@@ -6067,7 +6067,7 @@ a.waves-effect .waves-ripple {
 
 .modal.modal-fixed-footer {
   padding: 0;
-  height: 70%; }
+  height: 85%; }
   .modal.modal-fixed-footer .modal-content {
     position: absolute;
     height: calc(100% - 56px);
