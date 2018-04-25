@@ -17,6 +17,12 @@ function onDeviceReady() {
     // wifi info
     WifiInfo.getWifiInfo(success,err);
 
+    lerArquivoConfig();
+
+}
+/*VERIFICA DISPONIBILIDADE DAS APIS DO DISPOSITIVO - FIM*/
+
+function lerArquivoConfig(){
     readFromFile('config.json', function (data) {
         fileDataConfig = data;
 
@@ -29,7 +35,6 @@ function onDeviceReady() {
         console.log("preenche as info");
     });
 }
-/*VERIFICA DISPONIBILIDADE DAS APIS DO DISPOSITIVO - FIM*/
 
 function salvaConfig(tipo){
     if(tipo == "init"){
@@ -290,6 +295,7 @@ $('.bt-menu-lateral').on('click', function(){
         console.log("menu tomadas");
     }
     if($(this).hasClass("menu-configuracoes")){
+        lerArquivoConfig();
         $("#config").openModal();
     }
     navigator.vibrate(30);
