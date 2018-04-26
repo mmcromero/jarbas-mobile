@@ -59,7 +59,7 @@ function salvaConfig(tipo){
 }
 
 function readFromFile(fileName, cb) {
-    var pathToFile = cordova.file.externalDataDirectory + fileName;
+    var pathToFile = cordova.file.dataDirectory  + fileName;
     window.resolveLocalFileSystemURL(pathToFile, function (fileEntry) {
         fileEntry.file(function (file) {
             var reader = new FileReader();
@@ -73,7 +73,7 @@ function readFromFile(fileName, cb) {
 
 function writeToFile(fileName, data) {
     data = JSON.stringify(data, null, '\t');
-    window.resolveLocalFileSystemURL(cordova.file.externalDataDirectory, function (directoryEntry) {
+    window.resolveLocalFileSystemURL(cordova.file.dataDirectory , function (directoryEntry) {
         console.dir(directoryEntry);
         directoryEntry.getFile(fileName, { create: true }, function (fileEntry) {
             fileEntry.createWriter(function (fileWriter) {
