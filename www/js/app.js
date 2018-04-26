@@ -23,6 +23,7 @@ function onDeviceReady() {
 /*VERIFICA DISPONIBILIDADE DAS APIS DO DISPOSITIVO - FIM*/
 
 function lerArquivoConfig(){
+    console.log("tenta ler arquivo config...");
     readFromFile('config.json', function (data) {
         fileDataConfig = data;
 
@@ -50,9 +51,11 @@ function salvaConfig(tipo){
         var host_ext2 = $("#host-ext2").val();
         var $toastContent = '<span>Configurações Salvas</span>';
     }
-    
+    console.log("tenta salvar");
     writeToFile('config.json', { host1: host1, host_ext1: host_ext1, host2: host2, host_ext2: host_ext2 });
+    console.log("salvou???");
     Materialize.toast($toastContent, 3000);
+    lerArquivoConfig();
 }
 
 function readFromFile(fileName, cb) {
@@ -118,6 +121,7 @@ var errorHandler = function (fileName, e) {
     };
 
     console.log('Error (' + fileName + '): ' + msg);
+    alert('Error (' + fileName + '): ' + msg);
 }
 
 
@@ -149,6 +153,7 @@ function err(e) {
 
 function getHost(valor, repeticao, local){
     console.log(tipoConexao);
+    alert("tipoConexao: "+tipoConexao);
     if(local != "S"){
         if(tipoConexao == "interna"){
             var ipSend = $("#host2").val(); 
