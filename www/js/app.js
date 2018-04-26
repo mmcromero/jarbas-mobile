@@ -59,7 +59,7 @@ function salvaConfig(tipo){
 }
 
 function readFromFile(fileName, cb) {
-    var pathToFile = cordova.file.externalApplicationStorageDirectory + fileName;
+    var pathToFile = cordova.file.externalDataDirectory + fileName;
     window.resolveLocalFileSystemURL(pathToFile, function (fileEntry) {
         fileEntry.file(function (file) {
             var reader = new FileReader();
@@ -73,7 +73,7 @@ function readFromFile(fileName, cb) {
 
 function writeToFile(fileName, data) {
     data = JSON.stringify(data, null, '\t');
-    window.resolveLocalFileSystemURL(cordova.file.externalApplicationStorageDirectory, function (directoryEntry) {
+    window.resolveLocalFileSystemURL(cordova.file.externalDataDirectory, function (directoryEntry) {
         console.dir(directoryEntry);
         directoryEntry.getFile(fileName, { create: true }, function (fileEntry) {
             fileEntry.createWriter(function (fileWriter) {
@@ -121,7 +121,7 @@ var errorHandler = function (fileName, e) {
     };
 
     console.log('Error (' + fileName + '): ' + msg);
-    alert('Error (' + fileName + '): ' + msg);
+
 }
 
 
@@ -153,7 +153,6 @@ function err(e) {
 
 function getHost(valor, repeticao, local){
     console.log(tipoConexao);
-    alert("tipoConexao: "+tipoConexao);
     if(local != "S"){
         if(tipoConexao == "interna"){
             var ipSend = $("#host2").val(); 
