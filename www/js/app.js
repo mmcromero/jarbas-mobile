@@ -3,8 +3,9 @@ var repeticaoLed = "1"
 var localLed ="S";
 var localControle="S";
 var ondeEstou="S";
-var tipoConexao;
+var tipoConexao ="interna";
 var fileDataConfig;
+var tipoUser=0;
 
 
 /*VERIFICA DISPONIBILIDADE DAS APIS DO DISPOSITIVO - INICIO*/
@@ -14,16 +15,21 @@ function onLoad() {
 
 // device APIs are available
 function onDeviceReady() {
-    // wifi info
-    WifiInfo.getWifiInfo(success,err);
+    /*
+    ####FLUXO
+    -leio json de config
+        se não existe 
+            -verifico se é um despositivo conhecido
+    -verifico tipo de conexão
+    */
 
     lerArquivoConfig();
-
+    window.plugins.uniqueDeviceID.get(successId, failId);
 }
 /*VERIFICA DISPONIBILIDADE DAS APIS DO DISPOSITIVO - FIM*/
 
 function lerArquivoConfig(){
-    console.log("tenta ler arquivo config...");
+    console.log("carregando arquivo de config...");
     readFromFile('config.json', function (data) {
         fileDataConfig = data;
 
@@ -33,10 +39,21 @@ function lerArquivoConfig(){
         $("#host2").val(fileDataConfig.host2);
         $("#host-ext2").val(fileDataConfig.host_ext2);
         console.log(fileDataConfig)
-        console.log("preenche as info");
+        console.log("arquivo carregado..");
     });
 }
-
+function readFromFile(fileName, cb) {
+    var pathToFile = cordova.file.dataDirectory  + fileName;
+    window.resolveLocalFileSystemURL(pathToFile, function (fileEntry) {
+        fileEntry.file(function (file) {
+            var reader = new FileReader();
+            reader.onloadend = function (e) {
+                cb(JSON.parse(this.result));
+            };
+            reader.readAsText(file);
+        }, errorHandler.bind(null, fileName));
+    }, errorHandler.bind(null, fileName));
+}
 function salvaConfig(tipo){
     if(tipo == "init"){
         var host1 = $("#host1-init").val();
@@ -57,20 +74,6 @@ function salvaConfig(tipo){
     Materialize.toast($toastContent, 3000);
     lerArquivoConfig();
 }
-
-function readFromFile(fileName, cb) {
-    var pathToFile = cordova.file.dataDirectory  + fileName;
-    window.resolveLocalFileSystemURL(pathToFile, function (fileEntry) {
-        fileEntry.file(function (file) {
-            var reader = new FileReader();
-            reader.onloadend = function (e) {
-                cb(JSON.parse(this.result));
-            };
-            reader.readAsText(file);
-        }, errorHandler.bind(null, fileName));
-    }, errorHandler.bind(null, fileName));
-}
-
 function writeToFile(fileName, data) {
     data = JSON.stringify(data, null, '\t');
     window.resolveLocalFileSystemURL(cordova.file.dataDirectory , function (directoryEntry) {
@@ -78,7 +81,7 @@ function writeToFile(fileName, data) {
         directoryEntry.getFile(fileName, { create: true }, function (fileEntry) {
             fileEntry.createWriter(function (fileWriter) {
                 fileWriter.onwriteend = function (e) {
-                    // for real-world usage, you might consider passing a success callback
+                    // for real-world usage, you might consider passing a successs callback
                     console.log('Write of file "' + fileName + '"" completed.');
                     console.log(data);
                 };
@@ -94,7 +97,6 @@ function writeToFile(fileName, data) {
         }, errorHandler.bind(null, fileName));
     }, errorHandler.bind(null, fileName));
 }
-
 var errorHandler = function (fileName, e) {  
     var msg = '';
 
@@ -123,31 +125,59 @@ var errorHandler = function (fileName, e) {
     console.log('Error (' + fileName + '): ' + msg);
 
 }
-
-
 //-----------------------------------------------------------------
-function success(results) {
-    //console.log(JSON.stringify(results));
-    console.log("######### Wifi - Info - Plugin #########")
-    console.log("SSID: "+results.SSID);
-    console.log("IpAddress: "+results.IpAddress);
-    console.log("MacAddress: "+results.MacAddress);
-    console.log("")
+function successId(uuid){
+    console.log("Id Device: "+uuid);
+    if(uuid == "e75ed4ac-a0bb-6777-3581-970754598108"){
+        console.log("Olá Marco !!!");
+        tipoUser=1;
+        alert("Olá Marco!");
+    }else if(uuid == "6cf00b78-5526-4cb6-3541-470711745118"){
+        console.log("Olá Gisele !!!");
+        tipoUser=1;
+        alert("Olá Gi! S2 S2 S2");
+    }else{
+        console.log("Olá visitante !!!");
+        tipoUser=0;
+        alert("Olá visitante, esse é um alert chato =P");
+    }
+    getWifiInfo();
+}
 
-    //mac adress meu cel: F0-D7-AA-E4-BD-B1
-    //ip meu cel: 192.168.0.11
-
-    //mac adress gi: A4-70-D6-E1-12-FC
-    //ip cel gi: 192.168.0.16
-
+function failId(erro){
+    console.log("Erro id: "+erro);
+    getWifiInfo();
+}
+//-----------------------------------------------------------------
+function getWifiInfo(){
+    WifiInfo.getWifiInfo(successWifiInfo,erroWifiInfo);
+}
+function successWifiInfo(results) {
     if(results.SSID == "\"Isengard\"" || results.SSID == "\"Fora-Temer-5g\"" || results.SSID == "\"Fora-Temer\""){
         tipoConexao = "interna";
     }else{
         tipoConexao = "externa";
     }
+
+    //console.log(JSON.stringify(results));
+    console.log("######### Wifi - Info - Plugin #########")
+    console.log("SSID: "+results.SSID);
+    console.log("IpAddress: "+results.IpAddress);
+    console.log("Tipo conexão : "+tipoConexao);
+
+
+    //mac adress meu cel: F0-D7-AA-E4-BD-B1
+    //ip meu cel: 192.168.0.11
+    //Id Device: e75ed4ac-a0bb-6777-3581-970754598108
+
+    //mac adress gi: A4-70-D6-E1-12-FC
+    //ip cel gi: 192.168.0.16
+    //Id Device: 6cf00b78-5526-4cb6-3541-470711745118
+
+    
 };
-function err(e) {
-    console.log(JSON.stringify(e));
+function erroWifiInfo(e) {
+    console.log("Erro na verificação de conexão: "+JSON.stringify(e));
 };
 //---------------------------------------------------------------
 
@@ -264,7 +294,6 @@ $('#menu-leds button').on('click', function() {
 
 
 $('#menu-por-locais button').on('click', function() {
-    WifiInfo.getWifiInfo(success,err);
     navigator.vibrate(20);
     var hostSend = getHost($(this).val(), $(this).attr('repeticao'), ondeEstou);
     console.log(hostSend);
