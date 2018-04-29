@@ -1,10 +1,23 @@
+
+//mac adress meu cel: F0-D7-AA-E4-BD-B1
+    //ip meu cel: 192.168.0.11
+    //Id Device: e75ed4ac-a0bb-6777-3581-970754598108
+
+    //mac adress gi: A4-70-D6-E1-12-FC
+    //ip cel gi: 192.168.0.16
+    //Id Device: 6cf00b78-5526-4cb6-3541-470711745118
+
+
+
+
 /*DECLARAÇÃO DE VARIAVEIS*/
 var repeticaoLed = "1"
 var localLed ="S";
 var localControle="S";
 var ondeEstou="S";
-var tipoConexao;
+var tipoConexao ="indefinida";
 var fileDataConfig;
+var tipoUser=0;
 
 
 /*VERIFICA DISPONIBILIDADE DAS APIS DO DISPOSITIVO - INICIO*/
@@ -14,29 +27,65 @@ function onLoad() {
 
 // device APIs are available
 function onDeviceReady() {
-    // wifi info
-    WifiInfo.getWifiInfo(success,err);
+    /*
+    ####FLUXO
+    -leio json de config
+        se não existe 
+            -verifico se é um despositivo conhecido
+    -verifico tipo de conexão
+    */
 
-    lerArquivoConfig();
+    getJsonConfiguracoes("full");
 
+/*    console.log("carregando arquivo de config...");
+    readFromFile('config.json', function (data) {
+        fileDataConfig = data;
+    });*/
+    
 }
 /*VERIFICA DISPONIBILIDADE DAS APIS DO DISPOSITIVO - FIM*/
 
-function lerArquivoConfig(){
-    console.log("tenta ler arquivo config...");
+function getJsonConfiguracoes(tipo){
+    console.log("carregando arquivo de config...");
     readFromFile('config.json', function (data) {
         fileDataConfig = data;
 
+        console.log("arquivo carregado..");
+         console.log(fileDataConfig)
+                
         //preenche os campos
         $("#host1").val(fileDataConfig.host1);
         $("#host-ext1").val(fileDataConfig.host_ext1);
         $("#host2").val(fileDataConfig.host2);
         $("#host-ext2").val(fileDataConfig.host_ext2);
-        console.log(fileDataConfig)
-        console.log("preenche as info");
-    });
+
+        if(tipo == "full"){
+                    console.log("tipo full");
+                    window.plugins.uniqueDeviceID.get(successId, failId);
+                }
+        
+    },tipo);
+    
 }
 
+
+function readFromFile(fileName, cb, tipo) {
+    var pathToFile = cordova.file.dataDirectory  + fileName;
+    window.resolveLocalFileSystemURL(pathToFile, function (fileEntry) {
+        fileEntry.file(function (file) {
+            var reader = new FileReader();
+            reader.onloadend = function (e) {
+                cb(JSON.parse(this.result),tipo);
+                
+
+               
+            };
+            reader.readAsText(file);
+        }, errorHandler.bind(null, fileName));
+    }, errorHandler.bind(null, fileName));
+    console.log("lendo json...");
+
+}
 function salvaConfig(tipo){
     if(tipo == "init"){
         var host1 = $("#host1-init").val();
@@ -51,26 +100,19 @@ function salvaConfig(tipo){
         var host_ext2 = $("#host-ext2").val();
         var $toastContent = '<span>Configurações Salvas</span>';
     }
+
+    fileDataConfig.host1 = host1;
+    fileDataConfig.host_ext1 = host_ext1;
+    fileDataConfig.host2 = host2;
+    fileDataConfig.host_ext2 = host_ext2;
+     
     console.log("tenta salvar");
     writeToFile('config.json', { host1: host1, host_ext1: host_ext1, host2: host2, host_ext2: host_ext2 });
     console.log("salvou???");
-    Materialize.toast($toastContent, 3000);
-    lerArquivoConfig();
+    Materialize.toast($toastContent, 3000, "green altura-80");
+    //lerArquivoConfig();
+    //getJsonConfiguracoes();
 }
-
-function readFromFile(fileName, cb) {
-    var pathToFile = cordova.file.dataDirectory  + fileName;
-    window.resolveLocalFileSystemURL(pathToFile, function (fileEntry) {
-        fileEntry.file(function (file) {
-            var reader = new FileReader();
-            reader.onloadend = function (e) {
-                cb(JSON.parse(this.result));
-            };
-            reader.readAsText(file);
-        }, errorHandler.bind(null, fileName));
-    }, errorHandler.bind(null, fileName));
-}
-
 function writeToFile(fileName, data) {
     data = JSON.stringify(data, null, '\t');
     window.resolveLocalFileSystemURL(cordova.file.dataDirectory , function (directoryEntry) {
@@ -78,7 +120,7 @@ function writeToFile(fileName, data) {
         directoryEntry.getFile(fileName, { create: true }, function (fileEntry) {
             fileEntry.createWriter(function (fileWriter) {
                 fileWriter.onwriteend = function (e) {
-                    // for real-world usage, you might consider passing a success callback
+                    // for real-world usage, you might consider passing a successs callback
                     console.log('Write of file "' + fileName + '"" completed.');
                     console.log(data);
                 };
@@ -94,7 +136,6 @@ function writeToFile(fileName, data) {
         }, errorHandler.bind(null, fileName));
     }, errorHandler.bind(null, fileName));
 }
-
 var errorHandler = function (fileName, e) {  
     var msg = '';
 
@@ -121,59 +162,149 @@ var errorHandler = function (fileName, e) {
     };
 
     console.log('Error (' + fileName + '): ' + msg);
+    window.plugins.uniqueDeviceID.get(successId, failId);
 
 }
-
-
 //-----------------------------------------------------------------
-function success(results) {
+function successId(uuid){
+    console.log("Id Device: "+uuid);
+    if(uuid == "e75ed4ac-a0bb-6777-3581-970754598108"){
+        console.log("Olá Marco !!!");
+        tipoUser=1;
+        alert("Olá Marco!");
+    }else if(uuid == "6cf00b78-5526-4cb6-3541-470711745118"){
+        console.log("Olá Gisele !!!");
+        tipoUser=1;
+        alert("Olá Gi! S2 S2 S2");
+    }else{
+        console.log("Olá visitante !!!");
+        tipoUser=0;
+        alert("Olá visitante, esse é um alert chato =P");
+    }
+    getWifiInfo(true);
+}
+
+function failId(erro){
+    console.log("Erro id: "+erro);
+    getWifiInfo();
+}
+//-----------------------------------------------------------------
+function getWifiInfo(log){
+    if(log){
+        console.log("Consulta Wifi com Log");
+        WifiInfo.getWifiInfo(successWifiInfo,erroWifiInfo);
+    }else{
+        WifiInfo.getWifiInfo(successWifi,erroWifiInfo);
+    }
+}
+
+function successWifiInfo(results) {
+    tipoConexao = lolgicaEscolhaRede(results);
     //console.log(JSON.stringify(results));
     console.log("######### Wifi - Info - Plugin #########")
     console.log("SSID: "+results.SSID);
     console.log("IpAddress: "+results.IpAddress);
-    console.log("MacAddress: "+results.MacAddress);
-    console.log("")
+    console.log("Tipo conexão : "+tipoConexao);
+};
+function successWifi(results) {
+    tipoConexao = lolgicaEscolhaRede(results);
+};
+function erroWifiInfo(e) {
+    console.log("Erro na verificação de conexão: "+JSON.stringify(e));
+};
 
-    //mac adress meu cel: F0-D7-AA-E4-BD-B1
-    //ip meu cel: 192.168.0.11
-
-    //mac adress gi: A4-70-D6-E1-12-FC
-    //ip cel gi: 192.168.0.16
-
+function lolgicaEscolhaRede(results){
+    var retornotipoConexao;
     if(results.SSID == "\"Isengard\"" || results.SSID == "\"Fora-Temer-5g\"" || results.SSID == "\"Fora-Temer\""){
-        tipoConexao = "interna";
+        retornotipoConexao = "interna";
     }else{
-        tipoConexao = "externa";
+        retornotipoConexao = "externa";
     }
-};
-function err(e) {
-    console.log(JSON.stringify(e));
-};
+    return retornotipoConexao;
+}
 //---------------------------------------------------------------
 
-function getHost(valor, repeticao, local){
-    console.log(tipoConexao);
+function getHostJson(local){
     if(local != "S"){
         if(tipoConexao == "interna"){
-            var ipSend = $("#host2").val(); 
+            data = fileDataConfig.host2
+        }else if(tipoConexao == "externa"){
+            data = fileDataConfig.host_ext2 
         }else{
-            var ipSend = $("#host-ext2").val(); 
-            console.log("envio externo"); 
+            console.log("tipo conexao indefinida");
         }
-        var saida = "ir?codigo=" + valor + "&repeticao=" + repeticao + "&local=" + local;
+
     }else{
         if(tipoConexao == "interna"){
-            var ipSend = $("#host1").val(); 
+            var data = fileDataConfig.host1
+        }else if(tipoConexao == "externa"){
+            var data = fileDataConfig.host_ext1 
         }else{
-            var ipSend = $("#host-ext1").val();
-            console.log("envio externo"); 
-        }
-        var saida = "ir?" + repeticao + valor + local;
+            console.log("tipo conexao indefinida");
+        } 
     }
-    var host="http://"+ipSend+"/"+saida;
-    return host;
+    return data;
 }
 
+function getSaida(valor, repeticao, local){
+    if(local != "S"){
+        data = "ir?codigo=" + valor + "&repeticao=" + repeticao + "&local=" + local;
+    }else{
+        data = "ir?" + repeticao + valor + local;
+    }
+    return data;
+}
+function getUrl(valor, repeticao, local){
+    var ipSend;
+    var saida;
+    var url;
+
+    getWifiInfo();
+    ipSend = getHostJson(local);
+    if(ipSend == ""){
+        
+        if(tipoConexao == "interna"){
+            if(local != "S"){
+                tipoHost = "Host 2";
+            }else{
+                tipoHost = "Host 1";
+            }
+        }else if(tipoConexao == "externa"){
+            if(local != "S"){
+                tipoHost = "Host Exteno 2";
+            }else{
+                tipoHost = "Host Exteno 1";
+            }
+        }
+        var $toastContent = '<span class="">'+tipoHost+' não informado</span>';
+        Materialize.toast($toastContent, 3000, 'red altura-80');
+        console.log("sem informação de "+tipoHost+", informação enviada por toast com atalho para area de configurações");
+    }else{
+        console.log("retorno getHostJson: "+ipSend);
+        saida = getSaida(valor, repeticao, local);
+        console.log("retorno getSaida: "+saida);
+        var url="http://"+ipSend+"/"+saida;
+    }
+    return url;
+}
+
+
+function hostSend(tipo,local,valor,repeticao){
+    var url = getUrl(valor, repeticao, local);
+    
+    if(url){
+        console.log("Send POST: "+url);
+        $.post(url);
+    }else{
+        //faz os tratamentos de erro
+        console.log("host não definido");
+        console.log("Retorno do getUrl: "+url);
+        //
+
+    }
+
+
+}
 //inicializa bt do menu lateral
 $(".button-collapse").sideNav();
 
@@ -264,11 +395,19 @@ $('#menu-leds button').on('click', function() {
 
 
 $('#menu-por-locais button').on('click', function() {
-    WifiInfo.getWifiInfo(success,err);
     navigator.vibrate(20);
-    var hostSend = getHost($(this).val(), $(this).attr('repeticao'), ondeEstou);
+    
+    var tipo="";
+    var valor=$(this).val();
+    var repeticao=$(this).attr('repeticao');
+    var local = ondeEstou;
+    //chama func de envio
+    hostSend(tipo,local,valor,repeticao);
+
+    
+/*    var hostSend = getUrl($(this).val(), $(this).attr('repeticao'), ondeEstou);
     console.log(hostSend);
-    $.post(hostSend);
+    $.post(hostSend);*/
 });
 
 
@@ -299,12 +438,16 @@ $('.bt-menu-lateral').on('click', function(){
         console.log("menu tomadas");
     }
     if($(this).hasClass("menu-configuracoes")){
-        lerArquivoConfig();
+        //lerArquivoConfig();
+        getJsonConfiguracoes();
         $("#config").openModal();
     }
     navigator.vibrate(30);
 });
 
+
+
+/*############## ABA DE SELEÇÃO DELOCAIS por categorias ############## - INICIO */
 $('.link-submenu-controle').on('click', function(){
     $('.link-submenu-controle').parent().removeClass('ativo');
     $(this).parent().addClass('ativo');
@@ -320,7 +463,6 @@ $('.link-submenu-controle').on('click', function(){
         localControle = "M";
     }
 });
-
 $('.link-submenu-led').on('click', function(){
     
 
@@ -359,7 +501,7 @@ $('.link-submenu-led').on('click', function(){
     }
 
 });
-
+/*############## ABA DE SELEÇÃO DELOCAIS por categorias ############## - FIM */
 
 
 
@@ -369,7 +511,6 @@ $('.link-locais').on('click', function(){
     $("#menu-por-locais").removeClass("hide");
     $('.button-collapse').sideNav('hide');
 });
-
 
 $('.link-submenu-locais').on('click', function(){
     
@@ -423,7 +564,6 @@ $('.link-submenu-locais').on('click', function(){
     }else{
         $(".swith-led").addClass('hide');
     }
-
 });
 
 

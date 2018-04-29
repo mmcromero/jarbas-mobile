@@ -88,6 +88,8 @@ background-color: #f2f2f2;
 .margem-baixo-10{margin-bottom: 10px !important;}
 .margem-baixo-15{margin-bottom: 15px !important;}
 
+.altura-80{     height: 80px !important; }
+
 .titulo-controles{
     border-bottom: 1px solid #ff9800;
     margin: 6px 35px;
