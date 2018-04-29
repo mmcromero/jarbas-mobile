@@ -23,6 +23,11 @@ var tipoUser=0;
 /*VERIFICA DISPONIBILIDADE DAS APIS DO DISPOSITIVO - INICIO*/
 function onLoad() {
     document.addEventListener("deviceready", onDeviceReady, false);  
+    document.addEventListener("backbutton",btVoltar, false);
+    function btVoltar(){
+        //code here
+        console.log("apertou voltar");
+    }
 }
 
 // device APIs are available
@@ -44,6 +49,67 @@ function onDeviceReady() {
     
 }
 /*VERIFICA DISPONIBILIDADE DAS APIS DO DISPOSITIVO - FIM*/
+
+var configInicial = function(){
+    //crio o json
+    //fileDataConfig = [{ id_device: '' , nome_user: '' , email_user: '' , senha_user: '' , host1: '' , host_ext1: '' , host2: '' , host_ext2: '' , tipo_conexao: '' , local: ''  }];
+
+    var obj = {
+        id_device:"init",
+        nome_user:"",
+        email_user:"",
+        senha_user:"",
+        host1:"",
+        host_ext1:"",
+        host2:"",
+        host_ext2:"",
+        tipo_conexao:"",
+        local:""
+    };
+
+    fileDataConfig = obj;
+    console.log("Criado obj: "+fileDataConfig);
+    console.log(fileDataConfig);
+
+    
+
+
+    //abro modal
+    $("#configInit").openModal();
+}
+
+var lerVarConfigLocal = function(){
+    console.log(fileDataConfig);
+
+        /*fileDataConfig.id_device;
+        fileDataConfig.nome_user;
+        fileDataConfig.email_user;
+        fileDataConfig.senha_user;
+        fileDataConfig.host1;
+        fileDataConfig.host_ext1;
+        fileDataConfig.host2;
+        fileDataConfig.host_ext2;
+        fileDataConfig.tipo_conexao;
+        fileDataConfig.local;*/
+
+        $("#host1-init").val(fileDataConfig.host1);
+        $("#host2-init").val(fileDataConfig.host2);
+        $("#host-ext1-init").val(fileDataConfig.host_ext1);
+        $("#host-ext2-init").val(fileDataConfig.host_ext2);
+
+
+        $("#host1").val(fileDataConfig.host1);
+        $("#host2").val(fileDataConfig.host2);
+        $("#host-ext1").val(fileDataConfig.host_ext1);
+        $("#host-ext2").val(fileDataConfig.host_ext2);
+}
+
+var escreverVarConfigLocal = function(chave, valor){
+    fileDataConfig[chave] = valor;
+    lerVarConfigLocal();
+
+}
+
 
 function getJsonConfiguracoes(tipo){
     console.log("carregando arquivo de config...");
@@ -70,7 +136,7 @@ function getJsonConfiguracoes(tipo){
 
 
 function readFromFile(fileName, cb, tipo) {
-    var pathToFile = cordova.file.dataDirectory  + fileName;
+    var pathToFile = cordova.file.externalApplicationStorageDirectory  + fileName;
     window.resolveLocalFileSystemURL(pathToFile, function (fileEntry) {
         fileEntry.file(function (file) {
             var reader = new FileReader();
@@ -115,7 +181,7 @@ function salvaConfig(tipo){
 }
 function writeToFile(fileName, data) {
     data = JSON.stringify(data, null, '\t');
-    window.resolveLocalFileSystemURL(cordova.file.dataDirectory , function (directoryEntry) {
+    window.resolveLocalFileSystemURL(cordova.file.externalApplicationStorageDirectory , function (directoryEntry) {
         console.dir(directoryEntry);
         directoryEntry.getFile(fileName, { create: true }, function (fileEntry) {
             fileEntry.createWriter(function (fileWriter) {
@@ -145,7 +211,8 @@ var errorHandler = function (fileName, e) {
             break;
         case FileError.NOT_FOUND_ERR:
             msg = 'File not found';
-            $("#configInit").openModal();
+            //não exite arquivo de config... executa config inicial
+            configInicial();
             break;
         case FileError.SECURITY_ERR:
             msg = 'Security error';
@@ -169,9 +236,19 @@ var errorHandler = function (fileName, e) {
 function successId(uuid){
     console.log("Id Device: "+uuid);
     if(uuid == "e75ed4ac-a0bb-6777-3581-970754598108"){
+        fileDataConfig.id_device = "e75ed4ac-a0bb-6777-3581-970754598108";
+        fileDataConfig.nome_user = "Marco";
+        fileDataConfig.email_user = "mmcromero@gmail.com";
+        fileDataConfig.senha_user = "rcmmocram";
+        fileDataConfig.host1 = "192.168.0.7:8087";
+        fileDataConfig.host2 = "";
+        fileDataConfig.host_ext1 = "romeropi.no-ip.org:8087";
+        fileDataConfig.host_ext2 = "";
+
+        lerVarConfigLocal();
         console.log("Olá Marco !!!");
         tipoUser=1;
-        alert("Olá Marco!");
+        //alert("Olá Marco!");
     }else if(uuid == "6cf00b78-5526-4cb6-3541-470711745118"){
         console.log("Olá Gisele !!!");
         tipoUser=1;
