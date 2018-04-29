@@ -242,7 +242,7 @@ function successId(uuid){
         fileDataConfig.senha_user = "rcmmocram";
         fileDataConfig.host1 = "192.168.0.7:8087";
         fileDataConfig.host2 = "";
-        fileDataConfig.host_ext1 = "romeropi.no-ip.org:8087";
+        fileDataConfig.host_ext1 = "";//"romeropi.no-ip.org:8087";
         fileDataConfig.host_ext2 = "";
 
         lerVarConfigLocal();
@@ -353,9 +353,17 @@ function getUrl(valor, repeticao, local){
                 tipoHost = "Host Exteno 1";
             }
         }
-        var $toastContent = '<span class="">'+tipoHost+' não informado</span>';
+        var $toastContent = '<span class="" style="width: 200px;">'+tipoHost+' não informado</span><button class="btn-flat waves-effect waves-light grey darken-3 white-text btToastConfig">Configurações</button>';
         Materialize.toast($toastContent, 3000, 'red altura-80');
         console.log("sem informação de "+tipoHost+", informação enviada por toast com atalho para area de configurações");
+        //bt toast de config
+        $(".btToastConfig").on("click",function(){
+            $(".toast").remove();
+            console.log("click toast de config");
+            getJsonConfiguracoes();
+            $("#config").openModal();
+        });
+
     }else{
         console.log("retorno getHostJson: "+ipSend);
         saida = getSaida(valor, repeticao, local);
@@ -521,6 +529,8 @@ $('.bt-menu-lateral').on('click', function(){
     }
     navigator.vibrate(30);
 });
+
+
 
 
 
