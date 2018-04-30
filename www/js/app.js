@@ -20,6 +20,7 @@ var ondeEstou="S";
 var fileDataConfig;
 var verificaConexao;
 
+
 /*VERIFICA DISPONIBILIDADE DAS APIS DO DISPOSITIVO - INICIO*/
 function onLoad() {
     document.addEventListener("deviceready", onDeviceReady, false);  
@@ -130,11 +131,6 @@ var lerVarConfigLocal = function(){
         fileDataConfig.host_ext2;
         fileDataConfig.tipo_conexao;
         fileDataConfig.local;*/
-
-        $("#host1-init").val(fileDataConfig.host1);
-        $("#host2-init").val(fileDataConfig.host2);
-        $("#host-ext1-init").val(fileDataConfig.host_ext1);
-        $("#host-ext2-init").val(fileDataConfig.host_ext2);
 
 
         $("#host1").val(fileDataConfig.host1);
@@ -274,36 +270,52 @@ var errorHandler = function (fileName, e) {
 //-----------------------------------------------------------------
 function successId(uuid){
     console.log("Id Device: "+uuid);
+    
     if(uuid == "e75ed4ac-a0bb-6777-3581-970754598108"){
-        fileDataConfig.id_device = "e75ed4ac-a0bb-6777-3581-970754598108";
-        fileDataConfig.nome_user = "Marco";
-        fileDataConfig.email_user = "mmcromero@gmail.com";
-        fileDataConfig.senha_user = "rcmmocram";
-        fileDataConfig.host1 = "192.168.0.7:8087";
-        fileDataConfig.host2 = "192.168.0.8:8088";
-        fileDataConfig.host_ext1 = "";//"romeropi.no-ip.org:8087";
-        fileDataConfig.host_ext2 = "";
+        if(fileDataConfig.id_device == "init"){
+            fileDataConfig.id_device = uuid;
+            fileDataConfig.nome_user = "Marco";
+            fileDataConfig.email_user = "mmcromero@gmail.com";
+            fileDataConfig.senha_user = "rcmmocram";
+            fileDataConfig.host1 = "192.168.0.7:8087";
+            fileDataConfig.host2 = "192.168.0.8:8088";
+            fileDataConfig.host_ext1 = "romeropi.no-ip.org:8087";//"romeropi.no-ip.org:8087";
+            fileDataConfig.host_ext2 = "romeropi.no-ip.org:8088";
+        }
 
         lerVarConfigLocal();
         console.log("Olá Marco !!!");
         //alert("Olá Marco!");
     }else if(uuid == "6cf00b78-5526-4cb6-3541-470711745118"){
-        fileDataConfig.id_device = "6cf00b78-5526-4cb6-3541-470711745118";
-        fileDataConfig.nome_user = "Gisele";
-        fileDataConfig.email_user = "gisacsoli@gmail.com";
-        fileDataConfig.senha_user = "gigi21";
-        fileDataConfig.host1 = "192.168.0.7:8087";
-        fileDataConfig.host2 = "192.168.0.8:8088";
-        fileDataConfig.host_ext1 = "romeropi.no-ip.org:8087";//"romeropi.no-ip.org:8087";
-        fileDataConfig.host_ext2 = "romeropi.no-ip.org:8088";
+        if(fileDataConfig.id_device == "init"){
+            fileDataConfig.id_device = uuid;
+            fileDataConfig.nome_user = "Gisele";
+            fileDataConfig.email_user = "gisacsoli@gmail.com";
+            fileDataConfig.senha_user = "gigi21";
+            fileDataConfig.host1 = "192.168.0.7:8087";
+            fileDataConfig.host2 = "192.168.0.8:8088";
+            fileDataConfig.host_ext1 = "romeropi.no-ip.org:8087";//"romeropi.no-ip.org:8087";
+            fileDataConfig.host_ext2 = "romeropi.no-ip.org:8088";
+        }
 
         lerVarConfigLocal();
         console.log("Olá Gisele !!!");
         alert("Olá Gi! S2 S2 S2");
     }else{
+
+        if(fileDataConfig.id_device == "init"){
+            fileDataConfig.id_device = uuid;
+            fileDataConfig.nome_user = "-USER-";
+            fileDataConfig.email_user = "";
+            fileDataConfig.senha_user = "";
+            fileDataConfig.host1 = "";
+            fileDataConfig.host2 = "";
+            fileDataConfig.host_ext1 = "";//"romeropi.no-ip.org:8087";
+            fileDataConfig.host_ext2 = "";
+        }
         console.log("Olá visitante !!!");
         alert("Olá visitante, esse é um alert chato =P");
-    }
+    } 
     getWifiInfo(true);
 }
 
@@ -369,6 +381,23 @@ function lolgicaEscolhaRede(results){
 }
 //---------------------------------------------------------------
 
+function getTipoHost(){
+    if(fileDataConfig.tipo_conexao == "interna"){
+        if(ondeEstou != "S"){
+            tipoHost = "Host 2";
+        }else{
+            tipoHost = "Host 1";
+        }
+    }else if(fileDataConfig.tipo_conexao == "externa"){
+        if(ondeEstou != "S"){
+            tipoHost = "Host Exteno 2";
+        }else{
+            tipoHost = "Host Exteno 1";
+        }
+    } 
+    return tipoHost;
+}
+
 function getHostJson(local){
     if(local != "S"){
         if(fileDataConfig.tipo_conexao == "interna"){
@@ -408,19 +437,7 @@ function getUrl(valor, repeticao, local){
     ipSend = getHostJson(local);
     if(ipSend == ""){
         
-        if(fileDataConfig.tipo_conexao == "interna"){
-            if(local != "S"){
-                tipoHost = "Host 2";
-            }else{
-                tipoHost = "Host 1";
-            }
-        }else if(fileDataConfig.tipo_conexao == "externa"){
-            if(local != "S"){
-                tipoHost = "Host Exteno 2";
-            }else{
-                tipoHost = "Host Exteno 1";
-            }
-        }
+        var tipoHost = getTipoHost();
         var $toastContent = '<span class="" style="width: 200px;">'+tipoHost+' não informado</span><button class="btn-flat waves-effect waves-light grey darken-3 white-text btToastConfig">Configurações</button>';
         Materialize.toast($toastContent, 3000, 'red altura-80');
         console.log("sem informação de "+tipoHost+", informação enviada por toast com atalho para area de configurações");
@@ -450,7 +467,37 @@ function hostSend(local,valor,repeticao){
     
     if(url){
         console.log("Send POST: "+url);
-        $.post(url);
+        //$.post(url);
+
+        $.ajax({
+            beforeSend: function() {  
+                
+
+            },
+            type: "POST",  
+            url: url,
+            success: function(data){ 
+
+                console.log("retorno do ajax de envio de comando para arduino: ");
+                console.log(data);
+                navigator.vibrate(20);  
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) { 
+                console.log("erro do ajax de envio de comando para arduino: "); 
+                console.log(XMLHttpRequest); 
+                console.log(textStatus); 
+                navigator.vibrate(100);
+
+                var tipoHost = getTipoHost();
+                
+                var $toastContent = '<span>'+tipoHost+' não respode...</span>';
+                Materialize.toast($toastContent, 2000, "red altura-80"); 
+       
+            },
+            timeout: 1000 // sets timeout to 3 seconds       
+        });
+
+
     }else{
         //faz os tratamentos de erro
         console.log("host não definido");
@@ -551,7 +598,7 @@ $('#menu-leds button').on('click', function() {
 
 
 $('#menu-por-locais button').on('click', function() {
-    navigator.vibrate(20);
+    //navigator.vibrate(20);
     
     var valor=$(this).val();
     var repeticao=$(this).attr('repeticao');
@@ -596,35 +643,45 @@ $('.bt-menu-lateral').on('click', function(){
     }
     if($(this).hasClass("menu-configuracoes")){
         //lerArquivoConfig();
-        getJsonConfiguracoes();
+        //getJsonConfiguracoes();
+        lerVarConfigLocal();
+
         $("#config").openModal();
         $("#config h5").text("Configurações");
         $("#config p:first").text("Utilize essa tela para atualizar as informações de host's.");
 
 
         if($("#host1").val() != ""){
+            console.log($("#host1").val());
             var valor=$("#host1").val();
             var icone=$("#host1").attr("data-id-ico");
             pingHosts(valor, icone);
         }
 
         if($("#host2").val() != ""){
+            console.log($("#host2").val());
             var valor=$("#host2").val();
             var icone=$("#host2").attr("data-id-ico");
             pingHosts(valor, icone);
         }
 
+        console.log($("#host-ext1").val());
         if($("#host-ext1").val() != ""){
+            
             var valor=$("#host-ext1").val();
             var icone=$("#host-ext1").attr("data-id-ico");
             pingHosts(valor, icone);
         }
 
+        console.log($("#host-ext2").val());
         if($("#host-ext2").val() != ""){
+            
             var valor=$("#host-ext2").val();
             var icone=$("#host-ext2").attr("data-id-ico");
             pingHosts(valor, icone);
         }
+
+
         
 
     }
@@ -771,7 +828,13 @@ var pingHosts = function(valor, icone){
     console.log(ipSend);
 
     $.ajax({
-        beforeSend: function() {  },
+        beforeSend: function() {  
+            var spinner = "<div class='preloader-wrapper small active'><div class='spinner-layer spinner-yellow-only'><div class='circle-clipper left'><div class='circle'></div></div><div class='gap-patch'><div class='circle'></div></div><div class='circle-clipper right'><div class='circle'></div></div></div></div>";
+            $("."+icoClass).html(spinner);
+            $("."+icoClass).removeClass("red-text");
+            $("."+icoClass).removeClass("green-text");
+
+        },
         type: "POST",  
         url: ipSend,
         success: function(data){ 
@@ -790,7 +853,8 @@ var pingHosts = function(valor, icone){
             console.log(XMLHttpRequest); 
             console.log(textStatus);  
             console.log(errorThrown);    
-        }       
+        },
+        timeout: 3000 // sets timeout to 3 seconds       
     });
 }
 
