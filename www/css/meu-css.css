@@ -89,6 +89,7 @@ background-color: #f2f2f2;
 .margem-baixo-15{margin-bottom: 15px !important;}
 
 .altura-80{     height: 80px !important; }
+.altura-160{     height: 160px !important; }
 
 .titulo-controles{
     border-bottom: 1px solid #ff9800;
@@ -120,3 +121,13 @@ background-color: #f2f2f2;
     right: 10px;
     font-size: 2rem;
 }
+
+.ico-host{
+    position: relative;
+    float: right;
+    top: -56px;
+    right: 10px;
+    font-size: 2rem;
+}
+
+
