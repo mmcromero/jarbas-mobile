@@ -98,16 +98,13 @@ function onOffline() {
 
 function btVoltar(){
     console.log("apertou voltar");
-    //code here
-    if(count == 0){
-        console.log("fecho modal caso exista");
+
+    if($('#config').is(':visible')){
         $("#config").closeModal();
-        count++;
+    }else if($('#configInit').is(':visible')){
+        console.log("tela de config inicial, bt voltar sem ação");
     }else{
-        count=0;
-        //na segunda vez apos fechar o modal
-        // faz modal de confirmação de saida
-        alert("desja sair");
+        alert("modal para confirma o fechamento");
         //navigator.app.exitApp();
     }
 }
