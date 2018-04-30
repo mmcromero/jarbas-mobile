@@ -18,6 +18,7 @@ var localLed ="S";
 var localControle="S";
 var ondeEstou="S";
 var fileDataConfig;
+var verificaConexao;
 
 /*VERIFICA DISPONIBILIDADE DAS APIS DO DISPOSITIVO - INICIO*/
 function onLoad() {
@@ -347,16 +348,16 @@ function lolgicaEscolhaRede(results){
             retornotipoConexao = "interna";
             //muda o icone
             $(".icoTipoConexao").text("wifi");
-            $(".icoTipoConexao").removeClass("red");
+            $(".icoTipoConexao").removeClass("red-text");
         }else{
             retornotipoConexao = "externa";
             //muda o icone
             $(".icoTipoConexao").text("cloud_queue");
-            $(".icoTipoConexao").removeClass("red");
+            $(".icoTipoConexao").removeClass("red-text");
         }
     }else{
         $(".icoTipoConexao").text("signal_wifi_off");
-        $(".icoTipoConexao").addClass("red");
+        $(".icoTipoConexao").addClass("red-text");
         retornotipoConexao = "offline";
         //toast de aviso "sem conexão"
         var $toastContent = '<span>Sem conexões ativas !</span>';
@@ -469,7 +470,7 @@ $('.lever').on('click', function(){
     navigator.vibrate(40);
 });
 
-$('#menu-controles button').on('click', function() {
+/*$('#menu-controles button').on('click', function() {
     navigator.vibrate(20);
     if(localControle != "S"){
 
@@ -544,7 +545,7 @@ $('#menu-leds button').on('click', function() {
     console.log(saida);
     console.log("http://"+ipSend+"/"+saida);
     $.post("http://"+ipSend+"/"+saida); 
-});
+});*/
 
 
 
@@ -599,6 +600,33 @@ $('.bt-menu-lateral').on('click', function(){
         $("#config").openModal();
         $("#config h5").text("Configurações");
         $("#config p:first").text("Utilize essa tela para atualizar as informações de host's.");
+
+
+        if($("#host1").val() != ""){
+            var valor=$("#host1").val();
+            var icone=$("#host1").attr("data-id-ico");
+            pingHosts(valor, icone);
+        }
+
+        if($("#host2").val() != ""){
+            var valor=$("#host2").val();
+            var icone=$("#host2").attr("data-id-ico");
+            pingHosts(valor, icone);
+        }
+
+        if($("#host-ext1").val() != ""){
+            var valor=$("#host-ext1").val();
+            var icone=$("#host-ext1").attr("data-id-ico");
+            pingHosts(valor, icone);
+        }
+
+        if($("#host-ext2").val() != ""){
+            var valor=$("#host-ext2").val();
+            var icone=$("#host-ext2").attr("data-id-ico");
+            pingHosts(valor, icone);
+        }
+        
+
     }
     navigator.vibrate(30);
 });
@@ -733,6 +761,44 @@ $('.bt-salvar').on('click', function(){
 });
 $('.bt-salvar-init').on('click', function(){
     salvaConfig("init");
+});
+
+
+var pingHosts = function(valor, icone){
+    var ipSend = "http://"+valor;
+    var icoClass = icone;
+    console.log(icoClass);
+    console.log(ipSend);
+
+    $.ajax({
+        beforeSend: function() {  },
+        type: "POST",  
+        url: ipSend,
+        success: function(data){ 
+
+            console.log(data);  
+            verificaConexao = data;
+
+            $("."+icoClass).text("wifi");
+            $("."+icoClass).addClass("green-text");
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) { 
+
+            $("."+icoClass).text("signal_wifi_off");
+            $("."+icoClass).addClass("red-text");
+            console.log("erro ajax"); 
+            console.log(XMLHttpRequest); 
+            console.log(textStatus);  
+            console.log(errorThrown);    
+        }       
+    });
+}
+
+
+$("#host1, #host2, #host-ext1, #host-ext2").on("blur", function(){
+    var valor=$(this).val();
+    var icone=$(this).attr("data-id-ico");
+    pingHosts(valor, icone);
 });
 
 
