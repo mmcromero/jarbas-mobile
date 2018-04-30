@@ -112,4 +112,11 @@ background-color: #f2f2f2;
     border-radius: 2px;
 }
 
-    
+
+.icoTipoConexao{
+    position: relative;
+    float: right;
+    top: -56px;
+    right: 10px;
+    font-size: 2rem;
+}
