@@ -18,8 +18,6 @@ var localLed ="S";
 var localControle="S";
 var ondeEstou="S";
 var fileDataConfig;
-var tipoUser=0;
-var count=0;
 
 /*VERIFICA DISPONIBILIDADE DAS APIS DO DISPOSITIVO - INICIO*/
 function onLoad() {
@@ -27,10 +25,6 @@ function onLoad() {
     document.addEventListener("backbutton",btVoltar, false);
     document.addEventListener("volumedownbutton", onVolumeDownKeyDown, false);
     document.addEventListener("volumeupbutton", onVolumeUpKeyDown, false);
-
-
-
-    
 
     document.addEventListener("offline", onOffline, false);
     document.addEventListener("online", onOnline, false);
@@ -55,20 +49,8 @@ function onLoad() {
 
 // device APIs are available
 function onDeviceReady() {
-    /*
-    ####FLUXO
-    -leio json de config
-        se não existe 
-            -verifico se é um despositivo conhecido
-    -verifico tipo de conexão
-    */
 
     getJsonConfiguracoes("full");
-
-/*    console.log("carregando arquivo de config...");
-    readFromFile('config.json', function (data) {
-        fileDataConfig = data;
-    });*/
     
 }
 /*VERIFICA DISPONIBILIDADE DAS APIS DO DISPOSITIVO - FIM*/
@@ -85,6 +67,32 @@ function onVolumeUpKeyDown() {
     hostSend("S","1587632295","1");
 }
 
+function btVoltar(){
+    console.log("apertou voltar");
+
+    if($('#config').is(':visible')){
+        $("#config").closeModal();
+    }else if($('#configInit').is(':visible')){
+        console.log("tela de config inicial, bt voltar sem ação");
+    }else{
+        
+        $("#modalSaida").openModal();
+        //js de tratamento dos botoes sim e não
+        $(".bt-sair-sim").on("click", function(){
+            navigator.app.exitApp();
+        });
+        $(".bt-sair-nao").on("click", function(){
+            $("#modalSaida").closeModal();
+        });
+
+
+    }
+}
+
+
+
+
+
 function onOnline() {
     // Handle the online event
     console.log("ficou online");
@@ -96,30 +104,16 @@ function onOffline() {
     getWifiInfo();
 }
 
-function btVoltar(){
-    console.log("apertou voltar");
 
-    if($('#config').is(':visible')){
-        $("#config").closeModal();
-    }else if($('#configInit').is(':visible')){
-        console.log("tela de config inicial, bt voltar sem ação");
-    }else{
-        alert("modal para confirma o fechamento");
-        //navigator.app.exitApp();
-    }
-}
+
+
 
 var configInicial = function(){
-    //crio o json
-    //fileDataConfig = [{ id_device: '' , nome_user: '' , email_user: '' , senha_user: '' , host1: '' , host_ext1: '' , host2: '' , host_ext2: '' , tipo_conexao: '' , local: ''  }];
-
-    
-
-    
-
-
     //abro modal
-    $("#configInit").openModal();
+    $("#config").openModal();
+    $("#config h5").text("Configuração inicial");
+    $("#config p:first").text("Não foi localizada as informações de hosts, informe-as nos campos a baixo.");
+
 }
 
 var lerVarConfigLocal = function(){
@@ -285,21 +279,28 @@ function successId(uuid){
         fileDataConfig.email_user = "mmcromero@gmail.com";
         fileDataConfig.senha_user = "rcmmocram";
         fileDataConfig.host1 = "192.168.0.7:8087";
-        fileDataConfig.host2 = "";
+        fileDataConfig.host2 = "192.168.0.8:8088";
         fileDataConfig.host_ext1 = "";//"romeropi.no-ip.org:8087";
         fileDataConfig.host_ext2 = "";
 
         lerVarConfigLocal();
         console.log("Olá Marco !!!");
-        tipoUser=1;
         //alert("Olá Marco!");
     }else if(uuid == "6cf00b78-5526-4cb6-3541-470711745118"){
+        fileDataConfig.id_device = "6cf00b78-5526-4cb6-3541-470711745118";
+        fileDataConfig.nome_user = "Gisele";
+        fileDataConfig.email_user = "gisacsoli@gmail.com";
+        fileDataConfig.senha_user = "gigi21";
+        fileDataConfig.host1 = "192.168.0.7:8087";
+        fileDataConfig.host2 = "192.168.0.8:8088";
+        fileDataConfig.host_ext1 = "romeropi.no-ip.org:8087";//"romeropi.no-ip.org:8087";
+        fileDataConfig.host_ext2 = "romeropi.no-ip.org:8088";
+
+        lerVarConfigLocal();
         console.log("Olá Gisele !!!");
-        tipoUser=1;
         alert("Olá Gi! S2 S2 S2");
     }else{
         console.log("Olá visitante !!!");
-        tipoUser=0;
         alert("Olá visitante, esse é um alert chato =P");
     }
     getWifiInfo(true);
@@ -340,15 +341,28 @@ function erroWifiInfo(e) {
 
 function lolgicaEscolhaRede(results){
     var retornotipoConexao;
-    if(results.SSID == "\"Isengard\"" || results.SSID == "\"Fora-Temer-5g\"" || results.SSID == "\"Fora-Temer\""){
-        retornotipoConexao = "interna";
-        //muda o icone
-        $(".icoTipoConexao").text("wifi");
+
+    if(navigator.connection.type !== "none"){
+        if(results.SSID == "\"Isengard\"" || results.SSID == "\"Fora-Temer-5g\"" || results.SSID == "\"Fora-Temer\""){
+            retornotipoConexao = "interna";
+            //muda o icone
+            $(".icoTipoConexao").text("wifi");
+            $(".icoTipoConexao").removeClass("red");
+        }else{
+            retornotipoConexao = "externa";
+            //muda o icone
+            $(".icoTipoConexao").text("cloud_queue");
+            $(".icoTipoConexao").removeClass("red");
+        }
     }else{
-        retornotipoConexao = "externa";
-        //muda o icone
-        $(".icoTipoConexao").text("cloud_queue");
+        $(".icoTipoConexao").text("signal_wifi_off");
+        $(".icoTipoConexao").addClass("red");
+        retornotipoConexao = "offline";
+        //toast de aviso "sem conexão"
+        var $toastContent = '<span>Sem conexões ativas !</span>';
+        Materialize.toast($toastContent, 3000, "red altura-80");
     }
+    
 
     return retornotipoConexao;
 }
@@ -415,6 +429,9 @@ function getUrl(valor, repeticao, local){
             console.log("click toast de config");
             getJsonConfiguracoes();
             $("#config").openModal();
+            $("#config h5").text("Configurações");
+            $("#config p:first").text("Utilize essa tela para atualizar as informações de host's.");
+
         });
 
     }else{
@@ -580,6 +597,8 @@ $('.bt-menu-lateral').on('click', function(){
         //lerArquivoConfig();
         getJsonConfiguracoes();
         $("#config").openModal();
+        $("#config h5").text("Configurações");
+        $("#config p:first").text("Utilize essa tela para atualizar as informações de host's.");
     }
     navigator.vibrate(30);
 });
