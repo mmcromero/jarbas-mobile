@@ -88,6 +88,8 @@ background-color: #f2f2f2;
 .margem-baixo-10{margin-bottom: 10px !important;}
 .margem-baixo-15{margin-bottom: 15px !important;}
 
+.altura-80{     height: 80px !important; }
+
 .titulo-controles{
     border-bottom: 1px solid #ff9800;
     margin: 6px 35px;
@@ -98,4 +100,23 @@ background-color: #f2f2f2;
     border-bottom: 1px solid #ff9800;
     margin: 20px 0px;
     color: #030947;
+}
+
+.btToastConfig{
+    margin-left: 0px !important;
+    margin-right: -15px !important;
+    height: 50px;
+    padding: 0px 10px;
+    text-transform: none;
+    border: none;
+    border-radius: 2px;
+}
+
+
+.icoTipoConexao{
+    position: relative;
+    float: right;
+    top: -56px;
+    right: 10px;
+    font-size: 2rem;
 }
