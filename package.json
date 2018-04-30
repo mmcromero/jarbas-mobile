@@ -29,7 +29,8 @@
       "cordova-plugin-statusbar": {},
       "cordova-wifiinfo-plugin": {},
       "cordova-plugin-file": {},
-      "cordova-plugin-uniquedeviceid": {}
+      "cordova-plugin-uniquedeviceid": {},
+      "cordova-plugin-network-information": {}
     },
     "platforms": [
       "android"

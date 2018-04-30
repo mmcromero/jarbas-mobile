@@ -8,6 +8,8 @@
     //Id Device: 6cf00b78-5526-4cb6-3541-470711745118
 
 
+//$("#config").closeModal();
+
 
 
 /*DECLARAÇÃO DE VARIAVEIS*/
@@ -15,19 +17,40 @@ var repeticaoLed = "1"
 var localLed ="S";
 var localControle="S";
 var ondeEstou="S";
-var tipoConexao ="indefinida";
 var fileDataConfig;
 var tipoUser=0;
-
+var count=0;
 
 /*VERIFICA DISPONIBILIDADE DAS APIS DO DISPOSITIVO - INICIO*/
 function onLoad() {
     document.addEventListener("deviceready", onDeviceReady, false);  
     document.addEventListener("backbutton",btVoltar, false);
-    function btVoltar(){
-        //code here
-        console.log("apertou voltar");
-    }
+    document.addEventListener("volumedownbutton", onVolumeDownKeyDown, false);
+    document.addEventListener("volumeupbutton", onVolumeUpKeyDown, false);
+
+
+
+    
+
+    document.addEventListener("offline", onOffline, false);
+    document.addEventListener("online", onOnline, false);
+
+    var obj = {
+        id_device:"init",
+        nome_user:"",
+        email_user:"",
+        senha_user:"",
+        host1:"",
+        host_ext1:"",
+        host2:"",
+        host_ext2:"",
+        tipo_conexao:"",
+        local:""
+    };
+
+    fileDataConfig = obj;
+    console.log("Criado obj: "+fileDataConfig);
+    console.log(fileDataConfig);
 }
 
 // device APIs are available
@@ -50,26 +73,50 @@ function onDeviceReady() {
 }
 /*VERIFICA DISPONIBILIDADE DAS APIS DO DISPOSITIVO - FIM*/
 
+function onVolumeDownKeyDown() {
+    // Handle the volume down button
+    console.log("abaixa sub");
+    hostSend("S","1587664935","1");
+}
+
+function onVolumeUpKeyDown() {
+    // Handle the volume up button
+    console.log("sob sub");
+    hostSend("S","1587632295","1");
+}
+
+function onOnline() {
+    // Handle the online event
+    console.log("ficou online");
+    getWifiInfo();
+}
+function onOffline() {
+    // Handle the offline event
+    console.log("ficou offLine");
+    getWifiInfo();
+}
+
+function btVoltar(){
+    console.log("apertou voltar");
+    //code here
+    if(count == 0){
+        console.log("fecho modal caso exista");
+        $("#config").closeModal();
+        count++;
+    }else{
+        count=0;
+        //na segunda vez apos fechar o modal
+        // faz modal de confirmação de saida
+        alert("desja sair");
+        //navigator.app.exitApp();
+    }
+}
+
 var configInicial = function(){
     //crio o json
     //fileDataConfig = [{ id_device: '' , nome_user: '' , email_user: '' , senha_user: '' , host1: '' , host_ext1: '' , host2: '' , host_ext2: '' , tipo_conexao: '' , local: ''  }];
 
-    var obj = {
-        id_device:"init",
-        nome_user:"",
-        email_user:"",
-        senha_user:"",
-        host1:"",
-        host_ext1:"",
-        host2:"",
-        host_ext2:"",
-        tipo_conexao:"",
-        local:""
-    };
-
-    fileDataConfig = obj;
-    console.log("Criado obj: "+fileDataConfig);
-    console.log(fileDataConfig);
+    
 
     
 
@@ -276,15 +323,19 @@ function getWifiInfo(log){
 }
 
 function successWifiInfo(results) {
-    tipoConexao = lolgicaEscolhaRede(results);
+    fileDataConfig.tipo_conexao = lolgicaEscolhaRede(results);
     //console.log(JSON.stringify(results));
     console.log("######### Wifi - Info - Plugin #########")
     console.log("SSID: "+results.SSID);
     console.log("IpAddress: "+results.IpAddress);
-    console.log("Tipo conexão : "+tipoConexao);
+    console.log("Tipo conexão : "+fileDataConfig.tipo_conexao);
+    console.log("atualizando json local");
+
+
 };
 function successWifi(results) {
-    tipoConexao = lolgicaEscolhaRede(results);
+    fileDataConfig.tipo_conexao = lolgicaEscolhaRede(results);
+
 };
 function erroWifiInfo(e) {
     console.log("Erro na verificação de conexão: "+JSON.stringify(e));
@@ -294,27 +345,32 @@ function lolgicaEscolhaRede(results){
     var retornotipoConexao;
     if(results.SSID == "\"Isengard\"" || results.SSID == "\"Fora-Temer-5g\"" || results.SSID == "\"Fora-Temer\""){
         retornotipoConexao = "interna";
+        //muda o icone
+        $(".icoTipoConexao").text("wifi");
     }else{
         retornotipoConexao = "externa";
+        //muda o icone
+        $(".icoTipoConexao").text("cloud_queue");
     }
+
     return retornotipoConexao;
 }
 //---------------------------------------------------------------
 
 function getHostJson(local){
     if(local != "S"){
-        if(tipoConexao == "interna"){
+        if(fileDataConfig.tipo_conexao == "interna"){
             data = fileDataConfig.host2
-        }else if(tipoConexao == "externa"){
+        }else if(fileDataConfig.tipo_conexao == "externa"){
             data = fileDataConfig.host_ext2 
         }else{
             console.log("tipo conexao indefinida");
         }
 
     }else{
-        if(tipoConexao == "interna"){
+        if(fileDataConfig.tipo_conexao == "interna"){
             var data = fileDataConfig.host1
-        }else if(tipoConexao == "externa"){
+        }else if(fileDataConfig.tipo_conexao == "externa"){
             var data = fileDataConfig.host_ext1 
         }else{
             console.log("tipo conexao indefinida");
@@ -340,13 +396,13 @@ function getUrl(valor, repeticao, local){
     ipSend = getHostJson(local);
     if(ipSend == ""){
         
-        if(tipoConexao == "interna"){
+        if(fileDataConfig.tipo_conexao == "interna"){
             if(local != "S"){
                 tipoHost = "Host 2";
             }else{
                 tipoHost = "Host 1";
             }
-        }else if(tipoConexao == "externa"){
+        }else if(fileDataConfig.tipo_conexao == "externa"){
             if(local != "S"){
                 tipoHost = "Host Exteno 2";
             }else{
@@ -374,7 +430,7 @@ function getUrl(valor, repeticao, local){
 }
 
 
-function hostSend(tipo,local,valor,repeticao){
+function hostSend(local,valor,repeticao){
     var url = getUrl(valor, repeticao, local);
     
     if(url){
@@ -411,7 +467,7 @@ $('#menu-controles button').on('click', function() {
 
 
         //var ipSend = $("#host2").val(); //var ipSend = "192.168.0.88";
-        if(tipoConexao == "wifi"){
+        if(fileDataConfig.tipo_conexao == "wifi"){
             var ipSend = $("#host2").val(); 
         }else{
             var ipSend = $("#host-ext2").val(); 
@@ -426,7 +482,7 @@ $('#menu-controles button').on('click', function() {
 
 
         //var ipSend = $("#host1").val(); //var ipSend = "192.168.15.46:8080";
-        if(tipoConexao == "wifi"){
+        if(fileDataConfig.tipo_conexao == "wifi"){
             var ipSend = $("#host1").val(); 
         }else{
             var ipSend = $("#host-ext1").val(); 
@@ -450,7 +506,7 @@ $('#menu-leds button').on('click', function() {
         //repeticao = repeticaoLed
         //local= localLed
         //var ipSend = $("#host2").val(); //var ipSend = "192.168.0.88";
-        if(tipoConexao == "wifi"){
+        if(fileDataConfig.tipo_conexao == "wifi"){
             var ipSend = $("#host2").val(); 
         }else{
             var ipSend = $("#host-ext2").val(); 
@@ -463,7 +519,7 @@ $('#menu-leds button').on('click', function() {
         //codigo = $(this).val()
         //local= localLed
         //var ipSend = $("#host1").val(); //var ipSend = "192.168.15.46:8080";
-        if(tipoConexao == "wifi"){
+        if(fileDataConfig.tipo_conexao == "wifi"){
             var ipSend = $("#host1").val(); 
         }else{
             var ipSend = $("#host-ext1").val(); 
@@ -482,17 +538,18 @@ $('#menu-leds button').on('click', function() {
 $('#menu-por-locais button').on('click', function() {
     navigator.vibrate(20);
     
-    var tipo="";
     var valor=$(this).val();
     var repeticao=$(this).attr('repeticao');
     var local = ondeEstou;
     //chama func de envio
-    hostSend(tipo,local,valor,repeticao);
+    hostSend(local,valor,repeticao);
 
     
-/*    var hostSend = getUrl($(this).val(), $(this).attr('repeticao'), ondeEstou);
+    /*  
+    var hostSend = getUrl($(this).val(), $(this).attr('repeticao'), ondeEstou);
     console.log(hostSend);
-    $.post(hostSend);*/
+    $.post(hostSend);
+    */
 });
 
 
