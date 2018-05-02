@@ -866,3 +866,10 @@ $("#host1, #host2, #host-ext1, #host-ext2").on("blur", function(){
 });
 
 
+
+$('.icoTipoConexao').on('click', function(){
+    var $toastContent = '<span class="black-text">Atualizando informações de conexões...</span>';
+    Materialize.toast($toastContent, 3000, "yellow darken-1 altura-80");
+    getWifiInfo();
+});
+
