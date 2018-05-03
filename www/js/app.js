@@ -51,24 +51,23 @@ function onLoad() {
 
 // device APIs are available
 function onDeviceReady() {
-
     getJsonConfiguracoes("full");
-    
 }
 /*VERIFICA DISPONIBILIDADE DAS APIS DO DISPOSITIVO - FIM*/
 
+
+
+
+
+///// EVENTOS DO CELULAR
 function onVolumeDownKeyDown() {
-    // Handle the volume down button
     console.log("abaixa sub");
     hostSend("S","1587664935","1");
 }
-
 function onVolumeUpKeyDown() {
-    // Handle the volume up button
     console.log("sob sub");
     hostSend("S","1587632295","1");
 }
-
 function btVoltar(){
     console.log("apertou voltar");
 
@@ -90,23 +89,15 @@ function btVoltar(){
 
     }
 }
-
-
-
-
-
 function onOnline() {
-    // Handle the online event
     console.log("ficou online");
     getWifiInfo();
 }
 function onOffline() {
-    // Handle the offline event
     console.log("ficou offLine");
     getWifiInfo();
 }
-
-
+/////////////////////////
 
 
 
@@ -115,9 +106,7 @@ var configInicial = function(){
     $("#config").openModal();
     $("#config h5").text("Configuração inicial");
     $("#config p:first").text("Não foi localizada as informações de hosts, informe-as nos campos a baixo.");
-
 }
-
 var lerVarConfigLocal = function(){
     console.log(fileDataConfig);
 
@@ -138,13 +127,10 @@ var lerVarConfigLocal = function(){
         $("#host-ext1").val(fileDataConfig.host_ext1);
         $("#host-ext2").val(fileDataConfig.host_ext2);
 }
-
 var escreverVarConfigLocal = function(chave, valor){
     fileDataConfig[chave] = valor;
     lerVarConfigLocal();
-
 }
-
 
 function getJsonConfiguracoes(tipo){
     console.log("carregando arquivo de config...");
@@ -165,10 +151,8 @@ function getJsonConfiguracoes(tipo){
                     window.plugins.uniqueDeviceID.get(successId, failId);
                 }
         
-    },tipo);
-    
+    },tipo);   
 }
-
 
 function readFromFile(fileName, cb, tipo) {
     var pathToFile = cordova.file.externalApplicationStorageDirectory  + fileName;
@@ -185,8 +169,8 @@ function readFromFile(fileName, cb, tipo) {
         }, errorHandler.bind(null, fileName));
     }, errorHandler.bind(null, fileName));
     console.log("lendo json...");
-
 }
+
 function salvaConfig(tipo){
     if(tipo == "init"){
         var host1 = $("#host1-init").val();
@@ -265,8 +249,8 @@ var errorHandler = function (fileName, e) {
 
     console.log('Error (' + fileName + '): ' + msg);
     window.plugins.uniqueDeviceID.get(successId, failId);
-
 }
+
 //-----------------------------------------------------------------
 function successId(uuid){
     console.log("Id Device: "+uuid);
@@ -341,12 +325,9 @@ function successWifiInfo(results) {
     console.log("IpAddress: "+results.IpAddress);
     console.log("Tipo conexão : "+fileDataConfig.tipo_conexao);
     console.log("atualizando json local");
-
-
 };
 function successWifi(results) {
     fileDataConfig.tipo_conexao = lolgicaEscolhaRede(results);
-
 };
 function erroWifiInfo(e) {
     console.log("Erro na verificação de conexão: "+JSON.stringify(e));
@@ -375,8 +356,6 @@ function lolgicaEscolhaRede(results){
         var $toastContent = '<span>Sem conexões ativas !</span>';
         Materialize.toast($toastContent, 3000, "red altura-80");
     }
-    
-
     return retornotipoConexao;
 }
 //---------------------------------------------------------------
@@ -651,31 +630,36 @@ $('.bt-menu-lateral').on('click', function(){
         $("#config p:first").text("Utilize essa tela para atualizar as informações de host's.");
 
 
-        if($("#host1").val() != ""){
-            console.log($("#host1").val());
-            var valor=$("#host1").val();
-            var icone=$("#host1").attr("data-id-ico");
-            pingHosts(valor, icone);
-        }
+        /// se estiver na conexão externa eu não verifico os servidores externos
+        if(fileDataConfig.tipo_conexao !== "externa"){
+            if($("#host1").val() != ""){
+                console.log($("#host1").val());
+                var valor=$("#host1").val();
+                var icone=$("#host1").attr("data-id-ico");
+                pingHosts(valor, icone);
+            }
+            if($("#host2").val() != ""){
+                console.log($("#host2").val());
+                var valor=$("#host2").val();
+                var icone=$("#host2").attr("data-id-ico");
+                pingHosts(valor, icone);
+            }
+        }else{
+            $(".ico-host1").text("signal_wifi_off");
+            $(".ico-host1").removeClass("red-text");
+            $(".ico-host1").removeClass("green-text");
 
-        if($("#host2").val() != ""){
-            console.log($("#host2").val());
-            var valor=$("#host2").val();
-            var icone=$("#host2").attr("data-id-ico");
-            pingHosts(valor, icone);
+            $(".ico-host2").text("signal_wifi_off");
+            $(".ico-host2").removeClass("red-text");
+            $(".ico-host2").removeClass("green-text");
         }
-
-        console.log($("#host-ext1").val());
+        
         if($("#host-ext1").val() != ""){
-            
             var valor=$("#host-ext1").val();
             var icone=$("#host-ext1").attr("data-id-ico");
             pingHosts(valor, icone);
         }
-
-        console.log($("#host-ext2").val());
         if($("#host-ext2").val() != ""){
-            
             var valor=$("#host-ext2").val();
             var icone=$("#host-ext2").attr("data-id-ico");
             pingHosts(valor, icone);
@@ -816,12 +800,11 @@ $('.link-submenu-locais').on('click', function(){
 $('.bt-salvar').on('click', function(){
     salvaConfig();
 });
-$('.bt-salvar-init').on('click', function(){
-    salvaConfig("init");
-});
+
 
 
 var pingHosts = function(valor, icone){
+
     var ipSend = "http://"+valor;
     var icoClass = icone;
     console.log(icoClass);
@@ -859,14 +842,31 @@ var pingHosts = function(valor, icone){
 }
 
 
-$("#host1, #host2, #host-ext1, #host-ext2").on("blur", function(){
+//// on blur dos campos de host, verifica se o host esta on line
+$("#host1, #host2").on("blur", function(){
+    if(fileDataConfig.tipo_conexao !== "externa"){
+        var valor=$(this).val();
+        var icone=$(this).attr("data-id-ico");
+        pingHosts(valor, icone);
+    }else{
+        $(".ico-host1").text("signal_wifi_off");
+        $(".ico-host1").removeClass("red-text");
+        $(".ico-host1").removeClass("green-text");
+
+        $(".ico-host2").text("signal_wifi_off");
+        $(".ico-host2").removeClass("red-text");
+        $(".ico-host2").removeClass("green-text");
+    }
+});
+
+$("#host-ext1, #host-ext2").on("blur", function(){
     var valor=$(this).val();
     var icone=$(this).attr("data-id-ico");
     pingHosts(valor, icone);
 });
 
 
-
+///click no icone de conexão faz verificação no tipo de conexão
 $('.icoTipoConexao').on('click', function(){
     var $toastContent = '<span class="black-text">Atualizando informações de conexões...</span>';
     Materialize.toast($toastContent, 3000, "yellow darken-1 altura-80");
