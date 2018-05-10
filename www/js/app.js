@@ -28,6 +28,8 @@ function onLoad() {
     document.addEventListener("volumedownbutton", onVolumeDownKeyDown, false);
     document.addEventListener("volumeupbutton", onVolumeUpKeyDown, false);
 
+    document.addEventListener("resume", onResume, false);
+
     document.addEventListener("offline", onOffline, false);
     document.addEventListener("online", onOnline, false);
 
@@ -59,7 +61,14 @@ function onDeviceReady() {
 
 
 
+
+
 ///// EVENTOS DO CELULAR
+function onResume() {
+    // Handle the resume event
+    alert("retorno com segurança");
+}
+
 function onVolumeDownKeyDown() {
     console.log("abaixa sub");
     hostSend("S","1587664935","1");
