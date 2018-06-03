@@ -1,7 +1,7 @@
 
 //mac adress meu cel: F0-D7-AA-E4-BD-B1
     //ip meu cel: 192.168.0.11
-    //Id Device: 3537354c-ad58-e22a-3581-970754598108
+    //Id Device: c3468f75-a5ee-75f4-3581-970754598108
 
     //mac adress gi: A4-70-D6-E1-12-FC
     //ip cel gi: 192.168.0.16
@@ -264,7 +264,7 @@ var errorHandler = function (fileName, e) {
 function successId(uuid){
     console.log("Id Device: "+uuid);
     
-    if(uuid == "3537354c-ad58-e22a-3581-970754598108"){
+    if(uuid == "c3468f75-a5ee-75f4-3581-970754598108"){
         if(fileDataConfig.id_device == "init"){
             fileDataConfig.id_device = uuid;
             fileDataConfig.nome_user = "Marco";
