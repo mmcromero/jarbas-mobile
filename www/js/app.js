@@ -1,7 +1,7 @@
 
 //mac adress meu cel: F0-D7-AA-E4-BD-B1
     //ip meu cel: 192.168.0.11
-    //Id Device: 3537354c-ad58-e22a-3581-970754598108
+    //Id Device: dfae2dba-836f-6f8b-0895-505311200227
 
     //mac adress gi: A4-70-D6-E1-12-FC
     //ip cel gi: 192.168.0.16
@@ -264,7 +264,7 @@ var errorHandler = function (fileName, e) {
 function successId(uuid){
     console.log("Id Device: "+uuid);
     
-    if(uuid == "3537354c-ad58-e22a-3581-970754598108"){
+    if(uuid == "dfae2dba-836f-6f8b-0895-505311200227"){
         if(fileDataConfig.id_device == "init"){
             fileDataConfig.id_device = uuid;
             fileDataConfig.nome_user = "Marco";
@@ -328,7 +328,7 @@ function getWifiInfo(log){
 
 function successWifiInfo(results) {
     fileDataConfig.tipo_conexao = lolgicaEscolhaRede(results);
-    //console.log(JSON.stringify(results));
+    console.log(JSON.stringify(results));
     console.log("######### Wifi - Info - Plugin #########")
     console.log("SSID: "+results.SSID);
     console.log("IpAddress: "+results.IpAddress);
@@ -389,9 +389,12 @@ function getTipoHost(){
 function getHostJson(local){
     if(local != "S"){
         if(fileDataConfig.tipo_conexao == "interna"){
-            data = fileDataConfig.host2
+            //data = fileDataConfig.host2
+            data = fileDataConfig.host1
+
         }else if(fileDataConfig.tipo_conexao == "externa"){
-            data = fileDataConfig.host_ext2 
+            //data = fileDataConfig.host_ext2 
+            data = fileDataConfig.host_ext1
         }else{
             console.log("tipo conexao indefinida");
         }
@@ -410,7 +413,8 @@ function getHostJson(local){
 
 function getSaida(valor, repeticao, local){
     if(local != "S"){
-        data = "ir?codigo=" + valor + "&repeticao=" + repeticao + "&local=" + local;
+        //data = "ir?codigo=" + valor + "&repeticao=" + repeticao + "&local=" + local;
+        data = "ir?" + repeticao + valor + local;
     }else{
         data = "ir?" + repeticao + valor + local;
     }
