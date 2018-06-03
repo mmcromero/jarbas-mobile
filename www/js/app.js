@@ -414,9 +414,18 @@ function getHostJson(local){
 function getSaida(valor, repeticao, local){
     if(local != "S"){
         //data = "ir?codigo=" + valor + "&repeticao=" + repeticao + "&local=" + local;
-        data = "ir?" + repeticao + valor + local;
+        
+        if(repeticao != "rele"){
+            data = "ir?" + repeticao + valor + local;
+        }else{
+            data = "rele?" +  valor ;
+        }
     }else{
-        data = "ir?" + repeticao + valor + local;
+        if(repeticao != "rele"){
+            data = "ir?" + repeticao + valor + local;
+        }else{
+            data = "rele?" +  valor ;
+        }
     }
     return data;
 }
@@ -587,16 +596,34 @@ $('#menu-leds button').on('click', function() {
 });*/
 
 
-
-
-$('#menu-por-locais button').on('click', function() {
-    //navigator.vibrate(20);
-    
+/*$('#menu-por-locais button').on('click', function() {
+    console.log("Envia Rele");
     var valor=$(this).val();
-    var repeticao=$(this).attr('repeticao');
-    var local = ondeEstou;
-    //chama func de envio
+    var repeticao="rele";
+    var local = "";
+
     hostSend(local,valor,repeticao);
+});*/
+
+$('#menu-por-locais button, #seguranca button').on('click', function() {
+    //navigator.vibrate(20);
+
+    if($(this).hasClass("bt-rele") ){ //
+        console.log("Envia Rele");
+        var valor=$(this).val();
+        var repeticao="rele";
+        var local = "";
+
+        hostSend(local,valor,repeticao);
+    }else{
+        var valor=$(this).val();
+        var repeticao=$(this).attr('repeticao');
+        var local = ondeEstou;
+        //chama func de envio
+        hostSend(local,valor,repeticao);
+    }
+    
+    
 
     
     /*  
@@ -633,6 +660,13 @@ $('.bt-menu-lateral').on('click', function(){
         $("#menu-tomadas").removeClass("hide");
         console.log("menu tomadas");
     }
+    if($(this).hasClass("menu-seguranca")){
+        $("#seguranca").openModal();
+    }
+ 
+
+
+
     if($(this).hasClass("menu-configuracoes")){
         //lerArquivoConfig();
         //getJsonConfiguracoes();
@@ -677,10 +711,6 @@ $('.bt-menu-lateral').on('click', function(){
             var icone=$("#host-ext2").attr("data-id-ico");
             pingHosts(valor, icone);
         }
-
-
-        
-
     }
     navigator.vibrate(30);
 });
@@ -800,7 +830,7 @@ $('.link-submenu-locais').on('click', function(){
     if($(this).text() === "Externas"){
         $(".local-externas").removeClass("hide");
         $(".titulo-locais").html("Áreas Externas");
-        ondeEstou = "F";
+        ondeEstou = "M";
         console.log(ondeEstou);
         $(".swith-led").removeClass('hide');
     }else{

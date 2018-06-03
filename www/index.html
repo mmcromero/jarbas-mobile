@@ -40,6 +40,7 @@
                 <li><a class="waves-effect waves-light white-text bt-menu-lateral menu-tomadas">Casal</a></li><li><div class="divider"></div></li>
                 <li><a class="waves-effect waves-light white-text bt-menu-lateral menu-controles">Banheiros</a></li><li><div class="divider"></div></li>
                 <li><a class="waves-effect waves-light white-text bt-menu-lateral menu-tomadas">Externa</a></li><li><div class="divider"></div></li> -->
+                <li><a class="waves-effect waves-light white-text bt-menu-lateral menu-seguranca">Segurança</a></li>
                 <li><a class="waves-effect waves-light white-text bt-menu-lateral menu-configuracoes">Configurações</a></li>
                 </ul>
             </div>
@@ -161,11 +162,20 @@
                         <button type="button" value="16214167" value2="16773135" class="btn-floating btn-large waves-effect waves-light pink darken-4" repeticao="5" >&emsp;</button>
                         <button type="button" value="16246807" value2="16724175" class="btn-floating btn-large waves-effect waves-light grey" repeticao="5" >smooth</button>
                     </div>
-                    <div class="row"></div>
-                    <div class="row"></div>
-                    <div class="row"></div>
+                    
                 </div>
+
+
+
+                <div class="center-align row margem-baixo-5">
+                    <button type="button" value="armadilhaBaixo" class="btn-floating btn-large waves-effect waves-light red accent-4 bt-rele" ><i class="material-icons">power_settings_new</i></button>
+                </div>
+                <div class="row"></div>
+                <div class="row"></div>
+                <div class="row"></div>
+
             </div>
+
             <!-- COZINHA -->
             <!-- ESCADA -->
             <div class="tabs-locais local-escada hide">
@@ -206,6 +216,14 @@
                     <button type="button" value="16214167" value2="16773135" class="btn-floating btn-large waves-effect waves-light pink darken-4" repeticao="5" >&emsp;</button>
                     <button type="button" value="16246807" value2="16724175" class="btn-floating btn-large waves-effect waves-light grey" repeticao="5" >smooth</button>
                 </div>
+
+                <div class="center-align row margem-baixo-5">
+                        
+                        <button type="button" value="armadilhaCima" class="btn-floating btn-large waves-effect waves-light red accent-4 bt-rele" ><i class="material-icons">power_settings_new</i></button>
+                </div>
+                <div class="row"></div>
+                <div class="row"></div>
+                <div class="row"></div>
             </div>
             <!-- CRIANÇAS -->
             <div class="tabs-locais local-criancas hide">
@@ -467,6 +485,7 @@
             </div>
     </div>
 
+
 	<div id="menu-controles" class="content-menu hide">
             <h5 class="center-align">Controles</h5>
 
@@ -616,6 +635,31 @@
         <div class="modal-footer">
           <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat green left white-text bt-sair-sim">Sim</a>
           <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat red white-text bt-sair-nao">Não</a>
+        </div>
+    </div>
+
+    <!-- Modal Structure -->
+    <div id="seguranca" class="modal modal-fixed-footer">
+        <div class="modal-content">
+            <h5>SEGURANÇA</h5>
+            <p>Utilize os botões dessa tela com cuidado, as ações efetuadas não poderão ser desfeitas! Alguns botões podem solicitar uma senha para continuar.</p>
+             <div class=""><i class="material-icons">cloud_circle</i>Reset Modem & Roteador</div>
+            <div class="row">
+               
+                    <button type="button" value="resetModem" class="bt-seguranca btn-floating btn-large waves-effect waves-light red accent-4 bt-rele" ><i class="material-icons">power_settings_new</i></button>
+                    
+            </div>
+            
+            <div class=""><i class="material-icons">home</i>Portão Pedestre</div>
+            <div class="row">
+
+                    <button type="button" value="portaoPedestre" class="bt-seguranca btn-floating btn-large waves-effect waves-light red accent-4 bt-rele" ><i class="material-icons">power_settings_new</i></button>
+                
+            </div>
+            
+        </div>
+        <div class="modal-footer">
+          <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat orange white-text bt-salvar">Salvar</a>
         </div>
     </div>
 
