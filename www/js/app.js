@@ -19,6 +19,7 @@ var localControle="S";
 var ondeEstou="S";
 var fileDataConfig;
 var verificaConexao;
+var arduinoNaoFuncionaPraPauNoCu = 0;
 
 
 /*VERIFICA DISPONIBILIDADE DAS APIS DO DISPOSITIVO - INICIO*/
@@ -35,6 +36,7 @@ function onLoad() {
 
     var obj = {
         id_device:"init",
+        ip_device:"000.000.000",
         nome_user:"",
         email_user:"",
         senha_user:"",
@@ -66,7 +68,7 @@ function onDeviceReady() {
 ///// EVENTOS DO CELULAR
 function onResume() {
     // Handle the resume event
-    alert("retorno com segurança");
+   // alert("retorno com segurança");
 }
 
 function onVolumeDownKeyDown() {
@@ -263,8 +265,8 @@ var errorHandler = function (fileName, e) {
 //-----------------------------------------------------------------
 function successId(uuid){
     console.log("Id Device: "+uuid);
-    
-    if(uuid == "dfae2dba-836f-6f8b-0895-505311200227"){
+       
+    if(uuid == "907fbb5e-6070-9932-3541-060922796188"){
         if(fileDataConfig.id_device == "init"){
             fileDataConfig.id_device = uuid;
             fileDataConfig.nome_user = "Marco";
@@ -279,6 +281,7 @@ function successId(uuid){
         lerVarConfigLocal();
         console.log("Olá Marco !!!");
         //alert("Olá Marco!");
+         arduinoNaoFuncionaPraPauNoCu = 0;
     }else if(uuid == "6cf00b78-5526-4cb6-3541-470711745118"){
         if(fileDataConfig.id_device == "init"){
             fileDataConfig.id_device = uuid;
@@ -292,11 +295,12 @@ function successId(uuid){
         }
 
         lerVarConfigLocal();
-        console.log("Olá Gisele !!!");
-        alert("Olá Gi! S2 S2 S2");
+        console.log("bummmmm");
+        arduinoNaoFuncionaPraPauNoCu = 1;
+        //alert("Olá Gi! S2 S2 S2");
     }else{
 
-        if(fileDataConfig.id_device == "init"){
+        /*if(fileDataConfig.id_device == "init"){
             fileDataConfig.id_device = uuid;
             fileDataConfig.nome_user = "-USER-";
             fileDataConfig.email_user = "";
@@ -307,7 +311,7 @@ function successId(uuid){
             fileDataConfig.host_ext2 = "";
         }
         console.log("Olá visitante !!!");
-        alert("Olá visitante, esse é um alert chato =P");
+        alert("Olá visitante, esse é um alert chato =P");*/
     } 
     getWifiInfo(true);
 }
@@ -334,10 +338,48 @@ function successWifiInfo(results) {
     console.log("IpAddress: "+results.IpAddress);
     console.log("Tipo conexão : "+fileDataConfig.tipo_conexao);
     console.log("atualizando json local");
+    fileDataConfig.ip_device = results.IpAddress;
+    //console.log(fileDataConfig.ip_device); 
+
+     /*if(fileDataConfig.ip_device == "192.168.0.11"){
+        if(fileDataConfig.id_device == "init"){
+            fileDataConfig.id_device = "undefined";
+            fileDataConfig.nome_user = "Marco";
+            fileDataConfig.email_user = "mmcromero@gmail.com";
+            fileDataConfig.senha_user = "rcmmocram";
+            fileDataConfig.host1 = "192.168.0.7:8087";
+            fileDataConfig.host2 = "";
+            fileDataConfig.host_ext1 = "romeropi.no-ip.org:8087";//"romeropi.no-ip.org:8087";
+            fileDataConfig.host_ext2 = "";
+        }
+
+        lerVarConfigLocal();
+        console.log("Olá Marco !!!");
+        //alert("Olá Marco!");
+        //arduinoNaoFuncionaPraPauNoCu = 1;
+     }else{
+
+        if(fileDataConfig.id_device == "init"){
+            fileDataConfig.id_device = "undefined";
+            fileDataConfig.nome_user = "-USER-";
+            fileDataConfig.email_user = "";
+            fileDataConfig.senha_user = "";
+            fileDataConfig.host1 = "";
+            fileDataConfig.host2 = "";
+            fileDataConfig.host_ext1 = "";//"romeropi.no-ip.org:8087";
+            fileDataConfig.host_ext2 = "";
+        }
+        console.log("Olá visitante !!!");
+        alert("Olá visitante, esse é um alert chato =P");
+    } */
 };
 function successWifi(results) {
     fileDataConfig.tipo_conexao = lolgicaEscolhaRede(results);
 };
+/*function getIp(results) {
+    console.log("aqui...");
+    fileDataConfig.ip_device = results.IpAddress;
+};*/
 function erroWifiInfo(e) {
     console.log("Erro na verificação de conexão: "+JSON.stringify(e));
 };
@@ -346,7 +388,7 @@ function lolgicaEscolhaRede(results){
     var retornotipoConexao;
 
     if(navigator.connection.type !== "none"){
-        if(results.SSID == "\"Isengard\"" || results.SSID == "\"Fora-Temer-5g\"" || results.SSID == "\"Fora-Temer\""){
+        if(results.SSID == "\"Isengard\"" || results.SSID == "\"Fora-Temer-5g\"" || results.SSID == "\"Fora-Temer\"" || results.IpAddress == "192.168.0.11"){
             retornotipoConexao = "interna";
             //muda o icone
             $(".icoTipoConexao").text("wifi");
@@ -371,23 +413,23 @@ function lolgicaEscolhaRede(results){
 
 function getTipoHost(){
     if(fileDataConfig.tipo_conexao == "interna"){
-        if(ondeEstou != "S"){
-            tipoHost = "Host 2";
-        }else{
+        //if(ondeEstou != "S"){
+           // tipoHost = "Host 2";
+       // }else{
             tipoHost = "Host 1";
-        }
+       // }
     }else if(fileDataConfig.tipo_conexao == "externa"){
-        if(ondeEstou != "S"){
-            tipoHost = "Host Exteno 2";
-        }else{
+       // if(ondeEstou != "S"){
+           // tipoHost = "Host Exteno 2";
+       // }else{
             tipoHost = "Host Exteno 1";
-        }
+       // }
     } 
     return tipoHost;
 }
 
 function getHostJson(local){
-    if(local != "S"){
+   // if(local != "S"){
         if(fileDataConfig.tipo_conexao == "interna"){
             //data = fileDataConfig.host2
             data = fileDataConfig.host1
@@ -399,7 +441,7 @@ function getHostJson(local){
             console.log("tipo conexao indefinida");
         }
 
-    }else{
+   /* }else{
         if(fileDataConfig.tipo_conexao == "interna"){
             var data = fileDataConfig.host1
         }else if(fileDataConfig.tipo_conexao == "externa"){
@@ -407,12 +449,12 @@ function getHostJson(local){
         }else{
             console.log("tipo conexao indefinida");
         } 
-    }
+    }*/
     return data;
 }
 
 function getSaida(valor, repeticao, local){
-    if(local != "S"){
+    //if(local != "S"){
         //data = "ir?codigo=" + valor + "&repeticao=" + repeticao + "&local=" + local;
         
         if(repeticao != "rele"){
@@ -420,13 +462,13 @@ function getSaida(valor, repeticao, local){
         }else{
             data = "rele?" +  valor ;
         }
-    }else{
-        if(repeticao != "rele"){
-            data = "ir?" + repeticao + valor + local;
-        }else{
-            data = "rele?" +  valor ;
-        }
-    }
+   //}else{
+    //    if(repeticao != "rele"){
+            //data = "ir?" + repeticao + valor + local;
+    //    }else{
+   //         data = "rele?" +  valor ;
+    //    }
+    //}
     return data;
 }
 function getUrl(valor, repeticao, local){
@@ -467,36 +509,42 @@ function hostSend(local,valor,repeticao){
     var url = getUrl(valor, repeticao, local);
     
     if(url){
-        console.log("Send POST: "+url);
-        //$.post(url);
 
-        $.ajax({
-            beforeSend: function() {  
-                
+        if(arduinoNaoFuncionaPraPauNoCu == 0){
+            console.log("Send POST: "+url);
+            //$.post(url);
 
-            },
-            type: "POST",  
-            url: url,
-            success: function(data){ 
+            $.ajax({
+                beforeSend: function() {  
+                    
 
-                console.log("retorno do ajax de envio de comando para arduino: ");
-                console.log(data);
-                navigator.vibrate(20);  
-            },
-            error: function(XMLHttpRequest, textStatus, errorThrown) { 
-                console.log("erro do ajax de envio de comando para arduino: "); 
-                console.log(XMLHttpRequest); 
-                console.log(textStatus); 
-                navigator.vibrate(100);
+                },
+                type: "POST",  
+                url: url,
+                success: function(data){ 
 
-                var tipoHost = getTipoHost();
-                
-                var $toastContent = '<span>'+tipoHost+' não respode...</span>';
-                Materialize.toast($toastContent, 2000, "red altura-80"); 
-       
-            },
-            timeout: 1000 // sets timeout to 3 seconds       
-        });
+                    console.log("retorno do ajax de envio de comando para arduino: ");
+                    console.log(data);
+                    navigator.vibrate(20);  
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) { 
+                    console.log("erro do ajax de envio de comando para arduino: "); 
+                    console.log(XMLHttpRequest); 
+                    console.log(textStatus); 
+                    navigator.vibrate(100);
+
+                    var tipoHost = getTipoHost();
+                    
+                    var $toastContent = '<span>'+tipoHost+' não respode...</span>';
+                    Materialize.toast($toastContent, 2000, "red altura-80"); 
+           
+                },
+                timeout: 1000 // sets timeout to 3 seconds       
+            });
+        }else{
+            alert("Bummmmmm, desejo realizado.... ;(");
+        }
+        
 
 
     }else{
