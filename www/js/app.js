@@ -388,7 +388,7 @@ function lolgicaEscolhaRede(results){
     var retornotipoConexao;
 
     if(navigator.connection.type !== "none"){
-        if(results.SSID == "\"Isengard\"" || results.SSID == "\"Fora-Temer-5g\"" || results.SSID == "\"Fora-Temer\"" || results.IpAddress == "192.168.0.11"){
+        if(results.SSID == "\"Isengard\"" || results.SSID == "\"Fora-Temer-5g\"" || results.SSID == "\"Fora-Temer\"" || results.IpAddress != "0.0.0.0"){
             retornotipoConexao = "interna";
             //muda o icone
             $(".icoTipoConexao").text("wifi");
